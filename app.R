@@ -17,7 +17,7 @@ server <- function(input, output, session) {
       value = round(runif(600) * 1000, 0)
     )
 
-    calendar(
+    n_calendar(
       data = df,
       emptyColor = "#eeeeee",
       colors = c("#d6e685", "#8cc665", "#44a340", "#1e6823"),

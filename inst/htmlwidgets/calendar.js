@@ -40029,7 +40029,7 @@ __webpack_require__.r(__webpack_exports__);
 Object(reactR__WEBPACK_IMPORTED_MODULE_0__["reactWidget"])(
   'calendar',
   'output',
-  { ResponsiveCalendar: _nivo_calendar__WEBPACK_IMPORTED_MODULE_1__["ResponsiveCalendar"] },
+  { ResponsiveCalendar: _nivo_calendar__WEBPACK_IMPORTED_MODULE_1__["ResponsiveCalendar"], ResponsiveCalendarCanvas: _nivo_calendar__WEBPACK_IMPORTED_MODULE_1__["ResponsiveCalendarCanvas"] },
   {},
 );
 

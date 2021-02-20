@@ -8,5 +8,5 @@ describe("calendar()", {
     value = round(runif(600) * 1000, 0)
   )
 
-  expect_visible(calendar(df))
+  expect_visible(n_calendar(df))
 })

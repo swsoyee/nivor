@@ -3,9 +3,12 @@
 #' @param data a data.frame contains day and value for create the calendar.
 #' @param day,value column names of day and value. if not provided, it will use
 #' the first column as day, and the second column as value.
-#' @param from start date
-#' @param to end date
-#' @param ... additional arguments
+#' @param from start date.
+#' @param to end date.
+#' @param render "svg" (responsive) or "canvas". "canvas" is well suited for
+#' large data sets as it does not impact DOM tree depth, however you'll lose the
+#' isomorphic rendering ability.
+#' @param ... additional arguments.
 #' @param width,height Must be a valid CSS unit (like \code{'100\%'},
 #'   \code{'400px'}, \code{'auto'}) or a number, which will be coerced to a
 #'   string and have \code{'px'} appended.
@@ -20,39 +23,62 @@
 #' @examples
 #' library(nivor)
 #'
+#' # generate data
 #' df <- data.frame(
 #'   day = seq.Date(
-#'     from = as.Date("2020-04-01"),
-#'     length.out = 600,
+#'     from = as.Date("2016-08-23"),
+#'     length.out = 1500,
 #'     by = "days"
 #'   ),
-#'   value = round(runif(600) * 1000, 0)
+#'   value = round(runif(1500) * 1000, 0)
 #' )
 #'
-#' # default
-#' calendar(df)
-#'
-#' # GitHub style
-#' calendar(
+#' # render in responsive (svg) with style.
+#' n_calendar(
 #'   data = df,
-#'   emptyColor = "#eeeeee",
-#'   colors = c("#d6e685", "#8cc665", "#44a340", "#1e6823"),
-#'   yearSpacing = 40,
-#'   monthBorderColor = "#ffffff",
-#'   dayBorderWidth = 2,
-#'   dayBorderColor = "#ffffff"
+#'   from = "2016-01-01",
+#'   to = "2019-12-31",
+#'   colors = c("#d6e685", "#8cc665", "#44a340", "#1e6823")
 #' )
-calendar <- function(
-                     data = NULL,
-                     day = NULL,
-                     value = NULL,
-                     from = NULL,
-                     to = NULL,
-                     ...,
-                     width = NULL,
-                     height = NULL,
-                     elementId = NULL) {
-
+#'
+#' # render in canvas with customization.
+#' n_calendar(
+#'   df,
+#'   render = "canvas",
+#'   emptyColor = "#aa7942",
+#'   from = "2016-01-01",
+#'   to = "2021-12-31",
+#'   colors = c("#61cdbb", "#97e3d5", "#e8c1a0", "#f47560"),
+#'   margin = list(top = 40, right = 40, bottom = 50, left = 40),
+#'   direction = "vertical",
+#'   monthBorderColor = "#ffffff",
+#'   dayBorderWidth = 0,
+#'   dayBorderColor = "#ffffff",
+#'   legends = list(
+#'     list(
+#'       anchor = "bottom-right",
+#'       direction = "row",
+#'       translateY = 36,
+#'       itemCount = 4,
+#'       itemWidth = 42,
+#'       itemHeight = 36,
+#'       itemsSpacing = 14,
+#'       itemDirection = "right-to-left"
+#'     )
+#'   )
+#' )
+n_calendar <- function(
+                       data = NULL,
+                       day = NULL,
+                       value = NULL,
+                       from = NULL,
+                       to = NULL,
+                       render = c("svg", "canvas"),
+                       ...,
+                       width = NULL,
+                       height = NULL,
+                       elementId = NULL) {
+  render <- match.arg(render, c("svg", "canvas"))
   # if date and value column name are not provided, use the first column as
   # date, second one as value
   if (is.null(day)) day <- colnames(data)[1]
@@ -76,7 +102,11 @@ calendar <- function(
   # describe a React component to send to the browser for rendering.
   component <- reactR::reactMarkup(
     htmltools::tag(
-      "ResponsiveCalendar",
+      ifelse(
+        render == "canvas",
+        "ResponsiveCalendarCanvas",
+        "ResponsiveCalendar"
+      ),
       list(
         data = data,
         from = from,
