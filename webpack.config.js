@@ -4,7 +4,7 @@ module.exports = {
   mode: 'development',
   entry: [
     'regenerator-runtime/runtime.js',
-    path.join(__dirname, 'srcjs', 'calendar.tsx'),
+    path.join(__dirname, 'srcjs', 'nivo.tsx'),
   ],
   output: {
     path: path.join(__dirname, 'inst', 'www', '${package}', 'calendar'),

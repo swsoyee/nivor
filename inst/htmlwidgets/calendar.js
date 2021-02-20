@@ -40011,10 +40011,10 @@ module.exports = function (module) {
 
 /***/ }),
 
-/***/ "./srcjs/calendar.tsx":
-/*!****************************!*\
-  !*** ./srcjs/calendar.tsx ***!
-  \****************************/
+/***/ "./srcjs/nivo.tsx":
+/*!************************!*\
+  !*** ./srcjs/nivo.tsx ***!
+  \************************/
 /*! no exports provided */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -40037,14 +40037,14 @@ Object(reactR__WEBPACK_IMPORTED_MODULE_0__["reactWidget"])(
 /***/ }),
 
 /***/ 0:
-/*!*****************************************************************!*\
-  !*** multi regenerator-runtime/runtime.js ./srcjs/calendar.tsx ***!
-  \*****************************************************************/
+/*!*************************************************************!*\
+  !*** multi regenerator-runtime/runtime.js ./srcjs/nivo.tsx ***!
+  \*************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(/*! regenerator-runtime/runtime.js */"./node_modules/regenerator-runtime/runtime.js");
-module.exports = __webpack_require__(/*! /Users/suwei/Documents/GitHub/nivor/srcjs/calendar.tsx */"./srcjs/calendar.tsx");
+module.exports = __webpack_require__(/*! /Users/suwei/Documents/GitHub/nivor/srcjs/nivo.tsx */"./srcjs/nivo.tsx");
 
 
 /***/ }),
