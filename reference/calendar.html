@@ -179,7 +179,19 @@ string and have <code>'px'</code> appended.</p></td>
   value <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span><span class='op'>(</span><span class='fl'>600</span><span class='op'>)</span> <span class='op'>*</span> <span class='fl'>1000</span>, <span class='fl'>0</span><span class='op'>)</span>
 <span class='op'>)</span>
 
+<span class='co'># default</span>
 <span class='fu'>calendar</span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span>
+
+<span class='co'># GitHub style</span>
+<span class='fu'>calendar</span><span class='op'>(</span>
+  data <span class='op'>=</span> <span class='va'>df</span>,
+  emptyColor <span class='op'>=</span> <span class='st'>"#eeeeee"</span>,
+  colors <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"#d6e685"</span>, <span class='st'>"#8cc665"</span>, <span class='st'>"#44a340"</span>, <span class='st'>"#1e6823"</span><span class='op'>)</span>,
+  yearSpacing <span class='op'>=</span> <span class='fl'>40</span>,
+  monthBorderColor <span class='op'>=</span> <span class='st'>"#ffffff"</span>,
+  dayBorderWidth <span class='op'>=</span> <span class='fl'>2</span>,
+  dayBorderColor <span class='op'>=</span> <span class='st'>"#ffffff"</span>
+<span class='op'>)</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
