@@ -31,8 +31,21 @@ This is a basic example which shows you how to solve a common problem:
 
 ``` r
 library(nivor)
-## basic example code
+
+# Calendar
+df <- data.frame(
+  day = seq.Date(
+    from = as.Date("2020-04-01"),
+    length.out = 600,
+    by = "days"
+  ),
+  value = round(runif(600) * 1000, 0)
+)
+
+calendar(df)
 ```
+
+![calendar](man/figures/calendar.png)
 
 ## Code of Conduct
 
