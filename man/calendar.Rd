@@ -52,7 +52,19 @@ df <- data.frame(
   value = round(runif(600) * 1000, 0)
 )
 
+# default
 calendar(df)
+
+# GitHub style
+calendar(
+  data = df,
+  emptyColor = "#eeeeee",
+  colors = c("#d6e685", "#8cc665", "#44a340", "#1e6823"),
+  yearSpacing = 40,
+  monthBorderColor = "#ffffff",
+  dayBorderWidth = 2,
+  dayBorderColor = "#ffffff"
+)
 }
 \seealso{
 \href{https://nivo.rocks/calendar/}{Additional arguments}

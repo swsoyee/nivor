@@ -29,17 +29,29 @@
 #'   value = round(runif(600) * 1000, 0)
 #' )
 #'
+#' # default
 #' calendar(df)
+#'
+#' # GitHub style
+#' calendar(
+#'   data = df,
+#'   emptyColor = "#eeeeee",
+#'   colors = c("#d6e685", "#8cc665", "#44a340", "#1e6823"),
+#'   yearSpacing = 40,
+#'   monthBorderColor = "#ffffff",
+#'   dayBorderWidth = 2,
+#'   dayBorderColor = "#ffffff"
+#' )
 calendar <- function(
-                    data = NULL,
-                    day = NULL,
-                    value = NULL,
-                    from = NULL,
-                    to = NULL,
-                    ...,
-                    width = NULL,
-                    height = NULL,
-                    elementId = NULL) {
+                     data = NULL,
+                     day = NULL,
+                     value = NULL,
+                     from = NULL,
+                     to = NULL,
+                     ...,
+                     width = NULL,
+                     height = NULL,
+                     elementId = NULL) {
 
   # if date and value column name are not provided, use the first column as
   # date, second one as value
