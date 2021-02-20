@@ -1,6 +1,8 @@
 #' Calendar Visualization
 #'
-#' @param data Chart data
+#' @param data a data.frame contains day and value for create the calendar.
+#' @param day,value column names of day and value. if not provided, it will use
+#' the first column as day, and the second column as value.
 #' @param from start date
 #' @param to end date
 #' @param ... additional arguments
@@ -11,7 +13,7 @@
 #'
 #' @import htmlwidgets
 #' @importFrom utils tail
-#' @return
+#' @return a nivo calendar component
 #' @export
 #' @seealso \href{https://nivo.rocks/calendar/}{Additional arguments}
 #'
@@ -20,16 +22,18 @@
 #'
 #' df <- data.frame(
 #'   day = seq.Date(
-#'     from = as.Date("2017-03-15"),
-#'     length.out = 500,
+#'     from = as.Date("2020-04-01"),
+#'     length.out = 600,
 #'     by = "days"
 #'   ),
-#'   value = round(runif(500) * 1000, 0)
+#'   value = round(runif(600) * 1000, 0)
 #' )
 #'
 #' calendar(df)
 calendar <- function(
                     data = NULL,
+                    day = NULL,
+                    value = NULL,
                     from = NULL,
                     to = NULL,
                     ...,
@@ -37,18 +41,23 @@ calendar <- function(
                     height = NULL,
                     elementId = NULL) {
 
+  # if date and value column name are not provided, use the first column as
+  # date, second one as value
+  if (is.null(day)) day <- colnames(data)[1]
+  if (is.null(value)) value <- colnames(data)[2]
+
   # from and to are required
-  #  assume first and last are from and to
-  if (is.null(from)) from <- data$day[1]
-  if (is.null(to)) to <- utils::tail(data, 1)$day
+  # assume first and last are from and to
+  if (is.null(from)) from <- data[day][1, ]
+  if (is.null(to)) to <- utils::tail(data, n = 1)[day][1, ]
 
   # convert data to array of objects or by row list of lists
   data <- mapply(
     function(day, value) {
       list(day = day, value = value)
     },
-    data$day,
-    data$value,
+    data[day][[1]],
+    data[value][[1]],
     SIMPLIFY = FALSE
   )
 

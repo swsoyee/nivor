@@ -6,6 +6,8 @@
 \usage{
 calendar(
   data = NULL,
+  day = NULL,
+  value = NULL,
   from = NULL,
   to = NULL,
   ...,
@@ -15,7 +17,10 @@ calendar(
 )
 }
 \arguments{
-\item{data}{Chart data}
+\item{data}{a data.frame contains day and value for create the calendar.}
+
+\item{day, value}{column names of day and value. if not provided, it will use
+the first column as day, and the second column as value.}
 
 \item{from}{start date}
 
@@ -30,7 +35,7 @@ string and have \code{'px'} appended.}
 \item{elementId}{element id of widgets}
 }
 \value{
-
+a nivo calendar component
 }
 \description{
 Calendar Visualization
@@ -40,11 +45,11 @@ library(nivor)
 
 df <- data.frame(
   day = seq.Date(
-    from = as.Date("2017-03-15"),
-    length.out = 500,
+    from = as.Date("2020-04-01"),
+    length.out = 600,
     by = "days"
   ),
-  value = round(runif(500) * 1000, 0)
+  value = round(runif(600) * 1000, 0)
 )
 
 calendar(df)
