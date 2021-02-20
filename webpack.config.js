@@ -4,12 +4,12 @@ module.exports = {
   mode: 'development',
   entry: [
     'regenerator-runtime/runtime.js',
-    path.join(__dirname, 'srcjs', 'nivocal.tsx'),
+    path.join(__dirname, 'srcjs', 'calendar.tsx'),
   ],
   output: {
-    path: path.join(__dirname, 'inst', 'www', '${package}', 'nivocal'),
+    path: path.join(__dirname, 'inst', 'www', '${package}', 'calendar'),
     path: path.join(__dirname, 'inst/htmlwidgets'),
-    filename: 'nivocal.js',
+    filename: 'calendar.js',
   },
   module: {
     rules: [

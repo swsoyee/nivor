@@ -27,8 +27,8 @@
 #'   value = round(runif(500) * 1000, 0)
 #' )
 #'
-#' nivocal(df)
-nivocal <- function(
+#' calendar(df)
+calendar <- function(
                     data = NULL,
                     from = NULL,
                     to = NULL,
@@ -68,7 +68,7 @@ nivocal <- function(
 
   # create widget
   htmlwidgets::createWidget(
-    name = "nivocal",
+    name = "calendar",
     component,
     width = width,
     height = height,
@@ -77,16 +77,16 @@ nivocal <- function(
   )
 }
 
-#' Shiny bindings for nivocal
+#' Shiny bindings for calendar
 #'
-#' Output and render functions for using nivocal within Shiny
+#' Output and render functions for using calendar within Shiny
 #' applications and interactive Rmd documents.
 #'
 #' @param outputId output variable to read from
 #' @param width,height Must be a valid CSS unit (like \code{'100\%'},
 #'   \code{'400px'}, \code{'auto'}) or a number, which will be coerced to a
 #'   string and have \code{'px'} appended.
-#' @param expr An expression that generates a nivocal
+#' @param expr An expression that generates a calendar
 #' @param env The environment in which to evaluate \code{expr}.
 #' @param quoted Is \code{expr} a quoted expression (with \code{quote()})? This
 #'   is useful if you want to save an expression in a variable.
@@ -95,31 +95,31 @@ nivocal <- function(
 #' @param style inline style.
 #' @param ... additional arguments
 #'
-#' @name nivocal-shiny
+#' @name calendar-shiny
 #'
 #' @export
-nivocalOutput <- function(outputId, width = "100%", height = "400px") {
+calendarOutput <- function(outputId, width = "100%", height = "400px") {
   htmlwidgets::shinyWidgetOutput(
     outputId,
-    "nivocal",
+    "calendar",
     width,
     height,
     package = "nivor"
   )
 }
 
-#' @rdname nivocal-shiny
+#' @rdname calendar-shiny
 #' @export
-renderNivocal <- function(expr, env = parent.frame(), quoted = FALSE) {
+renderCalendar <- function(expr, env = parent.frame(), quoted = FALSE) {
   if (!quoted) {
     expr <- substitute(expr)
   } # force quoted
-  htmlwidgets::shinyRenderWidget(expr, nivocalOutput, env, quoted = TRUE)
+  htmlwidgets::shinyRenderWidget(expr, calendarOutput, env, quoted = TRUE)
 }
 
 #' Called by HTMLWidgets to produce the widget's root element.
-#' @rdname nivocal-shiny
-nivocal_html <- function(id, style, class, ...) {
+#' @rdname calendar-shiny
+calendar_html <- function(id, style, class, ...) {
   htmltools::tagList(
     # Necessary for RStudio viewer version < 1.2
     reactR::html_dependency_corejs(),
