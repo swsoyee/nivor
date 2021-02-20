@@ -40011,9 +40011,9 @@ module.exports = function (module) {
 
 /***/ }),
 
-/***/ "./srcjs/nivocal.jsx":
+/***/ "./srcjs/nivocal.tsx":
 /*!***************************!*\
-  !*** ./srcjs/nivocal.jsx ***!
+  !*** ./srcjs/nivocal.tsx ***!
   \***************************/
 /*! no exports provided */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -40025,21 +40025,26 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _nivo_calendar__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @nivo/calendar */ "./node_modules/@nivo/calendar/dist/nivo-calendar.es.js");
 
 
-Object(reactR__WEBPACK_IMPORTED_MODULE_0__["reactWidget"])('nivocal', 'output', {
-  ResponsiveCalendar: _nivo_calendar__WEBPACK_IMPORTED_MODULE_1__["ResponsiveCalendar"]
-}, {});
+
+Object(reactR__WEBPACK_IMPORTED_MODULE_0__["reactWidget"])(
+  'nivocal',
+  'output',
+  { ResponsiveCalendar: _nivo_calendar__WEBPACK_IMPORTED_MODULE_1__["ResponsiveCalendar"] },
+  {},
+);
+
 
 /***/ }),
 
 /***/ 0:
 /*!****************************************************************!*\
-  !*** multi regenerator-runtime/runtime.js ./srcjs/nivocal.jsx ***!
+  !*** multi regenerator-runtime/runtime.js ./srcjs/nivocal.tsx ***!
   \****************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(/*! regenerator-runtime/runtime.js */"./node_modules/regenerator-runtime/runtime.js");
-module.exports = __webpack_require__(/*! /Users/suwei/Documents/GitHub/nivor/srcjs/nivocal.jsx */"./srcjs/nivocal.jsx");
+module.exports = __webpack_require__(/*! /Users/suwei/Documents/GitHub/nivor/srcjs/nivocal.tsx */"./srcjs/nivocal.tsx");
 
 
 /***/ }),
