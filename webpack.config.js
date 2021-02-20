@@ -2,7 +2,10 @@ var path = require('path');
 
 module.exports = {
     mode: 'development',
-    entry: path.join(__dirname, 'srcjs', 'nivocal.jsx'),
+    entry: [
+        "regenerator-runtime/runtime.js", 
+        path.join(__dirname, 'srcjs', 'nivocal.jsx')
+    ],
     output: {
         path: path.join(__dirname, 'inst', 'www', '${package}', 'nivocal'),
         path: path.join(__dirname, 'inst/htmlwidgets'),

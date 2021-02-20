@@ -1,7 +1,10 @@
 {
   "private": true,
   "dependencies": {
-    "@nivo/calendar": "0.67.0"
+    "@babel/plugin-transform-runtime": "^7.12.17",
+    "@nivo/calendar": "0.67.0",
+    "@nivo/core": "0.67.0",
+    "prop-types": "^15.7.2"
   },
   "devDependencies": {
     "webpack": "^4.27.1",
