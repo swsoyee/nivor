@@ -42,7 +42,7 @@ df <- data.frame(
   value = round(runif(600) * 1000, 0)
 )
 
-calendar(df)
+n_calendar(df)
 ```
 
 ![calendar](man/figures/calendar.png)
