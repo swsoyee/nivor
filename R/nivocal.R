@@ -5,10 +5,42 @@
 #' @import htmlwidgets
 #'
 #' @export
-nivocal <- function(message, width = NULL, height = NULL, elementId = NULL) {
+nivocal <- function(
+  data = NULL,
+  from = NULL,
+  to = NULL,
+  ...,
+  width = NULL, height = NULL, elementId = NULL
+) {
+
+  # from and to are required
+  #  assume first and last are from and to
+  if(is.null(from)) from <- data$day[1]
+  if(is.null(to)) to <- tail(data,1)$day
+
+  # convert data to array of objects or by row list of lists
+  data <- mapply(
+    function(day, value) {
+      list(day = day, value = value)
+    },
+    data$day,
+    data$value,
+    SIMPLIFY = FALSE
+  )
 
   # describe a React component to send to the browser for rendering.
-  component <- reactR::reactMarkup(htmltools::tag("div", list(message)))
+  component <- reactR::reactMarkup(
+    htmltools::tag(
+      "ResponsiveCalendar",
+      list(
+        data = data,
+        from = from,
+        to = to,
+        # assume extra arguments are props
+        ...
+      )
+    )
+  )
 
   # create widget
   htmlwidgets::createWidget(
