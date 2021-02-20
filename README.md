@@ -5,6 +5,9 @@
 
 <!-- badges: start -->
 
+[![Codecov test
+coverage](https://codecov.io/gh/swsoyee/nivor/branch/main/graph/badge.svg)](https://codecov.io/gh/swsoyee/nivor?branch=main)
+[![R-CMD-check](https://github.com/swsoyee/nivor/workflows/R-CMD-check/badge.svg)](https://github.com/swsoyee/nivor/actions)
 <!-- badges: end -->
 
 The goal of nivor is to …
