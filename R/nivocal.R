@@ -1,22 +1,42 @@
-#' <Add Title>
+#' Calendar Visualization
 #'
-#' <Add Description>
+#' @param data Chart data
+#' @param from start date
+#' @param to end date
+#' @param ... additional arguments
+#' @param width width of widgets
+#' @param height height of widgets
+#' @param elementId element id of widgets
 #'
 #' @import htmlwidgets
-#'
+#' @return
 #' @export
+#' @seealso \href{https://nivo.rocks/calendar/}{Additional arguments}
+#'
+#' @examples
+#' library(nivor)
+#'
+#' df <- data.frame(
+#'   day = seq.Date(
+#'     from = as.Date("2017-03-15"),
+#'     length.out = 500,
+#'     by = "days"
+#'   ),
+#'   value = round(runif(500) * 1000, 0)
+#' )
+#'
+#' nivocal(df)
 nivocal <- function(
-  data = NULL,
-  from = NULL,
-  to = NULL,
-  ...,
-  width = NULL, height = NULL, elementId = NULL
-) {
+                    data = NULL,
+                    from = NULL,
+                    to = NULL,
+                    ...,
+                    width = NULL, height = NULL, elementId = NULL) {
 
   # from and to are required
   #  assume first and last are from and to
-  if(is.null(from)) from <- data$day[1]
-  if(is.null(to)) to <- tail(data,1)$day
+  if (is.null(from)) from <- data$day[1]
+  if (is.null(to)) to <- tail(data, 1)$day
 
   # convert data to array of objects or by row list of lists
   data <- mapply(
@@ -44,11 +64,11 @@ nivocal <- function(
 
   # create widget
   htmlwidgets::createWidget(
-    name = 'nivocal',
+    name = "nivocal",
     component,
     width = width,
     height = height,
-    package = 'nivor',
+    package = "nivor",
     elementId = elementId
   )
 }
@@ -70,14 +90,16 @@ nivocal <- function(
 #' @name nivocal-shiny
 #'
 #' @export
-nivocalOutput <- function(outputId, width = '100%', height = '400px'){
-  htmlwidgets::shinyWidgetOutput(outputId, 'nivocal', width, height, package = 'nivor')
+nivocalOutput <- function(outputId, width = "100%", height = "400px") {
+  htmlwidgets::shinyWidgetOutput(outputId, "nivocal", width, height, package = "nivor")
 }
 
 #' @rdname nivocal-shiny
 #' @export
 renderNivocal <- function(expr, env = parent.frame(), quoted = FALSE) {
-  if (!quoted) { expr <- substitute(expr) } # force quoted
+  if (!quoted) {
+    expr <- substitute(expr)
+  } # force quoted
   htmlwidgets::shinyRenderWidget(expr, nivocalOutput, env, quoted = TRUE)
 }
 

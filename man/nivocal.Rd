@@ -2,7 +2,7 @@
 % Please edit documentation in R/nivocal.R
 \name{nivocal}
 \alias{nivocal}
-\title{<Add Title>}
+\title{Calendar Visualization}
 \usage{
 nivocal(
   data = NULL,
@@ -14,6 +14,41 @@ nivocal(
   elementId = NULL
 )
 }
+\arguments{
+\item{data}{Chart data}
+
+\item{from}{start date}
+
+\item{to}{end date}
+
+\item{...}{additional arguments}
+
+\item{width}{width of widgets}
+
+\item{height}{height of widgets}
+
+\item{elementId}{element id of widgets}
+}
+\value{
+
+}
 \description{
-<Add Description>
+Calendar Visualization
+}
+\examples{
+library(nivor)
+
+df <- data.frame(
+  day = seq.Date(
+    from = as.Date("2017-03-15"),
+    length.out = 500,
+    by = "days"
+  ),
+  value = round(runif(500) * 1000, 0)
+)
+
+nivocal(df)
+}
+\seealso{
+\href{https://nivo.rocks/calendar/}{Additional arguments}
 }
