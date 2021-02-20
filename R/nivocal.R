@@ -4,11 +4,13 @@
 #' @param from start date
 #' @param to end date
 #' @param ... additional arguments
-#' @param width width of widgets
-#' @param height height of widgets
+#' @param width,height Must be a valid CSS unit (like \code{'100\%'},
+#'   \code{'400px'}, \code{'auto'}) or a number, which will be coerced to a
+#'   string and have \code{'px'} appended.
 #' @param elementId element id of widgets
 #'
 #' @import htmlwidgets
+#' @importFrom utils tail
 #' @return
 #' @export
 #' @seealso \href{https://nivo.rocks/calendar/}{Additional arguments}
@@ -31,12 +33,14 @@ nivocal <- function(
                     from = NULL,
                     to = NULL,
                     ...,
-                    width = NULL, height = NULL, elementId = NULL) {
+                    width = NULL,
+                    height = NULL,
+                    elementId = NULL) {
 
   # from and to are required
   #  assume first and last are from and to
   if (is.null(from)) from <- data$day[1]
-  if (is.null(to)) to <- tail(data, 1)$day
+  if (is.null(to)) to <- utils::tail(data, 1)$day
 
   # convert data to array of objects or by row list of lists
   data <- mapply(
@@ -79,19 +83,29 @@ nivocal <- function(
 #' applications and interactive Rmd documents.
 #'
 #' @param outputId output variable to read from
-#' @param width,height Must be a valid CSS unit (like \code{'100\%%'},
+#' @param width,height Must be a valid CSS unit (like \code{'100\%'},
 #'   \code{'400px'}, \code{'auto'}) or a number, which will be coerced to a
 #'   string and have \code{'px'} appended.
 #' @param expr An expression that generates a nivocal
 #' @param env The environment in which to evaluate \code{expr}.
 #' @param quoted Is \code{expr} a quoted expression (with \code{quote()})? This
 #'   is useful if you want to save an expression in a variable.
+#' @param id div id.
+#' @param class class name.
+#' @param style inline style.
+#' @param ... additional arguments
 #'
 #' @name nivocal-shiny
 #'
 #' @export
 nivocalOutput <- function(outputId, width = "100%", height = "400px") {
-  htmlwidgets::shinyWidgetOutput(outputId, "nivocal", width, height, package = "nivor")
+  htmlwidgets::shinyWidgetOutput(
+    outputId,
+    "nivocal",
+    width,
+    height,
+    package = "nivor"
+  )
 }
 
 #' @rdname nivocal-shiny
