@@ -239,6 +239,2638 @@ module.exports = _setPrototypeOf;
 
 /***/ }),
 
+/***/ "./node_modules/@nivo/axes/dist/nivo-axes.es.js":
+/*!******************************************************!*\
+  !*** ./node_modules/@nivo/axes/dist/nivo-axes.es.js ***!
+  \******************************************************/
+/*! exports provided: Axes, Axis, Grid, axisPropType, axisPropTypes, renderAxesToCanvas, renderAxisToCanvas, renderGridLinesToCanvas */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Axes", function() { return Axes$1; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Axis", function() { return Axis$1; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Grid", function() { return Grid$1; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "axisPropType", function() { return axisPropType; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "axisPropTypes", function() { return axisPropTypes; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "renderAxesToCanvas", function() { return renderAxesToCanvas; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "renderAxisToCanvas", function() { return renderAxisToCanvas; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "renderGridLinesToCanvas", function() { return renderGridLinesToCanvas; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_spring__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-spring */ "./node_modules/react-spring/web.js");
+/* harmony import */ var _nivo_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @nivo/core */ "./node_modules/@nivo/core/dist/nivo-core.es.js");
+/* harmony import */ var d3_time__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! d3-time */ "./node_modules/d3-time/src/index.js");
+/* harmony import */ var d3_time_format__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! d3-time-format */ "./node_modules/d3-time-format/src/index.js");
+/* harmony import */ var d3_format__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! d3-format */ "./node_modules/d3-format/src/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_6__);
+
+
+
+
+
+
+
+
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+function ownKeys(object, enumerableOnly) {
+  var keys = Object.keys(object);
+
+  if (Object.getOwnPropertySymbols) {
+    var symbols = Object.getOwnPropertySymbols(object);
+    if (enumerableOnly) symbols = symbols.filter(function (sym) {
+      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+    });
+    keys.push.apply(keys, symbols);
+  }
+
+  return keys;
+}
+
+function _objectSpread2(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i] != null ? arguments[i] : {};
+
+    if (i % 2) {
+      ownKeys(Object(source), true).forEach(function (key) {
+        _defineProperty(target, key, source[key]);
+      });
+    } else if (Object.getOwnPropertyDescriptors) {
+      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+    } else {
+      ownKeys(Object(source)).forEach(function (key) {
+        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+      });
+    }
+  }
+
+  return target;
+}
+
+var centerScale = function centerScale(scale) {
+  var bandwidth = scale.bandwidth();
+  if (bandwidth === 0) return scale;
+  var offset = bandwidth / 2;
+
+  if (scale.round()) {
+    offset = Math.round(offset);
+  }
+
+  return function (d) {
+    return scale(d) + offset;
+  };
+};
+
+var timeByType = {
+  millisecond: [d3_time__WEBPACK_IMPORTED_MODULE_3__["timeMillisecond"], d3_time__WEBPACK_IMPORTED_MODULE_3__["utcMillisecond"]],
+  second: [d3_time__WEBPACK_IMPORTED_MODULE_3__["timeSecond"], d3_time__WEBPACK_IMPORTED_MODULE_3__["utcSecond"]],
+  minute: [d3_time__WEBPACK_IMPORTED_MODULE_3__["timeMinute"], d3_time__WEBPACK_IMPORTED_MODULE_3__["utcMinute"]],
+  hour: [d3_time__WEBPACK_IMPORTED_MODULE_3__["timeHour"], d3_time__WEBPACK_IMPORTED_MODULE_3__["utcHour"]],
+  day: [d3_time__WEBPACK_IMPORTED_MODULE_3__["timeDay"], d3_time__WEBPACK_IMPORTED_MODULE_3__["utcDay"]],
+  week: [d3_time__WEBPACK_IMPORTED_MODULE_3__["timeWeek"], d3_time__WEBPACK_IMPORTED_MODULE_3__["utcWeek"]],
+  sunday: [d3_time__WEBPACK_IMPORTED_MODULE_3__["timeSunday"], d3_time__WEBPACK_IMPORTED_MODULE_3__["utcSunday"]],
+  monday: [d3_time__WEBPACK_IMPORTED_MODULE_3__["timeMonday"], d3_time__WEBPACK_IMPORTED_MODULE_3__["utcMonday"]],
+  tuesday: [d3_time__WEBPACK_IMPORTED_MODULE_3__["timeTuesday"], d3_time__WEBPACK_IMPORTED_MODULE_3__["utcTuesday"]],
+  wednesday: [d3_time__WEBPACK_IMPORTED_MODULE_3__["timeWednesday"], d3_time__WEBPACK_IMPORTED_MODULE_3__["utcWednesday"]],
+  thursday: [d3_time__WEBPACK_IMPORTED_MODULE_3__["timeThursday"], d3_time__WEBPACK_IMPORTED_MODULE_3__["utcThursday"]],
+  friday: [d3_time__WEBPACK_IMPORTED_MODULE_3__["timeFriday"], d3_time__WEBPACK_IMPORTED_MODULE_3__["utcFriday"]],
+  saturday: [d3_time__WEBPACK_IMPORTED_MODULE_3__["timeSaturday"], d3_time__WEBPACK_IMPORTED_MODULE_3__["utcSaturday"]],
+  month: [d3_time__WEBPACK_IMPORTED_MODULE_3__["timeMonth"], d3_time__WEBPACK_IMPORTED_MODULE_3__["utcMonth"]],
+  year: [d3_time__WEBPACK_IMPORTED_MODULE_3__["timeYear"], d3_time__WEBPACK_IMPORTED_MODULE_3__["utcYear"]]
+};
+var timeTypes = Object.keys(timeByType);
+var timeIntervalRegexp = new RegExp("^every\\s*(\\d+)?\\s*(".concat(timeTypes.join('|'), ")s?$"), 'i');
+
+var isInteger = function isInteger(value) {
+  return typeof value === 'number' && isFinite(value) && Math.floor(value) === value;
+};
+
+var getScaleTicks = function getScaleTicks(scale, spec) {
+  if (Array.isArray(spec)) {
+    return spec;
+  }
+
+  if (scale.ticks) {
+    if (spec === undefined) {
+      return scale.ticks();
+    }
+
+    if (isInteger(spec)) {
+      return scale.ticks(spec);
+    }
+
+    if (typeof spec === 'string') {
+      var matches = spec.match(timeIntervalRegexp);
+
+      if (matches) {
+        var timeType = timeByType[matches[2]][scale.useUTC ? 1 : 0];
+
+        if (matches[1] === undefined) {
+          return scale.ticks(timeType);
+        }
+
+        return scale.ticks(timeType.every(Number(matches[1])));
+      }
+
+      throw new Error("Invalid tickValues: ".concat(spec));
+    }
+  }
+
+  return scale.domain();
+};
+
+var computeCartesianTicks = function computeCartesianTicks(_ref) {
+  var axis = _ref.axis,
+      scale = _ref.scale,
+      ticksPosition = _ref.ticksPosition,
+      tickValues = _ref.tickValues,
+      tickSize = _ref.tickSize,
+      tickPadding = _ref.tickPadding,
+      tickRotation = _ref.tickRotation,
+      _ref$engine = _ref.engine,
+      engine = _ref$engine === void 0 ? 'svg' : _ref$engine;
+  var values = getScaleTicks(scale, tickValues);
+  var textProps = _nivo_core__WEBPACK_IMPORTED_MODULE_2__["textPropsByEngine"][engine];
+  var position = scale.bandwidth ? centerScale(scale) : scale;
+  var line = {
+    lineX: 0,
+    lineY: 0
+  };
+  var text = {
+    textX: 0,
+    textY: 0
+  };
+  var translate;
+  var textAlign = textProps.align.center;
+  var textBaseline = textProps.baseline.center;
+
+  if (axis === 'x') {
+    translate = function translate(d) {
+      return {
+        x: position(d),
+        y: 0
+      };
+    };
+
+    line.lineY = tickSize * (ticksPosition === 'after' ? 1 : -1);
+    text.textY = (tickSize + tickPadding) * (ticksPosition === 'after' ? 1 : -1);
+
+    if (ticksPosition === 'after') {
+      textBaseline = textProps.baseline.top;
+    } else {
+      textBaseline = textProps.baseline.bottom;
+    }
+
+    if (tickRotation === 0) {
+      textAlign = textProps.align.center;
+    } else if (ticksPosition === 'after' && tickRotation < 0 || ticksPosition === 'before' && tickRotation > 0) {
+      textAlign = textProps.align.right;
+      textBaseline = textProps.baseline.center;
+    } else if (ticksPosition === 'after' && tickRotation > 0 || ticksPosition === 'before' && tickRotation < 0) {
+      textAlign = textProps.align.left;
+      textBaseline = textProps.baseline.center;
+    }
+  } else {
+    translate = function translate(d) {
+      return {
+        x: 0,
+        y: position(d)
+      };
+    };
+
+    line.lineX = tickSize * (ticksPosition === 'after' ? 1 : -1);
+    text.textX = (tickSize + tickPadding) * (ticksPosition === 'after' ? 1 : -1);
+
+    if (ticksPosition === 'after') {
+      textAlign = textProps.align.left;
+    } else {
+      textAlign = textProps.align.right;
+    }
+  }
+
+  var ticks = values.map(function (value) {
+    return _objectSpread2(_objectSpread2(_objectSpread2({
+      key: value,
+      value: value
+    }, translate(value)), line), text);
+  });
+  return {
+    ticks: ticks,
+    textAlign: textAlign,
+    textBaseline: textBaseline
+  };
+};
+
+var getFormatter = function getFormatter(format$1, scale) {
+  if (!format$1 || typeof format$1 === 'function') return format$1;
+
+  if (scale.type === 'time') {
+    var f = Object(d3_time_format__WEBPACK_IMPORTED_MODULE_4__["timeFormat"])(format$1);
+    return function (d) {
+      return f(new Date(d));
+    };
+  }
+
+  return Object(d3_format__WEBPACK_IMPORTED_MODULE_5__["format"])(format$1);
+};
+
+var computeGridLines = function computeGridLines(_ref2) {
+  var width = _ref2.width,
+      height = _ref2.height,
+      scale = _ref2.scale,
+      axis = _ref2.axis,
+      _values = _ref2.values;
+  var lineValues = Array.isArray(_values) ? _values : undefined;
+  var lineCount = isInteger(_values) ? _values : undefined;
+  var values = lineValues || getScaleTicks(scale, lineCount);
+  var position = scale.bandwidth ? centerScale(scale) : scale;
+  var lines;
+
+  if (axis === 'x') {
+    lines = values.map(function (v) {
+      return {
+        key: "".concat(v),
+        x1: position(v),
+        x2: position(v),
+        y1: 0,
+        y2: height
+      };
+    });
+  } else if (axis === 'y') {
+    lines = values.map(function (v) {
+      return {
+        key: "".concat(v),
+        x1: 0,
+        x2: width,
+        y1: position(v),
+        y2: position(v)
+      };
+    });
+  }
+
+  return lines;
+};
+
+var axisPropTypes = {
+  ticksPosition: prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.oneOf(['before', 'after']),
+  tickValues: prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.number, prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.arrayOf(prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.number, prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.string, prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.instanceOf(Date)])), prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.string]),
+  tickSize: prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.number,
+  tickPadding: prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.number,
+  tickRotation: prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.number,
+  format: prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.func, prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.string]),
+  renderTick: prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.func,
+  legend: prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.node,
+  legendPosition: prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.oneOf(['start', 'middle', 'end']),
+  legendOffset: prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.number,
+  ariaHidden: prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.bool
+};
+var axisPropType = prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.shape(axisPropTypes);
+
+var AxisTick = function AxisTick(_ref) {
+  var _value = _ref.value,
+      format = _ref.format,
+      lineX = _ref.lineX,
+      lineY = _ref.lineY,
+      _onClick = _ref.onClick,
+      textBaseline = _ref.textBaseline,
+      textAnchor = _ref.textAnchor,
+      animatedProps = _ref.animatedProps;
+  var theme = Object(_nivo_core__WEBPACK_IMPORTED_MODULE_2__["useTheme"])();
+  var value = _value;
+
+  if (format !== undefined) {
+    value = format(value);
+  }
+
+  var gStyle = {
+    opacity: animatedProps.opacity
+  };
+
+  if (_onClick) {
+    gStyle['cursor'] = 'pointer';
+  }
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_spring__WEBPACK_IMPORTED_MODULE_1__["animated"].g, Object.assign({
+    transform: animatedProps.transform
+  }, _onClick ? {
+    onClick: function onClick(e) {
+      return _onClick(e, value);
+    }
+  } : {}, {
+    style: gStyle
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("line", {
+    x1: 0,
+    x2: lineX,
+    y1: 0,
+    y2: lineY,
+    style: theme.axis.ticks.line
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_spring__WEBPACK_IMPORTED_MODULE_1__["animated"].text, {
+    dominantBaseline: textBaseline,
+    textAnchor: textAnchor,
+    transform: animatedProps.textTransform,
+    style: theme.axis.ticks.text
+  }, value));
+};
+
+AxisTick.defaultProps = {
+  opacity: 1,
+  rotate: 0
+};
+var AxisTick$1 = /*#__PURE__*/Object(react__WEBPACK_IMPORTED_MODULE_0__["memo"])(AxisTick);
+
+var defaultTickRenderer = function defaultTickRenderer(props) {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(AxisTick$1, props);
+};
+
+var Axis = function Axis(_ref) {
+  var axis = _ref.axis,
+      scale = _ref.scale,
+      x = _ref.x,
+      y = _ref.y,
+      length = _ref.length,
+      ticksPosition = _ref.ticksPosition,
+      tickValues = _ref.tickValues,
+      tickSize = _ref.tickSize,
+      tickPadding = _ref.tickPadding,
+      tickRotation = _ref.tickRotation,
+      format = _ref.format,
+      renderTick = _ref.renderTick,
+      legend = _ref.legend,
+      legendPosition = _ref.legendPosition,
+      legendOffset = _ref.legendOffset,
+      onClick = _ref.onClick,
+      ariaHidden = _ref.ariaHidden;
+  var theme = Object(_nivo_core__WEBPACK_IMPORTED_MODULE_2__["useTheme"])();
+  var formatValue = Object(react__WEBPACK_IMPORTED_MODULE_0__["useMemo"])(function () {
+    return getFormatter(format, scale);
+  }, [format, scale]);
+
+  var _computeCartesianTick = computeCartesianTicks({
+    axis: axis,
+    scale: scale,
+    ticksPosition: ticksPosition,
+    tickValues: tickValues,
+    tickSize: tickSize,
+    tickPadding: tickPadding,
+    tickRotation: tickRotation
+  }),
+      ticks = _computeCartesianTick.ticks,
+      textAlign = _computeCartesianTick.textAlign,
+      textBaseline = _computeCartesianTick.textBaseline;
+
+  var legendNode = null;
+
+  if (legend !== undefined) {
+    var legendX = 0;
+    var legendY = 0;
+    var legendRotation = 0;
+    var textAnchor;
+
+    if (axis === 'y') {
+      legendRotation = -90;
+      legendX = legendOffset;
+
+      if (legendPosition === 'start') {
+        textAnchor = 'start';
+        legendY = length;
+      } else if (legendPosition === 'middle') {
+        textAnchor = 'middle';
+        legendY = length / 2;
+      } else if (legendPosition === 'end') {
+        textAnchor = 'end';
+      }
+    } else {
+      legendY = legendOffset;
+
+      if (legendPosition === 'start') {
+        textAnchor = 'start';
+      } else if (legendPosition === 'middle') {
+        textAnchor = 'middle';
+        legendX = length / 2;
+      } else if (legendPosition === 'end') {
+        textAnchor = 'end';
+        legendX = length;
+      }
+    }
+
+    legendNode = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("text", {
+      transform: "translate(".concat(legendX, ", ").concat(legendY, ") rotate(").concat(legendRotation, ")"),
+      textAnchor: textAnchor,
+      style: _objectSpread2({
+        dominantBaseline: 'central'
+      }, theme.axis.legend.text)
+    }, legend);
+  }
+
+  var _useMotionConfig = Object(_nivo_core__WEBPACK_IMPORTED_MODULE_2__["useMotionConfig"])(),
+      animate = _useMotionConfig.animate,
+      springConfig = _useMotionConfig.config;
+
+  var animatedProps = Object(react_spring__WEBPACK_IMPORTED_MODULE_1__["useSpring"])({
+    transform: "translate(".concat(x, ",").concat(y, ")"),
+    lineX2: axis === 'x' ? length : 0,
+    lineY2: axis === 'x' ? 0 : length,
+    config: springConfig,
+    immediate: !animate
+  });
+  var transition = Object(react_spring__WEBPACK_IMPORTED_MODULE_1__["useTransition"])(ticks, {
+    key: function key(tick) {
+      return tick.key;
+    },
+    initial: function initial(tick) {
+      return {
+        opacity: 1,
+        transform: "translate(".concat(tick.x, ",").concat(tick.y, ")"),
+        textTransform: "translate(".concat(tick.textX, ",").concat(tick.textY, ") rotate(").concat(tickRotation, ")")
+      };
+    },
+    from: function from(tick) {
+      return {
+        opacity: 0,
+        transform: "translate(".concat(tick.x, ",").concat(tick.y, ")"),
+        textTransform: "translate(".concat(tick.textX, ",").concat(tick.textY, ") rotate(").concat(tickRotation, ")")
+      };
+    },
+    enter: function enter(tick) {
+      return {
+        opacity: 1,
+        transform: "translate(".concat(tick.x, ",").concat(tick.y, ")"),
+        textTransform: "translate(".concat(tick.textX, ",").concat(tick.textY, ") rotate(").concat(tickRotation, ")")
+      };
+    },
+    update: function update(tick) {
+      return {
+        opacity: 1,
+        transform: "translate(".concat(tick.x, ",").concat(tick.y, ")"),
+        textTransform: "translate(".concat(tick.textX, ",").concat(tick.textY, ") rotate(").concat(tickRotation, ")")
+      };
+    },
+    leave: {
+      opacity: 0
+    },
+    config: springConfig,
+    immediate: !animate
+  });
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_spring__WEBPACK_IMPORTED_MODULE_1__["animated"].g, {
+    transform: animatedProps.transform,
+    "aria-hidden": ariaHidden
+  }, transition(function (transitionProps, tick, state, tickIndex) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(renderTick, _objectSpread2(_objectSpread2(_objectSpread2({
+      tickIndex: tickIndex,
+      format: formatValue,
+      rotate: tickRotation,
+      textBaseline: textBaseline,
+      textAnchor: textAlign,
+      animatedProps: transitionProps
+    }, tick), onClick ? {
+      onClick: onClick
+    } : {}), {}, {
+      key: tick.key
+    }));
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_spring__WEBPACK_IMPORTED_MODULE_1__["animated"].line, {
+    style: theme.axis.domain.line,
+    x1: 0,
+    x2: animatedProps.lineX2,
+    y1: 0,
+    y2: animatedProps.lineY2
+  }), legendNode);
+};
+
+Axis.defaultProps = {
+  x: 0,
+  y: 0,
+  tickSize: 5,
+  tickPadding: 5,
+  tickRotation: 0,
+  renderTick: defaultTickRenderer,
+  legendPosition: 'end',
+  legendOffset: 0
+};
+var Axis$1 = /*#__PURE__*/Object(react__WEBPACK_IMPORTED_MODULE_0__["memo"])(Axis);
+var positions = ['top', 'right', 'bottom', 'left'];
+
+var Axes = function Axes(_ref) {
+  var xScale = _ref.xScale,
+      yScale = _ref.yScale,
+      width = _ref.width,
+      height = _ref.height,
+      top = _ref.top,
+      right = _ref.right,
+      bottom = _ref.bottom,
+      left = _ref.left;
+  var axes = {
+    top: top,
+    right: right,
+    bottom: bottom,
+    left: left
+  };
+  return positions.map(function (position) {
+    var axis = axes[position];
+    if (!axis) return null;
+    var isXAxis = position === 'top' || position === 'bottom';
+    var ticksPosition = position === 'top' || position === 'left' ? 'before' : 'after';
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Axis$1, Object.assign({
+      key: position
+    }, axis, {
+      axis: isXAxis ? 'x' : 'y',
+      x: position === 'right' ? width : 0,
+      y: position === 'bottom' ? height : 0,
+      scale: isXAxis ? xScale : yScale,
+      length: isXAxis ? width : height,
+      ticksPosition: ticksPosition
+    }));
+  });
+};
+
+var Axes$1 = /*#__PURE__*/Object(react__WEBPACK_IMPORTED_MODULE_0__["memo"])(Axes);
+
+var GridLine = function GridLine(_ref) {
+  var animatedProps = _ref.animatedProps;
+  var theme = Object(_nivo_core__WEBPACK_IMPORTED_MODULE_2__["useTheme"])();
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_spring__WEBPACK_IMPORTED_MODULE_1__["animated"].line, Object.assign({}, animatedProps, theme.grid.line));
+};
+
+GridLine.defaultProps = {
+  x1: 0,
+  x2: 0,
+  y1: 0,
+  y2: 0
+};
+var GridLine$1 = /*#__PURE__*/Object(react__WEBPACK_IMPORTED_MODULE_0__["memo"])(GridLine);
+
+var GridLines = function GridLines(_ref) {
+  var lines = _ref.lines;
+
+  var _useMotionConfig = Object(_nivo_core__WEBPACK_IMPORTED_MODULE_2__["useMotionConfig"])(),
+      animate = _useMotionConfig.animate,
+      springConfig = _useMotionConfig.config;
+
+  var transition = Object(react_spring__WEBPACK_IMPORTED_MODULE_1__["useTransition"])(lines, {
+    key: function key(line) {
+      return line.key;
+    },
+    initial: function initial(line) {
+      return {
+        opacity: 1,
+        x1: line.x1,
+        x2: line.x2,
+        y1: line.y1,
+        y2: line.y2
+      };
+    },
+    from: function from(line) {
+      return {
+        opacity: 0,
+        x1: line.x1,
+        x2: line.x2,
+        y1: line.y1,
+        y2: line.y2
+      };
+    },
+    enter: function enter(line) {
+      return {
+        opacity: 1,
+        x1: line.x1,
+        x2: line.x2,
+        y1: line.y1,
+        y2: line.y2
+      };
+    },
+    update: function update(line) {
+      return {
+        opacity: 1,
+        x1: line.x1,
+        x2: line.x2,
+        y1: line.y1,
+        y2: line.y2
+      };
+    },
+    leave: {
+      opacity: 0
+    },
+    config: springConfig,
+    immediate: !animate
+  });
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("g", null, transition(function (animatedProps, line) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(GridLine$1, Object.assign({}, line, {
+      key: line.key,
+      animatedProps: animatedProps
+    }));
+  }));
+};
+
+var GridLines$1 = /*#__PURE__*/Object(react__WEBPACK_IMPORTED_MODULE_0__["memo"])(GridLines);
+
+var Grid = function Grid(_ref) {
+  var width = _ref.width,
+      height = _ref.height,
+      xScale = _ref.xScale,
+      yScale = _ref.yScale,
+      xValues = _ref.xValues,
+      yValues = _ref.yValues;
+  var xLines = Object(react__WEBPACK_IMPORTED_MODULE_0__["useMemo"])(function () {
+    if (!xScale) return false;
+    return computeGridLines({
+      width: width,
+      height: height,
+      scale: xScale,
+      axis: 'x',
+      values: xValues
+    });
+  }, [xScale, xValues, width, height]);
+  var yLines = yScale ? computeGridLines({
+    width: width,
+    height: height,
+    scale: yScale,
+    axis: 'y',
+    values: yValues
+  }) : false;
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, xLines && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(GridLines$1, {
+    type: "x",
+    lines: xLines
+  }), yLines && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(GridLines$1, {
+    type: "y",
+    lines: yLines
+  }));
+};
+
+var Grid$1 = /*#__PURE__*/Object(react__WEBPACK_IMPORTED_MODULE_0__["memo"])(Grid);
+
+var degreesToRadians = function degreesToRadians(degrees) {
+  return degrees * Math.PI / 180;
+};
+
+var renderAxisToCanvas = function renderAxisToCanvas(ctx, _ref) {
+  var axis = _ref.axis,
+      scale = _ref.scale,
+      _ref$x = _ref.x,
+      x = _ref$x === void 0 ? 0 : _ref$x,
+      _ref$y = _ref.y,
+      y = _ref$y === void 0 ? 0 : _ref$y,
+      length = _ref.length,
+      ticksPosition = _ref.ticksPosition,
+      tickValues = _ref.tickValues,
+      _ref$tickSize = _ref.tickSize,
+      tickSize = _ref$tickSize === void 0 ? 5 : _ref$tickSize,
+      _ref$tickPadding = _ref.tickPadding,
+      tickPadding = _ref$tickPadding === void 0 ? 5 : _ref$tickPadding,
+      _ref$tickRotation = _ref.tickRotation,
+      tickRotation = _ref$tickRotation === void 0 ? 0 : _ref$tickRotation,
+      format = _ref.format,
+      legend = _ref.legend,
+      _ref$legendPosition = _ref.legendPosition,
+      legendPosition = _ref$legendPosition === void 0 ? 'end' : _ref$legendPosition,
+      _ref$legendOffset = _ref.legendOffset,
+      legendOffset = _ref$legendOffset === void 0 ? 0 : _ref$legendOffset,
+      theme = _ref.theme;
+
+  var _computeCartesianTick = computeCartesianTicks({
+    axis: axis,
+    scale: scale,
+    ticksPosition: ticksPosition,
+    tickValues: tickValues,
+    tickSize: tickSize,
+    tickPadding: tickPadding,
+    tickRotation: tickRotation,
+    engine: 'canvas'
+  }),
+      ticks = _computeCartesianTick.ticks,
+      textAlign = _computeCartesianTick.textAlign,
+      textBaseline = _computeCartesianTick.textBaseline;
+
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.textAlign = textAlign;
+  ctx.textBaseline = textBaseline;
+  ctx.font = "".concat(theme.axis.ticks.text.fontSize, "px ").concat(theme.axis.ticks.text.fontFamily);
+
+  if (theme.axis.domain.line.strokeWidth > 0) {
+    ctx.lineWidth = theme.axis.domain.line.strokeWidth;
+    ctx.lineCap = 'square';
+    ctx.strokeStyle = theme.axis.domain.line.stroke;
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+    ctx.lineTo(axis === 'x' ? length : 0, axis === 'x' ? 0 : length);
+    ctx.stroke();
+  }
+
+  ticks.forEach(function (tick) {
+    if (theme.axis.ticks.line.strokeWidth > 0) {
+      ctx.lineWidth = theme.axis.ticks.line.strokeWidth;
+      ctx.lineCap = 'square';
+      ctx.strokeStyle = theme.axis.ticks.line.stroke;
+      ctx.beginPath();
+      ctx.moveTo(tick.x, tick.y);
+      ctx.lineTo(tick.x + tick.lineX, tick.y + tick.lineY);
+      ctx.stroke();
+    }
+
+    var value = format !== undefined ? format(tick.value) : tick.value;
+    ctx.save();
+    ctx.translate(tick.x + tick.textX, tick.y + tick.textY);
+    ctx.rotate(degreesToRadians(tickRotation));
+    ctx.fillStyle = theme.axis.ticks.text.fill;
+    ctx.fillText(value, 0, 0);
+    ctx.restore();
+  });
+
+  if (legend !== undefined) {
+    var legendX = 0;
+    var legendY = 0;
+    var legendRotation = 0;
+
+    var _textAlign;
+
+    if (axis === 'y') {
+      legendRotation = -90;
+      legendX = legendOffset;
+
+      if (legendPosition === 'start') {
+        _textAlign = 'start';
+        legendY = length;
+      } else if (legendPosition === 'middle') {
+        _textAlign = 'center';
+        legendY = length / 2;
+      } else if (legendPosition === 'end') {
+        _textAlign = 'end';
+      }
+    } else {
+      legendY = legendOffset;
+
+      if (legendPosition === 'start') {
+        _textAlign = 'start';
+      } else if (legendPosition === 'middle') {
+        _textAlign = 'center';
+        legendX = length / 2;
+      } else if (legendPosition === 'end') {
+        _textAlign = 'end';
+        legendX = length;
+      }
+    }
+
+    ctx.translate(legendX, legendY);
+    ctx.rotate(degreesToRadians(legendRotation));
+    ctx.font = "".concat(theme.axis.legend.text.fontWeight ? "".concat(theme.axis.legend.text.fontWeight, " ") : '').concat(theme.axis.legend.text.fontSize, "px ").concat(theme.axis.legend.text.fontFamily);
+    ctx.fillStyle = theme.axis.legend.text.fill;
+    ctx.textAlign = _textAlign;
+    ctx.textBaseline = 'middle';
+    ctx.fillText(legend, 0, 0);
+  }
+
+  ctx.restore();
+};
+
+var positions$1 = ['top', 'right', 'bottom', 'left'];
+
+var renderAxesToCanvas = function renderAxesToCanvas(ctx, _ref2) {
+  var xScale = _ref2.xScale,
+      yScale = _ref2.yScale,
+      width = _ref2.width,
+      height = _ref2.height,
+      top = _ref2.top,
+      right = _ref2.right,
+      bottom = _ref2.bottom,
+      left = _ref2.left,
+      theme = _ref2.theme;
+  var axes = {
+    top: top,
+    right: right,
+    bottom: bottom,
+    left: left
+  };
+  positions$1.forEach(function (position) {
+    var axis = axes[position];
+    if (!axis) return null;
+    var isXAxis = position === 'top' || position === 'bottom';
+    var ticksPosition = position === 'top' || position === 'left' ? 'before' : 'after';
+    var scale = isXAxis ? xScale : yScale;
+    var format = getFormatter(axis.format, scale);
+    renderAxisToCanvas(ctx, _objectSpread2(_objectSpread2({}, axis), {}, {
+      axis: isXAxis ? 'x' : 'y',
+      x: position === 'right' ? width : 0,
+      y: position === 'bottom' ? height : 0,
+      scale: scale,
+      format: format,
+      length: isXAxis ? width : height,
+      ticksPosition: ticksPosition,
+      theme: theme
+    }));
+  });
+};
+
+var renderGridLinesToCanvas = function renderGridLinesToCanvas(ctx, _ref3) {
+  var width = _ref3.width,
+      height = _ref3.height,
+      scale = _ref3.scale,
+      axis = _ref3.axis,
+      values = _ref3.values;
+  var lines = computeGridLines({
+    width: width,
+    height: height,
+    scale: scale,
+    axis: axis,
+    values: values
+  });
+  lines.forEach(function (line) {
+    ctx.beginPath();
+    ctx.moveTo(line.x1, line.y1);
+    ctx.lineTo(line.x2, line.y2);
+    ctx.stroke();
+  });
+};
+
+
+
+/***/ }),
+
+/***/ "./node_modules/@nivo/bump/dist/nivo-bump.es.js":
+/*!******************************************************!*\
+  !*** ./node_modules/@nivo/bump/dist/nivo-bump.es.js ***!
+  \******************************************************/
+/*! exports provided: AreaBump, AreaBumpDefaultProps, AreaBumpPropTypes, Bump, BumpDefaultProps, BumpPropTypes, ResponsiveAreaBump, ResponsiveBump */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AreaBump", function() { return AreaBump$1; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AreaBumpDefaultProps", function() { return AreaBumpDefaultProps; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AreaBumpPropTypes", function() { return AreaBumpPropTypes; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Bump", function() { return Bump$1; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "BumpDefaultProps", function() { return BumpDefaultProps; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "BumpPropTypes", function() { return BumpPropTypes; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ResponsiveAreaBump", function() { return ResponsiveAreaBump; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ResponsiveBump", function() { return ResponsiveBump; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _nivo_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @nivo/core */ "./node_modules/@nivo/core/dist/nivo-core.es.js");
+/* harmony import */ var _nivo_axes__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @nivo/axes */ "./node_modules/@nivo/axes/dist/nivo-axes.es.js");
+/* harmony import */ var d3_shape__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! d3-shape */ "./node_modules/d3-shape/src/index.js");
+/* harmony import */ var _nivo_colors__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @nivo/colors */ "./node_modules/@nivo/colors/dist/nivo-colors.es.js");
+/* harmony import */ var _nivo_tooltip__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @nivo/tooltip */ "./node_modules/@nivo/tooltip/dist/nivo-tooltip.es.js");
+/* harmony import */ var d3_scale__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! d3-scale */ "./node_modules/d3-scale/src/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var react_spring__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react-spring */ "./node_modules/react-spring/web.js");
+
+
+
+
+
+
+
+
+
+
+function _arrayWithHoles(arr) {
+  if (Array.isArray(arr)) return arr;
+}
+
+function _iterableToArrayLimit(arr, i) {
+  if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return;
+  var _arr = [];
+  var _n = true;
+  var _d = false;
+  var _e = undefined;
+
+  try {
+    for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
+      _arr.push(_s.value);
+
+      if (i && _arr.length === i) break;
+    }
+  } catch (err) {
+    _d = true;
+    _e = err;
+  } finally {
+    try {
+      if (!_n && _i["return"] != null) _i["return"]();
+    } finally {
+      if (_d) throw _e;
+    }
+  }
+
+  return _arr;
+}
+
+function _arrayLikeToArray(arr, len) {
+  if (len == null || len > arr.length) len = arr.length;
+
+  for (var i = 0, arr2 = new Array(len); i < len; i++) {
+    arr2[i] = arr[i];
+  }
+
+  return arr2;
+}
+
+function _unsupportedIterableToArray(o, minLen) {
+  if (!o) return;
+  if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+  var n = Object.prototype.toString.call(o).slice(8, -1);
+  if (n === "Object" && o.constructor) n = o.constructor.name;
+  if (n === "Map" || n === "Set") return Array.from(n);
+  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+}
+
+function _nonIterableRest() {
+  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+
+function _slicedToArray(arr, i) {
+  return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
+}
+
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+function ownKeys(object, enumerableOnly) {
+  var keys = Object.keys(object);
+
+  if (Object.getOwnPropertySymbols) {
+    var symbols = Object.getOwnPropertySymbols(object);
+    if (enumerableOnly) symbols = symbols.filter(function (sym) {
+      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+    });
+    keys.push.apply(keys, symbols);
+  }
+
+  return keys;
+}
+
+function _objectSpread2(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i] != null ? arguments[i] : {};
+
+    if (i % 2) {
+      ownKeys(Object(source), true).forEach(function (key) {
+        _defineProperty(target, key, source[key]);
+      });
+    } else if (Object.getOwnPropertyDescriptors) {
+      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+    } else {
+      ownKeys(Object(source)).forEach(function (key) {
+        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+      });
+    }
+  }
+
+  return target;
+}
+
+var computeSeries = function computeSeries(_ref) {
+  var width = _ref.width,
+      height = _ref.height,
+      data = _ref.data,
+      xPadding = _ref.xPadding,
+      xOuterPadding = _ref.xOuterPadding,
+      yOuterPadding = _ref.yOuterPadding;
+  var xValues = new Set();
+  data.forEach(function (serie) {
+    serie.data.forEach(function (datum) {
+      if (!xValues.has(datum.x)) {
+        xValues.add(datum.x);
+      }
+    });
+  });
+  xValues = Array.from(xValues);
+  var xScale = Object(d3_scale__WEBPACK_IMPORTED_MODULE_6__["scalePoint"])().domain(xValues).range([0, width]).padding(xOuterPadding);
+  var yScale = Object(d3_scale__WEBPACK_IMPORTED_MODULE_6__["scalePoint"])().domain(data.map(function (serie, i) {
+    return i + 1;
+  })).range([0, height]).padding(yOuterPadding);
+  var linePointPadding = xScale.step() * Math.min(xPadding * 0.5, 0.5);
+  var series = data.map(function (rawSerie) {
+    var serie = _objectSpread2(_objectSpread2({}, rawSerie), {}, {
+      points: [],
+      linePoints: []
+    });
+
+    rawSerie.data.forEach(function (datum, i) {
+      var x = null;
+      var y = null;
+
+      if (datum.y !== null && datum.y !== undefined) {
+        x = xScale(datum.x);
+        y = yScale(datum.y);
+      }
+
+      var point = {
+        id: "".concat(rawSerie.id, ".").concat(i),
+        serie: rawSerie,
+        data: datum,
+        x: x,
+        y: y
+      };
+      serie.points.push(point);
+
+      if (x !== null) {
+        if (i === 0) {
+          serie.linePoints.push([0, point.y]);
+        } else {
+          serie.linePoints.push([point.x - linePointPadding, point.y]);
+        }
+      }
+
+      serie.linePoints.push([point.x, point.y]);
+
+      if (x !== null) {
+        if (i === rawSerie.data.length - 1 && x) {
+          serie.linePoints.push([width, point.y]);
+        } else {
+          serie.linePoints.push([point.x + linePointPadding, point.y]);
+        }
+      }
+
+      serie.points = serie.points.filter(function (point) {
+        return point.x !== null;
+      });
+    });
+    return serie;
+  });
+  return {
+    series: series,
+    xScale: xScale,
+    yScale: yScale
+  };
+};
+
+var useLineGenerator = function useLineGenerator(interpolation) {
+  return Object(react__WEBPACK_IMPORTED_MODULE_0__["useMemo"])(function () {
+    return Object(d3_shape__WEBPACK_IMPORTED_MODULE_3__["line"])().curve(interpolation === 'smooth' ? d3_shape__WEBPACK_IMPORTED_MODULE_3__["curveBasis"] : d3_shape__WEBPACK_IMPORTED_MODULE_3__["curveLinear"]).defined(function (d) {
+      return d[0] !== null && d[1] !== null;
+    });
+  }, [interpolation]);
+};
+
+var useSerieDerivedProp = function useSerieDerivedProp(instruction) {
+  return Object(react__WEBPACK_IMPORTED_MODULE_0__["useMemo"])(function () {
+    if (typeof instruction === 'function') return instruction;
+    return function () {
+      return instruction;
+    };
+  }, [instruction]);
+};
+
+var useSerieStyle = function useSerieStyle(_ref) {
+  var lineWidth = _ref.lineWidth,
+      activeLineWidth = _ref.activeLineWidth,
+      inactiveLineWidth = _ref.inactiveLineWidth,
+      opacity = _ref.opacity,
+      activeOpacity = _ref.activeOpacity,
+      inactiveOpacity = _ref.inactiveOpacity,
+      isInteractive = _ref.isInteractive,
+      currentSerie = _ref.currentSerie;
+  var getLineWidth = useSerieDerivedProp(lineWidth);
+  var getActiveLineWidth = useSerieDerivedProp(activeLineWidth);
+  var getInactiveLineWidth = useSerieDerivedProp(inactiveLineWidth);
+  var getOpacity = useSerieDerivedProp(opacity);
+  var getActiveOpacity = useSerieDerivedProp(activeOpacity);
+  var getInactiveOpacity = useSerieDerivedProp(inactiveOpacity);
+  var getNormalStyle = Object(react__WEBPACK_IMPORTED_MODULE_0__["useMemo"])(function () {
+    return function (serie) {
+      return {
+        lineWidth: getLineWidth(serie),
+        opacity: getOpacity(serie)
+      };
+    };
+  }, [getLineWidth, getOpacity]);
+  var getActiveStyle = Object(react__WEBPACK_IMPORTED_MODULE_0__["useMemo"])(function () {
+    return function (serie) {
+      return {
+        lineWidth: getActiveLineWidth(serie),
+        opacity: getActiveOpacity(serie)
+      };
+    };
+  }, [getActiveLineWidth, getActiveOpacity]);
+  var getInactiveStyle = Object(react__WEBPACK_IMPORTED_MODULE_0__["useMemo"])(function () {
+    return function (serie) {
+      return {
+        lineWidth: getInactiveLineWidth(serie),
+        opacity: getInactiveOpacity(serie)
+      };
+    };
+  }, [getInactiveLineWidth, getInactiveOpacity]);
+  return Object(react__WEBPACK_IMPORTED_MODULE_0__["useMemo"])(function () {
+    if (!isInteractive) return getNormalStyle;
+    return function (serie) {
+      if (currentSerie === null) return getNormalStyle(serie);
+      if (serie.id === currentSerie) return getActiveStyle(serie);
+      return getInactiveStyle(serie);
+    };
+  }, [getNormalStyle, getActiveStyle, getInactiveStyle, isInteractive, currentSerie]);
+};
+
+var usePointStyle = function usePointStyle(_ref2) {
+  var pointSize = _ref2.pointSize,
+      activePointSize = _ref2.activePointSize,
+      inactivePointSize = _ref2.inactivePointSize,
+      pointBorderWidth = _ref2.pointBorderWidth,
+      activePointBorderWidth = _ref2.activePointBorderWidth,
+      inactivePointBorderWidth = _ref2.inactivePointBorderWidth,
+      isInteractive = _ref2.isInteractive,
+      currentSerie = _ref2.currentSerie;
+  var getSize = useSerieDerivedProp(pointSize);
+  var getActiveSize = useSerieDerivedProp(activePointSize);
+  var getInactiveSize = useSerieDerivedProp(inactivePointSize);
+  var getBorderWidth = useSerieDerivedProp(pointBorderWidth);
+  var getActiveBorderWidth = useSerieDerivedProp(activePointBorderWidth);
+  var getInactiveBorderWidth = useSerieDerivedProp(inactivePointBorderWidth);
+  var getNormalStyle = Object(react__WEBPACK_IMPORTED_MODULE_0__["useMemo"])(function () {
+    return function (point) {
+      return {
+        size: getSize(point),
+        borderWidth: getBorderWidth(point)
+      };
+    };
+  }, [getSize, getBorderWidth]);
+  var getActiveStyle = Object(react__WEBPACK_IMPORTED_MODULE_0__["useMemo"])(function () {
+    return function (point) {
+      return {
+        size: getActiveSize(point),
+        borderWidth: getActiveBorderWidth(point)
+      };
+    };
+  }, [getActiveSize, getActiveBorderWidth]);
+  var getInactiveStyle = Object(react__WEBPACK_IMPORTED_MODULE_0__["useMemo"])(function () {
+    return function (point) {
+      return {
+        size: getInactiveSize(point),
+        borderWidth: getInactiveBorderWidth(point)
+      };
+    };
+  }, [getInactiveSize, getInactiveBorderWidth]);
+  return Object(react__WEBPACK_IMPORTED_MODULE_0__["useMemo"])(function () {
+    if (!isInteractive) return getNormalStyle;
+    return function (point) {
+      if (currentSerie === null) return getNormalStyle(point);
+      if (point.serieId === currentSerie) return getActiveStyle(point);
+      return getInactiveStyle(point);
+    };
+  }, [getNormalStyle, getActiveStyle, getInactiveStyle, isInteractive, currentSerie]);
+};
+
+var useBump = function useBump(_ref3) {
+  var width = _ref3.width,
+      height = _ref3.height,
+      data = _ref3.data,
+      interpolation = _ref3.interpolation,
+      xPadding = _ref3.xPadding,
+      xOuterPadding = _ref3.xOuterPadding,
+      yOuterPadding = _ref3.yOuterPadding,
+      lineWidth = _ref3.lineWidth,
+      activeLineWidth = _ref3.activeLineWidth,
+      inactiveLineWidth = _ref3.inactiveLineWidth,
+      colors = _ref3.colors,
+      opacity = _ref3.opacity,
+      activeOpacity = _ref3.activeOpacity,
+      inactiveOpacity = _ref3.inactiveOpacity,
+      pointSize = _ref3.pointSize,
+      activePointSize = _ref3.activePointSize,
+      inactivePointSize = _ref3.inactivePointSize,
+      pointColor = _ref3.pointColor,
+      pointBorderWidth = _ref3.pointBorderWidth,
+      activePointBorderWidth = _ref3.activePointBorderWidth,
+      inactivePointBorderWidth = _ref3.inactivePointBorderWidth,
+      pointBorderColor = _ref3.pointBorderColor,
+      isInteractive = _ref3.isInteractive,
+      currentSerie = _ref3.currentSerie;
+
+  var _useMemo = Object(react__WEBPACK_IMPORTED_MODULE_0__["useMemo"])(function () {
+    return computeSeries({
+      width: width,
+      height: height,
+      data: data,
+      xPadding: xPadding,
+      xOuterPadding: xOuterPadding,
+      yOuterPadding: yOuterPadding
+    });
+  }, [width, height, data, xPadding, xOuterPadding, yOuterPadding]),
+      rawSeries = _useMemo.series,
+      xScale = _useMemo.xScale,
+      yScale = _useMemo.yScale;
+
+  var lineGenerator = useLineGenerator(interpolation);
+  var getColor = Object(_nivo_colors__WEBPACK_IMPORTED_MODULE_4__["useOrdinalColorScale"])(colors, 'id');
+  var getSerieStyle = useSerieStyle({
+    lineWidth: lineWidth,
+    activeLineWidth: activeLineWidth,
+    inactiveLineWidth: inactiveLineWidth,
+    opacity: opacity,
+    activeOpacity: activeOpacity,
+    inactiveOpacity: inactiveOpacity,
+    isInteractive: isInteractive,
+    currentSerie: currentSerie
+  });
+  var series = Object(react__WEBPACK_IMPORTED_MODULE_0__["useMemo"])(function () {
+    return rawSeries.map(function (serie) {
+      var nextSerie = _objectSpread2({}, serie);
+
+      nextSerie.color = getColor(nextSerie);
+      nextSerie.style = getSerieStyle(nextSerie);
+      return nextSerie;
+    });
+  }, [rawSeries, getColor, getSerieStyle]);
+  var theme = Object(_nivo_core__WEBPACK_IMPORTED_MODULE_1__["useTheme"])();
+  var getPointColor = Object(_nivo_colors__WEBPACK_IMPORTED_MODULE_4__["useInheritedColor"])(pointColor, theme);
+  var getPointBorderColor = Object(_nivo_colors__WEBPACK_IMPORTED_MODULE_4__["useInheritedColor"])(pointBorderColor, theme);
+  var getPointStyle = usePointStyle({
+    pointSize: pointSize,
+    activePointSize: activePointSize,
+    inactivePointSize: inactivePointSize,
+    pointBorderWidth: pointBorderWidth,
+    activePointBorderWidth: activePointBorderWidth,
+    inactivePointBorderWidth: inactivePointBorderWidth,
+    isInteractive: isInteractive,
+    currentSerie: currentSerie
+  });
+  var points = Object(react__WEBPACK_IMPORTED_MODULE_0__["useMemo"])(function () {
+    var pts = [];
+    series.forEach(function (serie) {
+      serie.points.forEach(function (rawPoint) {
+        var point = _objectSpread2(_objectSpread2({}, rawPoint), {}, {
+          serie: serie,
+          serieId: serie.id,
+          isActive: currentSerie === serie.id,
+          isInactive: currentSerie !== null && currentSerie !== serie.id
+        });
+
+        point.color = getPointColor(point);
+        point.borderColor = getPointBorderColor(point);
+        point.style = getPointStyle(_objectSpread2(_objectSpread2({}, point), {}, {
+          serie: serie
+        }));
+        pts.push(point);
+      });
+    });
+    return pts;
+  }, [series, getPointColor, getPointBorderColor, getPointStyle, currentSerie]);
+  return {
+    xScale: xScale,
+    yScale: yScale,
+    series: series,
+    points: points,
+    lineGenerator: lineGenerator
+  };
+};
+
+var useSerieHandlers = function useSerieHandlers(_ref4) {
+  var serie = _ref4.serie,
+      isInteractive = _ref4.isInteractive,
+      onMouseEnter = _ref4.onMouseEnter,
+      onMouseMove = _ref4.onMouseMove,
+      onMouseLeave = _ref4.onMouseLeave,
+      onClick = _ref4.onClick,
+      setCurrent = _ref4.setCurrent,
+      tooltip = _ref4.tooltip;
+
+  var _useTooltip = Object(_nivo_tooltip__WEBPACK_IMPORTED_MODULE_5__["useTooltip"])(),
+      showTooltipFromEvent = _useTooltip.showTooltipFromEvent,
+      hideTooltip = _useTooltip.hideTooltip;
+
+  var handleMouseEnter = Object(react__WEBPACK_IMPORTED_MODULE_0__["useCallback"])(function (event) {
+    showTooltipFromEvent( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(tooltip, {
+      serie: serie
+    }), event);
+    setCurrent(serie.id);
+    onMouseEnter && onMouseEnter(serie, event);
+  }, [serie, onMouseEnter, showTooltipFromEvent, setCurrent]);
+  var handleMouseMove = Object(react__WEBPACK_IMPORTED_MODULE_0__["useCallback"])(function (event) {
+    showTooltipFromEvent( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(tooltip, {
+      serie: serie
+    }), event);
+    onMouseMove && onMouseMove(serie, event);
+  }, [serie, onMouseMove, showTooltipFromEvent]);
+  var handleMouseLeave = Object(react__WEBPACK_IMPORTED_MODULE_0__["useCallback"])(function (event) {
+    hideTooltip();
+    setCurrent(null);
+    onMouseLeave && onMouseLeave(serie, event);
+  }, [serie, onMouseLeave, hideTooltip, setCurrent]);
+  var handleClick = Object(react__WEBPACK_IMPORTED_MODULE_0__["useCallback"])(function (event) {
+    onClick && onClick(serie, event);
+  }, [serie, onClick]);
+  var handlers = Object(react__WEBPACK_IMPORTED_MODULE_0__["useMemo"])(function () {
+    return {
+      onMouseEnter: isInteractive ? handleMouseEnter : undefined,
+      onMouseMove: isInteractive ? handleMouseMove : undefined,
+      onMouseLeave: isInteractive ? handleMouseLeave : undefined,
+      onClick: isInteractive ? handleClick : undefined
+    };
+  }, [isInteractive, handleMouseEnter, handleMouseMove, handleMouseLeave, handleClick]);
+  return handlers;
+};
+
+var useSeriesLabels = function useSeriesLabels(_ref5) {
+  var series = _ref5.series,
+      position = _ref5.position,
+      padding = _ref5.padding,
+      color = _ref5.color,
+      getLabel = _ref5.getLabel;
+  var theme = Object(_nivo_core__WEBPACK_IMPORTED_MODULE_1__["useTheme"])();
+  var getColor = Object(_nivo_colors__WEBPACK_IMPORTED_MODULE_4__["useInheritedColor"])(color, theme);
+  return Object(react__WEBPACK_IMPORTED_MODULE_0__["useMemo"])(function () {
+    var textAnchor;
+    var signedPadding;
+
+    if (position === 'start') {
+      textAnchor = 'end';
+      signedPadding = padding * -1;
+    } else {
+      textAnchor = 'start';
+      signedPadding = padding;
+    }
+
+    var labels = [];
+    series.forEach(function (serie) {
+      var label = serie.id;
+
+      if (typeof getLabel === 'function') {
+        label = getLabel(serie);
+      }
+
+      var point = position === 'start' ? serie.linePoints[0] : serie.linePoints[serie.linePoints.length - 1];
+
+      if (point[0] === null || point[1] === null) {
+        return;
+      }
+
+      labels.push({
+        id: serie.id,
+        label: label,
+        x: point[0] + signedPadding,
+        y: point[1],
+        color: getColor(serie),
+        opacity: serie.style.opacity,
+        serie: serie,
+        textAnchor: textAnchor
+      });
+    });
+    return labels;
+  }, [series, position, padding, getColor]);
+};
+
+var LineTooltip = function LineTooltip(_ref) {
+  var serie = _ref.serie;
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_nivo_tooltip__WEBPACK_IMPORTED_MODULE_5__["BasicTooltip"], {
+    id: serie.id,
+    enableChip: true,
+    color: serie.color
+  });
+};
+
+var LineTooltip$1 = /*#__PURE__*/Object(react__WEBPACK_IMPORTED_MODULE_0__["memo"])(LineTooltip);
+var pointStyle = {
+  pointerEvents: 'none'
+};
+
+var Point = function Point(_ref) {
+  var x = _ref.x,
+      y = _ref.y,
+      size = _ref.size,
+      color = _ref.color,
+      borderColor = _ref.borderColor,
+      borderWidth = _ref.borderWidth;
+
+  var _useMotionConfig = Object(_nivo_core__WEBPACK_IMPORTED_MODULE_1__["useMotionConfig"])(),
+      animate = _useMotionConfig.animate,
+      springConfig = _useMotionConfig.config;
+
+  var animatedProps = Object(react_spring__WEBPACK_IMPORTED_MODULE_8__["useSpring"])({
+    x: x,
+    y: y,
+    radius: size / 2,
+    color: color,
+    borderWidth: borderWidth,
+    config: springConfig,
+    immediate: !animate
+  });
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_spring__WEBPACK_IMPORTED_MODULE_8__["animated"].circle, {
+    cx: animatedProps.x,
+    cy: animatedProps.y,
+    r: Object(react_spring__WEBPACK_IMPORTED_MODULE_8__["to"])(animatedProps.radius, function (v) {
+      return Math.max(v, 0);
+    }),
+    fill: animatedProps.color,
+    strokeWidth: animatedProps.borderWidth,
+    stroke: borderColor,
+    style: pointStyle
+  });
+};
+
+var Point$1 = /*#__PURE__*/Object(react__WEBPACK_IMPORTED_MODULE_0__["memo"])(Point);
+var commonPropTypes = {
+  data: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.arrayOf(prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.shape({
+    id: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.string.isRequired,
+    data: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.arrayOf(prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.shape({
+      x: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.number, prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.string]).isRequired,
+      y: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.number, prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.string])
+    })).isRequired
+  })).isRequired,
+  layers: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.arrayOf(prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.oneOf(['grid', 'axes', 'labels', 'lines', 'points']), prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.func])).isRequired,
+  interpolation: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.oneOf(['linear', 'smooth']).isRequired,
+  xPadding: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.number.isRequired,
+  xOuterPadding: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.number.isRequired,
+  yOuterPadding: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.number.isRequired,
+  colors: _nivo_colors__WEBPACK_IMPORTED_MODULE_4__["ordinalColorsPropType"].isRequired,
+  lineWidth: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.number, prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.func]).isRequired,
+  activeLineWidth: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.number, prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.func]).isRequired,
+  inactiveLineWidth: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.number, prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.func]).isRequired,
+  opacity: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.number, prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.func]).isRequired,
+  activeOpacity: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.number, prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.func]).isRequired,
+  inactiveOpacity: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.number, prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.func]).isRequired,
+  startLabel: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.oneOf([false]), prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.string, prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.func]).isRequired,
+  startLabelPadding: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.number.isRequired,
+  startLabelTextColor: _nivo_colors__WEBPACK_IMPORTED_MODULE_4__["inheritedColorPropType"].isRequired,
+  endLabel: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.oneOf([false]), prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.string, prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.func]).isRequired,
+  endLabelPadding: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.number.isRequired,
+  endLabelTextColor: _nivo_colors__WEBPACK_IMPORTED_MODULE_4__["inheritedColorPropType"].isRequired,
+  pointComponent: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.func, prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.object]).isRequired,
+  pointSize: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.number, prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.func]).isRequired,
+  activePointSize: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.number, prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.func]).isRequired,
+  inactivePointSize: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.number, prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.func]).isRequired,
+  pointColor: _nivo_colors__WEBPACK_IMPORTED_MODULE_4__["inheritedColorPropType"].isRequired,
+  pointBorderWidth: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.number, prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.func]).isRequired,
+  activePointBorderWidth: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.number, prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.func]).isRequired,
+  inactivePointBorderWidth: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.number, prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.func]).isRequired,
+  pointBorderColor: _nivo_colors__WEBPACK_IMPORTED_MODULE_4__["inheritedColorPropType"].isRequired,
+  enableGridX: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.bool.isRequired,
+  enableGridY: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.bool.isRequired,
+  axisTop: _nivo_axes__WEBPACK_IMPORTED_MODULE_2__["axisPropType"],
+  axisRight: _nivo_axes__WEBPACK_IMPORTED_MODULE_2__["axisPropType"],
+  axisBottom: _nivo_axes__WEBPACK_IMPORTED_MODULE_2__["axisPropType"],
+  axisLeft: _nivo_axes__WEBPACK_IMPORTED_MODULE_2__["axisPropType"],
+  isInteractive: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.bool.isRequired,
+  onMouseEnter: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.func,
+  onMouseMove: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.func,
+  onMouseLeave: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.func,
+  onClick: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.func,
+  tooltip: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.func, prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.object]).isRequired
+};
+
+var BumpPropTypes = _objectSpread2(_objectSpread2(_objectSpread2({}, commonPropTypes), _nivo_core__WEBPACK_IMPORTED_MODULE_1__["motionPropTypes"]), {}, {
+  role: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.string.isRequired
+});
+
+var commonDefaultProps = {
+  layers: ['grid', 'axes', 'labels', 'lines', 'points'],
+  interpolation: 'smooth',
+  xPadding: 0.6,
+  xOuterPadding: 0.5,
+  yOuterPadding: 0.5,
+  colors: {
+    scheme: 'nivo'
+  },
+  lineWidth: 2,
+  activeLineWidth: 4,
+  inactiveLineWidth: 1,
+  opacity: 1,
+  activeOpacity: 1,
+  inactiveOpacity: 0.3,
+  startLabel: false,
+  startLabelPadding: 16,
+  startLabelTextColor: {
+    from: 'color'
+  },
+  endLabel: 'id',
+  endLabelPadding: 16,
+  endLabelTextColor: {
+    from: 'color'
+  },
+  pointSize: 6,
+  activePointSize: 8,
+  inactivePointSize: 4,
+  pointColor: {
+    from: 'serie.color'
+  },
+  pointBorderWidth: 0,
+  activePointBorderWidth: 0,
+  inactivePointBorderWidth: 0,
+  pointBorderColor: {
+    from: 'serie.color',
+    modifiers: [['darker', 1.4]]
+  },
+  enableGridX: true,
+  enableGridY: true,
+  axisTop: {},
+  axisBottom: {},
+  axisLeft: {},
+  isInteractive: true,
+  tooltip: LineTooltip$1
+};
+
+var BumpDefaultProps = _objectSpread2(_objectSpread2({}, commonDefaultProps), {}, {
+  pointComponent: Point$1,
+  animate: true,
+  motionConfig: 'gentle',
+  role: 'img'
+});
+
+var Line = function Line(_ref) {
+  var serie = _ref.serie,
+      lineGenerator = _ref.lineGenerator,
+      yStep = _ref.yStep,
+      isInteractive = _ref.isInteractive,
+      onMouseEnter = _ref.onMouseEnter,
+      onMouseMove = _ref.onMouseMove,
+      onMouseLeave = _ref.onMouseLeave,
+      onClick = _ref.onClick,
+      setCurrentSerie = _ref.setCurrentSerie,
+      tooltip = _ref.tooltip;
+  var handlers = useSerieHandlers({
+    serie: serie,
+    isInteractive: isInteractive,
+    onMouseEnter: onMouseEnter,
+    onMouseMove: onMouseMove,
+    onMouseLeave: onMouseLeave,
+    onClick: onClick,
+    setCurrent: setCurrentSerie,
+    tooltip: tooltip
+  });
+
+  var _useMotionConfig = Object(_nivo_core__WEBPACK_IMPORTED_MODULE_1__["useMotionConfig"])(),
+      animate = _useMotionConfig.animate,
+      springConfig = _useMotionConfig.config;
+
+  var linePath = lineGenerator(serie.linePoints);
+  var animatedPath = Object(_nivo_core__WEBPACK_IMPORTED_MODULE_1__["useAnimatedPath"])(linePath);
+  var animatedProps = Object(react_spring__WEBPACK_IMPORTED_MODULE_8__["useSpring"])({
+    color: serie.color,
+    opacity: serie.style.opacity,
+    lineWidth: serie.style.lineWidth,
+    config: springConfig,
+    immediate: !animate
+  });
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_spring__WEBPACK_IMPORTED_MODULE_8__["animated"].path, {
+    fill: "none",
+    d: animatedPath,
+    stroke: animatedProps.color,
+    strokeWidth: animatedProps.lineWidth,
+    strokeLinecap: "round",
+    strokeOpacity: animatedProps.opacity,
+    style: {
+      pointerEvents: 'none'
+    }
+  }), isInteractive && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("path", {
+    fill: "none",
+    stroke: "red",
+    strokeOpacity: 0,
+    strokeWidth: yStep,
+    d: linePath,
+    strokeLinecap: "butt",
+    onMouseEnter: handlers.onMouseEnter,
+    onMouseMove: handlers.onMouseMove,
+    onMouseLeave: handlers.onMouseLeave,
+    onClick: handlers.onClick
+  }));
+};
+
+var Line$1 = /*#__PURE__*/Object(react__WEBPACK_IMPORTED_MODULE_0__["memo"])(Line);
+
+var LinesLabels = function LinesLabels(_ref) {
+  var series = _ref.series,
+      getLabel = _ref.getLabel,
+      position = _ref.position,
+      padding = _ref.padding,
+      color = _ref.color;
+  var theme = Object(_nivo_core__WEBPACK_IMPORTED_MODULE_1__["useTheme"])();
+
+  var _useMotionConfig = Object(_nivo_core__WEBPACK_IMPORTED_MODULE_1__["useMotionConfig"])(),
+      animate = _useMotionConfig.animate,
+      springConfig = _useMotionConfig.config;
+
+  var labels = useSeriesLabels({
+    series: series,
+    getLabel: getLabel,
+    position: position,
+    padding: padding,
+    color: color
+  });
+  var springs = Object(react_spring__WEBPACK_IMPORTED_MODULE_8__["useSprings"])(labels.length, labels.map(function (label) {
+    return {
+      x: label.x,
+      y: label.y,
+      opacity: label.opacity,
+      config: springConfig,
+      immediate: !animate
+    };
+  }));
+  return springs.map(function (animatedProps, index) {
+    var label = labels[index];
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_spring__WEBPACK_IMPORTED_MODULE_8__["animated"].text, {
+      key: label.id,
+      x: animatedProps.x,
+      y: animatedProps.y,
+      textAnchor: label.textAnchor,
+      dominantBaseline: "central",
+      opacity: animatedProps.opacity,
+      style: _objectSpread2(_objectSpread2({}, theme.labels.text), {}, {
+        fill: label.color
+      })
+    }, label.label);
+  });
+};
+
+var LinesLabels$1 = /*#__PURE__*/Object(react__WEBPACK_IMPORTED_MODULE_0__["memo"])(LinesLabels);
+
+var Points = function Points(_ref) {
+  var pointComponent = _ref.pointComponent,
+      points = _ref.points;
+  return points.map(function (point) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(pointComponent, {
+      key: point.id,
+      data: point.data,
+      x: point.x,
+      y: point.y,
+      isActive: point.isActive,
+      isInactive: point.isInactive,
+      size: point.style.size,
+      color: point.color,
+      borderColor: point.borderColor,
+      borderWidth: point.style.borderWidth
+    });
+  });
+};
+
+var Points$1 = /*#__PURE__*/Object(react__WEBPACK_IMPORTED_MODULE_0__["memo"])(Points);
+
+var Bump = function Bump(props) {
+  var data = props.data,
+      width = props.width,
+      height = props.height,
+      partialMargin = props.margin,
+      layers = props.layers,
+      interpolation = props.interpolation,
+      xPadding = props.xPadding,
+      xOuterPadding = props.xOuterPadding,
+      yOuterPadding = props.yOuterPadding,
+      colors = props.colors,
+      lineWidth = props.lineWidth,
+      activeLineWidth = props.activeLineWidth,
+      inactiveLineWidth = props.inactiveLineWidth,
+      opacity = props.opacity,
+      activeOpacity = props.activeOpacity,
+      inactiveOpacity = props.inactiveOpacity,
+      startLabel = props.startLabel,
+      startLabelPadding = props.startLabelPadding,
+      startLabelTextColor = props.startLabelTextColor,
+      endLabel = props.endLabel,
+      endLabelPadding = props.endLabelPadding,
+      endLabelTextColor = props.endLabelTextColor,
+      pointComponent = props.pointComponent,
+      pointSize = props.pointSize,
+      activePointSize = props.activePointSize,
+      inactivePointSize = props.inactivePointSize,
+      pointColor = props.pointColor,
+      pointBorderWidth = props.pointBorderWidth,
+      activePointBorderWidth = props.activePointBorderWidth,
+      inactivePointBorderWidth = props.inactivePointBorderWidth,
+      pointBorderColor = props.pointBorderColor,
+      axisTop = props.axisTop,
+      axisRight = props.axisRight,
+      axisBottom = props.axisBottom,
+      axisLeft = props.axisLeft,
+      enableGridX = props.enableGridX,
+      enableGridY = props.enableGridY,
+      isInteractive = props.isInteractive,
+      onMouseEnter = props.onMouseEnter,
+      onMouseMove = props.onMouseMove,
+      onMouseLeave = props.onMouseLeave,
+      onClick = props.onClick,
+      tooltip = props.tooltip,
+      role = props.role;
+
+  var _useDimensions = Object(_nivo_core__WEBPACK_IMPORTED_MODULE_1__["useDimensions"])(width, height, partialMargin),
+      margin = _useDimensions.margin,
+      innerWidth = _useDimensions.innerWidth,
+      innerHeight = _useDimensions.innerHeight,
+      outerWidth = _useDimensions.outerWidth,
+      outerHeight = _useDimensions.outerHeight;
+
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(null),
+      _useState2 = _slicedToArray(_useState, 2),
+      currentSerie = _useState2[0],
+      setCurrentSerie = _useState2[1];
+
+  var _useBump = useBump({
+    width: innerWidth,
+    height: innerHeight,
+    data: data,
+    interpolation: interpolation,
+    xPadding: xPadding,
+    xOuterPadding: xOuterPadding,
+    yOuterPadding: yOuterPadding,
+    lineWidth: lineWidth,
+    activeLineWidth: activeLineWidth,
+    inactiveLineWidth: inactiveLineWidth,
+    colors: colors,
+    opacity: opacity,
+    activeOpacity: activeOpacity,
+    inactiveOpacity: inactiveOpacity,
+    pointSize: pointSize,
+    activePointSize: activePointSize,
+    inactivePointSize: inactivePointSize,
+    pointColor: pointColor,
+    pointBorderWidth: pointBorderWidth,
+    activePointBorderWidth: activePointBorderWidth,
+    inactivePointBorderWidth: inactivePointBorderWidth,
+    pointBorderColor: pointBorderColor,
+    startLabel: startLabel,
+    endLabel: endLabel,
+    isInteractive: isInteractive,
+    currentSerie: currentSerie
+  }),
+      series = _useBump.series,
+      points = _useBump.points,
+      xScale = _useBump.xScale,
+      yScale = _useBump.yScale,
+      lineGenerator = _useBump.lineGenerator;
+
+  var layerById = {
+    grid: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_nivo_axes__WEBPACK_IMPORTED_MODULE_2__["Grid"], {
+      key: "grid",
+      width: innerWidth,
+      height: innerHeight,
+      xScale: enableGridX ? xScale : null,
+      yScale: enableGridY ? yScale : null
+    }),
+    axes: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_nivo_axes__WEBPACK_IMPORTED_MODULE_2__["Axes"], {
+      key: "axes",
+      xScale: xScale,
+      yScale: yScale,
+      width: innerWidth,
+      height: innerHeight,
+      top: axisTop,
+      right: axisRight,
+      bottom: axisBottom,
+      left: axisLeft
+    }),
+    labels: [],
+    lines: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], {
+      key: "lines"
+    }, series.map(function (serie) {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Line$1, {
+        key: serie.id,
+        serie: serie,
+        currentSerie: currentSerie,
+        setCurrentSerie: setCurrentSerie,
+        lineGenerator: lineGenerator,
+        yStep: yScale.step(),
+        margin: margin,
+        isInteractive: isInteractive,
+        onMouseEnter: onMouseEnter,
+        onMouseMove: onMouseMove,
+        onMouseLeave: onMouseLeave,
+        onClick: onClick,
+        tooltip: tooltip
+      });
+    })),
+    points: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Points$1, {
+      key: "points",
+      pointComponent: pointComponent,
+      points: points
+    })
+  };
+
+  if (startLabel !== false) {
+    layerById.labels.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(LinesLabels$1, {
+      key: "start",
+      series: series,
+      getLabel: startLabel,
+      position: "start",
+      padding: startLabelPadding,
+      color: startLabelTextColor
+    }));
+  }
+
+  if (endLabel !== false) {
+    layerById.labels.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(LinesLabels$1, {
+      key: "end",
+      series: series,
+      getLabel: endLabel,
+      position: "end",
+      padding: endLabelPadding,
+      color: endLabelTextColor
+    }));
+  }
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_nivo_core__WEBPACK_IMPORTED_MODULE_1__["SvgWrapper"], {
+    width: outerWidth,
+    height: outerHeight,
+    margin: margin,
+    role: role
+  }, layers.map(function (layer, i) {
+    if (typeof layer === 'function') {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], {
+        key: i
+      }, layer({
+        innerWidth: innerWidth,
+        innerHeight: innerHeight,
+        xScale: xScale,
+        yScale: yScale
+      }));
+    }
+
+    return layerById[layer];
+  }));
+};
+
+Bump.defaultProps = BumpDefaultProps;
+var Bump$1 = /*#__PURE__*/Object(react__WEBPACK_IMPORTED_MODULE_0__["memo"])(Object(_nivo_core__WEBPACK_IMPORTED_MODULE_1__["withContainer"])(Bump));
+
+var ResponsiveBump = function ResponsiveBump(props) {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_nivo_core__WEBPACK_IMPORTED_MODULE_1__["ResponsiveWrapper"], null, function (_ref) {
+    var width = _ref.width,
+        height = _ref.height;
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Bump$1, Object.assign({
+      width: width,
+      height: height
+    }, props));
+  });
+};
+
+var AreaTooltip = function AreaTooltip(_ref) {
+  var serie = _ref.serie;
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_nivo_tooltip__WEBPACK_IMPORTED_MODULE_5__["BasicTooltip"], {
+    id: serie.id,
+    enableChip: true,
+    color: serie.color
+  });
+};
+
+var AreaTooltip$1 = /*#__PURE__*/Object(react__WEBPACK_IMPORTED_MODULE_0__["memo"])(AreaTooltip);
+var commonPropTypes$1 = {
+  data: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.arrayOf(prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.shape({
+    id: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.string.isRequired,
+    data: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.arrayOf(prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.shape({
+      x: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.number, prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.string]).isRequired,
+      y: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.number.isRequired
+    })).isRequired
+  })).isRequired,
+  align: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.oneOf(['start', 'middle', 'end']).isRequired,
+  layers: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.arrayOf(prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.oneOf(['grid', 'axes', 'labels', 'areas']), prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.func])).isRequired,
+  interpolation: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.oneOf(['linear', 'smooth']).isRequired,
+  spacing: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.number.isRequired,
+  xPadding: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.number.isRequired,
+  colors: _nivo_colors__WEBPACK_IMPORTED_MODULE_4__["ordinalColorsPropType"].isRequired,
+  blendMode: _nivo_core__WEBPACK_IMPORTED_MODULE_1__["blendModePropType"].isRequired,
+  fillOpacity: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.number.isRequired,
+  activeFillOpacity: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.number.isRequired,
+  inactiveFillOpacity: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.number.isRequired,
+  defs: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.arrayOf(prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.shape({
+    id: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.string.isRequired
+  })).isRequired,
+  fill: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.arrayOf(prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.shape({
+    id: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.string,
+    match: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.oneOf(['*']), prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.object, prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.func]).isRequired
+  })).isRequired,
+  borderWidth: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.number.isRequired,
+  activeBorderWidth: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.number.isRequired,
+  inactiveBorderWidth: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.number.isRequired,
+  borderColor: _nivo_colors__WEBPACK_IMPORTED_MODULE_4__["inheritedColorPropType"].isRequired,
+  borderOpacity: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.number.isRequired,
+  activeBorderOpacity: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.number.isRequired,
+  inactiveBorderOpacity: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.number.isRequired,
+  startLabel: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.oneOf([false]), prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.string, prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.func]).isRequired,
+  startLabelPadding: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.number.isRequired,
+  startLabelTextColor: _nivo_colors__WEBPACK_IMPORTED_MODULE_4__["inheritedColorPropType"].isRequired,
+  endLabel: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.oneOf([false]), prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.string, prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.func]).isRequired,
+  endLabelPadding: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.number.isRequired,
+  endLabelTextColor: _nivo_colors__WEBPACK_IMPORTED_MODULE_4__["inheritedColorPropType"].isRequired,
+  enableGridX: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.bool.isRequired,
+  axisTop: _nivo_axes__WEBPACK_IMPORTED_MODULE_2__["axisPropType"],
+  axisBottom: _nivo_axes__WEBPACK_IMPORTED_MODULE_2__["axisPropType"],
+  isInteractive: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.bool.isRequired,
+  onMouseEnter: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.func,
+  onMouseMove: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.func,
+  onMouseLeave: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.func,
+  onClick: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.func,
+  tooltip: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.func, prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.object]).isRequired
+};
+
+var AreaBumpPropTypes = _objectSpread2(_objectSpread2(_objectSpread2({}, commonPropTypes$1), _nivo_core__WEBPACK_IMPORTED_MODULE_1__["motionPropTypes"]), {}, {
+  role: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.string.isRequired
+});
+
+var commonDefaultProps$1 = {
+  align: 'middle',
+  layers: ['grid', 'axes', 'labels', 'areas'],
+  interpolation: 'smooth',
+  spacing: 0,
+  xPadding: 0.6,
+  colors: {
+    scheme: 'nivo'
+  },
+  blendMode: 'normal',
+  fillOpacity: 0.8,
+  activeFillOpacity: 1,
+  inactiveFillOpacity: 0.15,
+  defs: [],
+  fill: [],
+  borderWidth: 1,
+  activeBorderWidth: 1,
+  inactiveBorderWidth: 0,
+  borderColor: {
+    from: 'color',
+    modifiers: [['darker', 0.4]]
+  },
+  borderOpacity: 1,
+  activeBorderOpacity: 1,
+  inactiveBorderOpacity: 0,
+  startLabel: false,
+  startLabelPadding: 12,
+  startLabelTextColor: {
+    from: 'color',
+    modifiers: [['darker', 1]]
+  },
+  endLabel: 'id',
+  endLabelPadding: 12,
+  endLabelTextColor: {
+    from: 'color',
+    modifiers: [['darker', 1]]
+  },
+  enableGridX: true,
+  axisTop: {},
+  axisBottom: {},
+  isInteractive: true,
+  tooltip: AreaTooltip$1
+};
+
+var AreaBumpDefaultProps = _objectSpread2(_objectSpread2({}, commonDefaultProps$1), {}, {
+  animate: true,
+  motionConfig: 'gentle',
+  role: 'img'
+});
+
+var computeSeries$1 = function computeSeries(_ref) {
+  var data = _ref.data,
+      width = _ref.width,
+      height = _ref.height,
+      align = _ref.align,
+      spacing = _ref.spacing,
+      xPadding = _ref.xPadding;
+  var slices = new Map();
+  var maxSum = null;
+  var maxValues = null;
+  data.forEach(function (serie) {
+    serie.data.forEach(function (datum) {
+      if (!slices.has(datum.x)) {
+        slices.set(datum.x, {
+          id: datum.x,
+          total: 0,
+          values: new Map()
+        });
+      }
+
+      var slice = slices.get(datum.x);
+      var total = slice.total + datum.y;
+      slice.total = total;
+      slice.values.set(serie.id, {
+        serieId: serie.id,
+        value: datum.y
+      });
+
+      if (total === null || total > maxSum) {
+        maxSum = total;
+        maxValues = slice.values.size;
+      }
+    });
+  });
+  var xScale = Object(d3_scale__WEBPACK_IMPORTED_MODULE_6__["scalePoint"])().domain(Array.from(slices.keys())).range([0, width]);
+  var heightScale = Object(d3_scale__WEBPACK_IMPORTED_MODULE_6__["scaleLinear"])().domain([0, maxSum]).range([0, height - maxValues * spacing]);
+  slices.forEach(function (slice, x) {
+    slice.x = xScale(x);
+    var sliceHeight = heightScale(slice.total) + slice.values.size * spacing;
+    var offset = 0;
+
+    if (align === 'middle') {
+      offset = (height - sliceHeight) / 2;
+    } else if (align === 'end') {
+      offset = height - sliceHeight;
+    }
+
+    Array.from(slice.values.values()).sort(function (a, b) {
+      return b.value - a.value;
+    }).forEach(function (value, position, all) {
+      var previousValues = all.filter(function (i, pos) {
+        return pos < position;
+      });
+      var beforeValue = previousValues.reduce(function (t, v) {
+        return t + v.value;
+      }, 0);
+      var sliceValue = slice.values.get(value.serieId);
+      sliceValue.position = position;
+      sliceValue.height = heightScale(value.value);
+      sliceValue.beforeHeight = heightScale(beforeValue) + offset + spacing * (previousValues.length + 0.5);
+    });
+  });
+  var areaPointPadding = xScale.step() * Math.min(xPadding * 0.5, 0.5);
+  var series = data.map(function (serie) {
+    var serieCopy = _objectSpread2({}, serie);
+
+    serieCopy.points = [];
+    serieCopy.areaPoints = [];
+    serie.data.forEach(function (datum, i) {
+      var slice = slices.get(datum.x);
+      var position = slice.values.get(serie.id);
+      var x = slice.x;
+      var beforeHeight = position.beforeHeight,
+          height = position.height;
+      var y = beforeHeight + height / 2;
+      var y0 = beforeHeight;
+      var y1 = beforeHeight + height;
+      serieCopy.points.push({
+        x: x,
+        y: y,
+        height: height,
+        data: _objectSpread2({}, datum)
+      });
+
+      if (i > 0) {
+        serieCopy.areaPoints.push({
+          x: x - areaPointPadding,
+          y0: y0,
+          y1: y1
+        });
+      }
+
+      serieCopy.areaPoints.push({
+        x: x,
+        y0: y0,
+        y1: y1
+      });
+
+      if (i < serie.data.length - 1) {
+        serieCopy.areaPoints.push({
+          x: x + areaPointPadding,
+          y0: y0,
+          y1: y1
+        });
+      }
+    });
+    return serieCopy;
+  });
+  return {
+    xScale: xScale,
+    heightScale: heightScale,
+    series: series
+  };
+};
+
+var useAreaBumpSeries = function useAreaBumpSeries(_ref) {
+  var data = _ref.data,
+      width = _ref.width,
+      height = _ref.height,
+      align = _ref.align,
+      spacing = _ref.spacing,
+      xPadding = _ref.xPadding;
+  return Object(react__WEBPACK_IMPORTED_MODULE_0__["useMemo"])(function () {
+    return computeSeries$1({
+      data: data,
+      width: width,
+      height: height,
+      align: align,
+      spacing: spacing,
+      xPadding: xPadding
+    });
+  }, [data, width, height, align, spacing, xPadding]);
+};
+
+var useAreaGenerator = function useAreaGenerator(interpolation) {
+  return Object(react__WEBPACK_IMPORTED_MODULE_0__["useMemo"])(function () {
+    return Object(d3_shape__WEBPACK_IMPORTED_MODULE_3__["area"])().x(function (d) {
+      return d.x;
+    }).y0(function (d) {
+      return d.y0;
+    }).y1(function (d) {
+      return d.y1;
+    }).curve(interpolation === 'smooth' ? d3_shape__WEBPACK_IMPORTED_MODULE_3__["curveBasis"] : d3_shape__WEBPACK_IMPORTED_MODULE_3__["curveLinear"]);
+  }, [interpolation]);
+};
+
+var useSerieDerivedProp$1 = function useSerieDerivedProp(instruction) {
+  return Object(react__WEBPACK_IMPORTED_MODULE_0__["useMemo"])(function () {
+    if (typeof instruction === 'function') return instruction;
+    return function () {
+      return instruction;
+    };
+  }, [instruction]);
+};
+
+var useSerieStyle$1 = function useSerieStyle(_ref2) {
+  var fillOpacity = _ref2.fillOpacity,
+      activeFillOpacity = _ref2.activeFillOpacity,
+      inactiveFillOpacity = _ref2.inactiveFillOpacity,
+      borderWidth = _ref2.borderWidth,
+      activeBorderWidth = _ref2.activeBorderWidth,
+      inactiveBorderWidth = _ref2.inactiveBorderWidth,
+      borderColor = _ref2.borderColor,
+      borderOpacity = _ref2.borderOpacity,
+      activeBorderOpacity = _ref2.activeBorderOpacity,
+      inactiveBorderOpacity = _ref2.inactiveBorderOpacity,
+      isInteractive = _ref2.isInteractive,
+      current = _ref2.current;
+  var getFillOpacity = useSerieDerivedProp$1(fillOpacity);
+  var getActiveFillOpacity = useSerieDerivedProp$1(activeFillOpacity);
+  var getInactiveFillOpacity = useSerieDerivedProp$1(inactiveFillOpacity);
+  var getBorderWidth = useSerieDerivedProp$1(borderWidth);
+  var getActiveBorderWidth = useSerieDerivedProp$1(activeBorderWidth);
+  var getInactiveBorderWidth = useSerieDerivedProp$1(inactiveBorderWidth);
+  var theme = Object(_nivo_core__WEBPACK_IMPORTED_MODULE_1__["useTheme"])();
+  var getBorderColor = Object(_nivo_colors__WEBPACK_IMPORTED_MODULE_4__["useInheritedColor"])(borderColor, theme);
+  var getBorderOpacity = useSerieDerivedProp$1(borderOpacity);
+  var getActiveBorderOpacity = useSerieDerivedProp$1(activeBorderOpacity);
+  var getInactiveBorderOpacity = useSerieDerivedProp$1(inactiveBorderOpacity);
+  var getNormalStyle = Object(react__WEBPACK_IMPORTED_MODULE_0__["useMemo"])(function () {
+    return function (serie) {
+      return {
+        fillOpacity: getFillOpacity(serie),
+        borderWidth: getBorderWidth(serie),
+        borderColor: getBorderColor(serie),
+        borderOpacity: getBorderOpacity(serie)
+      };
+    };
+  }, [getFillOpacity, getBorderWidth, getBorderColor, getBorderOpacity]);
+  var getActiveStyle = Object(react__WEBPACK_IMPORTED_MODULE_0__["useMemo"])(function () {
+    return function (serie) {
+      return {
+        fillOpacity: getActiveFillOpacity(serie),
+        borderWidth: getActiveBorderWidth(serie),
+        borderColor: getBorderColor(serie),
+        borderOpacity: getActiveBorderOpacity(serie)
+      };
+    };
+  }, [getActiveFillOpacity, getActiveBorderWidth, getBorderColor, getActiveBorderOpacity]);
+  var getInactiveStyle = Object(react__WEBPACK_IMPORTED_MODULE_0__["useMemo"])(function () {
+    return function (serie) {
+      return {
+        fillOpacity: getInactiveFillOpacity(serie),
+        borderWidth: getInactiveBorderWidth(serie),
+        borderColor: getBorderColor(serie),
+        borderOpacity: getInactiveBorderOpacity(serie)
+      };
+    };
+  }, [getInactiveFillOpacity, getInactiveBorderWidth, getBorderColor, getInactiveBorderOpacity]);
+  return Object(react__WEBPACK_IMPORTED_MODULE_0__["useMemo"])(function () {
+    if (!isInteractive) return getNormalStyle;
+    return function (serie) {
+      if (current === null) return getNormalStyle(serie);
+      if (serie.id === current) return getActiveStyle(serie);
+      return getInactiveStyle(serie);
+    };
+  }, [getNormalStyle, getActiveStyle, getInactiveStyle, isInteractive, current]);
+};
+
+var useAreaBump = function useAreaBump(_ref3) {
+  var data = _ref3.data,
+      width = _ref3.width,
+      height = _ref3.height,
+      align = _ref3.align,
+      spacing = _ref3.spacing,
+      xPadding = _ref3.xPadding,
+      interpolation = _ref3.interpolation,
+      colors = _ref3.colors,
+      fillOpacity = _ref3.fillOpacity,
+      activeFillOpacity = _ref3.activeFillOpacity,
+      inactiveFillOpacity = _ref3.inactiveFillOpacity,
+      borderWidth = _ref3.borderWidth,
+      activeBorderWidth = _ref3.activeBorderWidth,
+      inactiveBorderWidth = _ref3.inactiveBorderWidth,
+      borderColor = _ref3.borderColor,
+      borderOpacity = _ref3.borderOpacity,
+      activeBorderOpacity = _ref3.activeBorderOpacity,
+      inactiveBorderOpacity = _ref3.inactiveBorderOpacity,
+      isInteractive = _ref3.isInteractive,
+      current = _ref3.current;
+
+  var _useAreaBumpSeries = useAreaBumpSeries({
+    data: data,
+    width: width,
+    height: height,
+    align: align,
+    spacing: spacing,
+    xPadding: xPadding
+  }),
+      rawSeries = _useAreaBumpSeries.series,
+      xScale = _useAreaBumpSeries.xScale,
+      heightScale = _useAreaBumpSeries.heightScale;
+
+  var areaGenerator = useAreaGenerator(interpolation);
+  var getColor = Object(_nivo_colors__WEBPACK_IMPORTED_MODULE_4__["useOrdinalColorScale"])(colors, 'id');
+  var getSerieStyle = useSerieStyle$1({
+    fillOpacity: fillOpacity,
+    activeFillOpacity: activeFillOpacity,
+    inactiveFillOpacity: inactiveFillOpacity,
+    borderWidth: borderWidth,
+    activeBorderWidth: activeBorderWidth,
+    inactiveBorderWidth: inactiveBorderWidth,
+    borderColor: borderColor,
+    borderOpacity: borderOpacity,
+    activeBorderOpacity: activeBorderOpacity,
+    inactiveBorderOpacity: inactiveBorderOpacity,
+    isInteractive: isInteractive,
+    current: current
+  });
+  var series = Object(react__WEBPACK_IMPORTED_MODULE_0__["useMemo"])(function () {
+    return rawSeries.map(function (serie) {
+      var nextSerie = _objectSpread2({}, serie);
+
+      nextSerie.color = getColor(nextSerie);
+      nextSerie.style = getSerieStyle(nextSerie);
+      return nextSerie;
+    });
+  }, [rawSeries, getColor, getSerieStyle]);
+  return {
+    series: series,
+    xScale: xScale,
+    heightScale: heightScale,
+    areaGenerator: areaGenerator
+  };
+};
+
+var useSerieHandlers$1 = function useSerieHandlers(_ref4) {
+  var serie = _ref4.serie,
+      isInteractive = _ref4.isInteractive,
+      onMouseEnter = _ref4.onMouseEnter,
+      onMouseMove = _ref4.onMouseMove,
+      onMouseLeave = _ref4.onMouseLeave,
+      onClick = _ref4.onClick,
+      setCurrent = _ref4.setCurrent,
+      tooltip = _ref4.tooltip;
+
+  var _useTooltip = Object(_nivo_tooltip__WEBPACK_IMPORTED_MODULE_5__["useTooltip"])(),
+      showTooltipFromEvent = _useTooltip.showTooltipFromEvent,
+      hideTooltip = _useTooltip.hideTooltip;
+
+  var handleMouseEnter = Object(react__WEBPACK_IMPORTED_MODULE_0__["useCallback"])(function (event) {
+    showTooltipFromEvent( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(tooltip, {
+      serie: serie
+    }), event);
+    setCurrent(serie.id);
+    onMouseEnter && onMouseEnter(serie, event);
+  }, [serie, onMouseEnter, showTooltipFromEvent, setCurrent]);
+  var handleMouseMove = Object(react__WEBPACK_IMPORTED_MODULE_0__["useCallback"])(function (event) {
+    showTooltipFromEvent( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(tooltip, {
+      serie: serie
+    }), event);
+    onMouseMove && onMouseMove(serie, event);
+  }, [serie, onMouseMove, showTooltipFromEvent]);
+  var handleMouseLeave = Object(react__WEBPACK_IMPORTED_MODULE_0__["useCallback"])(function (event) {
+    hideTooltip();
+    setCurrent(null);
+    onMouseLeave && onMouseLeave(serie, event);
+  }, [serie, onMouseLeave, hideTooltip, setCurrent]);
+  var handleClick = Object(react__WEBPACK_IMPORTED_MODULE_0__["useCallback"])(function (event) {
+    onClick && onClick(serie, event);
+  }, [serie, onClick]);
+  var handlers = Object(react__WEBPACK_IMPORTED_MODULE_0__["useMemo"])(function () {
+    return {
+      onMouseEnter: isInteractive ? handleMouseEnter : undefined,
+      onMouseMove: isInteractive ? handleMouseMove : undefined,
+      onMouseLeave: isInteractive ? handleMouseLeave : undefined,
+      onClick: isInteractive ? handleClick : undefined
+    };
+  }, [isInteractive, handleMouseEnter, handleMouseMove, handleMouseLeave, handleClick]);
+  return handlers;
+};
+
+var useSeriesLabels$1 = function useSeriesLabels(_ref5) {
+  var series = _ref5.series,
+      position = _ref5.position,
+      padding = _ref5.padding,
+      color = _ref5.color;
+  var theme = Object(_nivo_core__WEBPACK_IMPORTED_MODULE_1__["useTheme"])();
+  var getColor = Object(_nivo_colors__WEBPACK_IMPORTED_MODULE_4__["useInheritedColor"])(color, theme);
+  return Object(react__WEBPACK_IMPORTED_MODULE_0__["useMemo"])(function () {
+    var textAnchor;
+    var signedPadding;
+
+    if (position === 'start') {
+      textAnchor = 'end';
+      signedPadding = padding * -1;
+    } else {
+      textAnchor = 'start';
+      signedPadding = padding;
+    }
+
+    return series.map(function (serie) {
+      var point = position === 'start' ? serie.points[0] : serie.points[serie.points.length - 1];
+      return {
+        id: serie.id,
+        x: point.x + signedPadding,
+        y: point.y,
+        color: getColor(serie),
+        opacity: serie.style.fillOpacity,
+        serie: serie,
+        textAnchor: textAnchor
+      };
+    });
+  }, [series, position, padding, getColor]);
+};
+
+var Area = function Area(_ref) {
+  var serie = _ref.serie,
+      areaGenerator = _ref.areaGenerator,
+      blendMode = _ref.blendMode,
+      isInteractive = _ref.isInteractive,
+      onMouseEnter = _ref.onMouseEnter,
+      onMouseMove = _ref.onMouseMove,
+      onMouseLeave = _ref.onMouseLeave,
+      onClick = _ref.onClick,
+      setCurrentSerie = _ref.setCurrentSerie,
+      tooltip = _ref.tooltip;
+  var handlers = useSerieHandlers$1({
+    serie: serie,
+    isInteractive: isInteractive,
+    onMouseEnter: onMouseEnter,
+    onMouseMove: onMouseMove,
+    onMouseLeave: onMouseLeave,
+    onClick: onClick,
+    setCurrent: setCurrentSerie,
+    tooltip: tooltip
+  });
+
+  var _useMotionConfig = Object(_nivo_core__WEBPACK_IMPORTED_MODULE_1__["useMotionConfig"])(),
+      animate = _useMotionConfig.animate,
+      springConfig = _useMotionConfig.config;
+
+  var animatedPath = Object(_nivo_core__WEBPACK_IMPORTED_MODULE_1__["useAnimatedPath"])(areaGenerator(serie.areaPoints));
+  var animatedProps = Object(react_spring__WEBPACK_IMPORTED_MODULE_8__["useSpring"])({
+    color: serie.color,
+    fillOpacity: serie.style.fillOpacity,
+    stroke: serie.style.borderColor,
+    strokeOpacity: serie.style.borderOpacity,
+    config: springConfig,
+    immediate: !animate
+  });
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_spring__WEBPACK_IMPORTED_MODULE_8__["animated"].path, {
+    d: animatedPath,
+    fill: serie.fill ? serie.fill : animatedProps.color,
+    fillOpacity: animatedProps.fillOpacity,
+    stroke: animatedProps.stroke,
+    strokeWidth: serie.style.borderWidth,
+    strokeOpacity: animatedProps.strokeOpacity,
+    style: {
+      mixBlendMode: blendMode
+    },
+    onMouseEnter: handlers.onMouseEnter,
+    onMouseMove: handlers.onMouseMove,
+    onMouseLeave: handlers.onMouseLeave,
+    onClick: handlers.onClick
+  });
+};
+
+var Area$1 = /*#__PURE__*/Object(react__WEBPACK_IMPORTED_MODULE_0__["memo"])(Area);
+
+var AreasLabels = function AreasLabels(_ref) {
+  var series = _ref.series,
+      position = _ref.position,
+      padding = _ref.padding,
+      color = _ref.color;
+  var theme = Object(_nivo_core__WEBPACK_IMPORTED_MODULE_1__["useTheme"])();
+
+  var _useMotionConfig = Object(_nivo_core__WEBPACK_IMPORTED_MODULE_1__["useMotionConfig"])(),
+      animate = _useMotionConfig.animate,
+      springConfig = _useMotionConfig.config;
+
+  var labels = useSeriesLabels$1({
+    series: series,
+    position: position,
+    padding: padding,
+    color: color
+  });
+  var springs = Object(react_spring__WEBPACK_IMPORTED_MODULE_8__["useSprings"])(labels.length, labels.map(function (label) {
+    return {
+      x: label.x,
+      y: label.y,
+      opacity: label.opacity,
+      config: springConfig,
+      immediate: !animate
+    };
+  }));
+  return springs.map(function (animatedProps, index) {
+    var label = labels[index];
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_spring__WEBPACK_IMPORTED_MODULE_8__["animated"].text, {
+      key: label.id,
+      x: animatedProps.x,
+      y: animatedProps.y,
+      textAnchor: label.textAnchor,
+      dominantBaseline: "central",
+      opacity: animatedProps.opacity,
+      style: _objectSpread2(_objectSpread2({}, theme.labels.text), {}, {
+        fill: label.color
+      })
+    }, label.id);
+  });
+};
+
+var AreasLabels$1 = /*#__PURE__*/Object(react__WEBPACK_IMPORTED_MODULE_0__["memo"])(AreasLabels);
+
+var AreaBump = function AreaBump(props) {
+  var data = props.data,
+      align = props.align,
+      width = props.width,
+      height = props.height,
+      partialMargin = props.margin,
+      layers = props.layers,
+      interpolation = props.interpolation,
+      spacing = props.spacing,
+      xPadding = props.xPadding,
+      colors = props.colors,
+      blendMode = props.blendMode,
+      fillOpacity = props.fillOpacity,
+      activeFillOpacity = props.activeFillOpacity,
+      inactiveFillOpacity = props.inactiveFillOpacity,
+      defs = props.defs,
+      fill = props.fill,
+      borderWidth = props.borderWidth,
+      activeBorderWidth = props.activeBorderWidth,
+      inactiveBorderWidth = props.inactiveBorderWidth,
+      borderColor = props.borderColor,
+      borderOpacity = props.borderOpacity,
+      activeBorderOpacity = props.activeBorderOpacity,
+      inactiveBorderOpacity = props.inactiveBorderOpacity,
+      startLabel = props.startLabel,
+      startLabelPadding = props.startLabelPadding,
+      startLabelTextColor = props.startLabelTextColor,
+      endLabel = props.endLabel,
+      endLabelPadding = props.endLabelPadding,
+      endLabelTextColor = props.endLabelTextColor,
+      enableGridX = props.enableGridX,
+      axisTop = props.axisTop,
+      axisBottom = props.axisBottom,
+      isInteractive = props.isInteractive,
+      onMouseEnter = props.onMouseEnter,
+      onMouseMove = props.onMouseMove,
+      onMouseLeave = props.onMouseLeave,
+      onClick = props.onClick,
+      tooltip = props.tooltip,
+      role = props.role;
+
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(null),
+      _useState2 = _slicedToArray(_useState, 2),
+      currentSerie = _useState2[0],
+      setCurrentSerie = _useState2[1];
+
+  var _useDimensions = Object(_nivo_core__WEBPACK_IMPORTED_MODULE_1__["useDimensions"])(width, height, partialMargin),
+      margin = _useDimensions.margin,
+      innerWidth = _useDimensions.innerWidth,
+      innerHeight = _useDimensions.innerHeight,
+      outerWidth = _useDimensions.outerWidth,
+      outerHeight = _useDimensions.outerHeight;
+
+  var _useAreaBump = useAreaBump({
+    data: data,
+    width: innerWidth,
+    height: innerHeight,
+    align: align,
+    spacing: spacing,
+    xPadding: xPadding,
+    interpolation: interpolation,
+    colors: colors,
+    fillOpacity: fillOpacity,
+    activeFillOpacity: activeFillOpacity,
+    inactiveFillOpacity: inactiveFillOpacity,
+    borderWidth: borderWidth,
+    activeBorderWidth: activeBorderWidth,
+    inactiveBorderWidth: inactiveBorderWidth,
+    borderColor: borderColor,
+    borderOpacity: borderOpacity,
+    activeBorderOpacity: activeBorderOpacity,
+    inactiveBorderOpacity: inactiveBorderOpacity,
+    isInteractive: isInteractive,
+    current: currentSerie
+  }),
+      series = _useAreaBump.series,
+      xScale = _useAreaBump.xScale,
+      areaGenerator = _useAreaBump.areaGenerator;
+
+  var boundDefs = Object(react__WEBPACK_IMPORTED_MODULE_0__["useMemo"])(function () {
+    return Object(_nivo_core__WEBPACK_IMPORTED_MODULE_1__["bindDefs"])(defs, series, fill, {
+      targetKey: 'fill'
+    });
+  }, [defs, series, fill]);
+  var layerById = {
+    grid: enableGridX && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_nivo_axes__WEBPACK_IMPORTED_MODULE_2__["Grid"], {
+      key: "grid",
+      width: innerWidth,
+      height: innerHeight,
+      xScale: xScale
+    }),
+    axes: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_nivo_axes__WEBPACK_IMPORTED_MODULE_2__["Axes"], {
+      key: "axes",
+      xScale: xScale,
+      width: innerWidth,
+      height: innerHeight,
+      top: axisTop,
+      bottom: axisBottom
+    }),
+    labels: [],
+    areas: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], {
+      key: "areas"
+    }, series.map(function (serie) {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Area$1, {
+        key: serie.id,
+        areaGenerator: areaGenerator,
+        serie: serie,
+        blendMode: blendMode,
+        isInteractive: isInteractive,
+        setCurrentSerie: setCurrentSerie,
+        onMouseEnter: onMouseEnter,
+        onMouseMove: onMouseMove,
+        onMouseLeave: onMouseLeave,
+        onClick: onClick,
+        tooltip: tooltip
+      });
+    }))
+  };
+
+  if (startLabel !== false) {
+    layerById.labels.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(AreasLabels$1, {
+      key: "start",
+      series: series,
+      position: "start",
+      padding: startLabelPadding,
+      color: startLabelTextColor
+    }));
+  }
+
+  if (endLabel !== false) {
+    layerById.labels.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(AreasLabels$1, {
+      key: "end",
+      series: series,
+      position: "end",
+      padding: endLabelPadding,
+      color: endLabelTextColor
+    }));
+  }
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_nivo_core__WEBPACK_IMPORTED_MODULE_1__["SvgWrapper"], {
+    defs: boundDefs,
+    width: outerWidth,
+    height: outerHeight,
+    margin: margin,
+    role: role
+  }, layers.map(function (layer, i) {
+    if (typeof layer === 'function') {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], {
+        key: i
+      }, layer(_objectSpread2(_objectSpread2({}, props), {}, {
+        innerWidth: innerWidth,
+        innerHeight: innerHeight,
+        outerWidth: outerWidth,
+        outerHeight: outerHeight,
+        series: series,
+        xScale: xScale,
+        areaGenerator: areaGenerator
+      })));
+    }
+
+    return layerById[layer];
+  }));
+};
+
+AreaBump.defaultProps = AreaBumpDefaultProps;
+var AreaBump$1 = /*#__PURE__*/Object(react__WEBPACK_IMPORTED_MODULE_0__["memo"])(Object(_nivo_core__WEBPACK_IMPORTED_MODULE_1__["withContainer"])(AreaBump));
+
+var ResponsiveAreaBump = function ResponsiveAreaBump(props) {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_nivo_core__WEBPACK_IMPORTED_MODULE_1__["ResponsiveWrapper"], null, function (_ref) {
+    var width = _ref.width,
+        height = _ref.height;
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(AreaBump$1, Object.assign({
+      width: width,
+      height: height
+    }, props));
+  });
+};
+
+
+
+/***/ }),
+
 /***/ "./node_modules/@nivo/calendar/dist/nivo-calendar.es.js":
 /*!**************************************************************!*\
   !*** ./node_modules/@nivo/calendar/dist/nivo-calendar.es.js ***!
@@ -1456,6 +4088,577 @@ var ResponsiveCalendarCanvas = function ResponsiveCalendarCanvas(props) {
 
 
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js")))
+
+/***/ }),
+
+/***/ "./node_modules/@nivo/colors/dist/nivo-colors.es.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/@nivo/colors/dist/nivo-colors.es.js ***!
+  \**********************************************************/
+/*! exports provided: categoricalColorSchemeIds, categoricalColorSchemes, colorInterpolatorIds, colorInterpolators, colorPropertyAccessorPropType, colorSchemeIds, colorSchemes, cyclicalColorInterpolators, divergingColorInterpolators, divergingColorSchemeIds, divergingColorSchemes, getInheritedColorGenerator, getInterpolatedColor, getOrdinalColorScale, inheritedColorPropType, interpolateColor, isCategoricalColorScheme, isDivergingColorScheme, isSequentialColorScheme, ordinalColorsPropType, sequentialColorInterpolators, sequentialColorSchemeIds, sequentialColorSchemes, useInheritedColor, useOrdinalColorScale */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "categoricalColorSchemeIds", function() { return categoricalColorSchemeIds; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "categoricalColorSchemes", function() { return categoricalColorSchemes; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "colorInterpolatorIds", function() { return colorInterpolatorIds; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "colorInterpolators", function() { return colorInterpolators; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "colorPropertyAccessorPropType", function() { return colorPropertyAccessorPropType; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "colorSchemeIds", function() { return colorSchemeIds; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "colorSchemes", function() { return colorSchemes; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "cyclicalColorInterpolators", function() { return cyclicalColorInterpolators; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "divergingColorInterpolators", function() { return divergingColorInterpolators; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "divergingColorSchemeIds", function() { return divergingColorSchemeIds; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "divergingColorSchemes", function() { return divergingColorSchemes; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getInheritedColorGenerator", function() { return getInheritedColorGenerator; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getInterpolatedColor", function() { return getInterpolatedColor; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getOrdinalColorScale", function() { return getOrdinalColorScale; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "inheritedColorPropType", function() { return inheritedColorPropType; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "interpolateColor", function() { return interpolateColor; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isCategoricalColorScheme", function() { return isCategoricalColorScheme; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isDivergingColorScheme", function() { return isDivergingColorScheme; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isSequentialColorScheme", function() { return isSequentialColorScheme; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ordinalColorsPropType", function() { return ordinalColorsPropType; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "sequentialColorInterpolators", function() { return sequentialColorInterpolators; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "sequentialColorSchemeIds", function() { return sequentialColorSchemeIds; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "sequentialColorSchemes", function() { return sequentialColorSchemes; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "useInheritedColor", function() { return useInheritedColor; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "useOrdinalColorScale", function() { return useOrdinalColorScale; });
+/* harmony import */ var d3_scale_chromatic__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! d3-scale-chromatic */ "./node_modules/d3-scale-chromatic/src/index.js");
+/* harmony import */ var lodash_isPlainObject__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lodash/isPlainObject */ "./node_modules/lodash/isPlainObject.js");
+/* harmony import */ var lodash_isPlainObject__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(lodash_isPlainObject__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var lodash_get__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! lodash/get */ "./node_modules/lodash/get.js");
+/* harmony import */ var lodash_get__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(lodash_get__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var d3_color__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! d3-color */ "./node_modules/d3-color/src/index.js");
+/* harmony import */ var react_motion__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-motion */ "./node_modules/react-motion/lib/react-motion.js");
+/* harmony import */ var react_motion__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(react_motion__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var d3_scale__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! d3-scale */ "./node_modules/d3-scale/src/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_7__);
+
+
+
+
+
+
+
+
+
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+function ownKeys(object, enumerableOnly) {
+  var keys = Object.keys(object);
+
+  if (Object.getOwnPropertySymbols) {
+    var symbols = Object.getOwnPropertySymbols(object);
+    if (enumerableOnly) symbols = symbols.filter(function (sym) {
+      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+    });
+    keys.push.apply(keys, symbols);
+  }
+
+  return keys;
+}
+
+function _objectSpread2(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i] != null ? arguments[i] : {};
+
+    if (i % 2) {
+      ownKeys(Object(source), true).forEach(function (key) {
+        _defineProperty(target, key, source[key]);
+      });
+    } else if (Object.getOwnPropertyDescriptors) {
+      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+    } else {
+      ownKeys(Object(source)).forEach(function (key) {
+        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+      });
+    }
+  }
+
+  return target;
+}
+
+var categoricalColorSchemes = {
+  nivo: ['#e8c1a0', '#f47560', '#f1e15b', '#e8a838', '#61cdbb', '#97e3d5'],
+  category10: d3_scale_chromatic__WEBPACK_IMPORTED_MODULE_0__["schemeCategory10"],
+  accent: d3_scale_chromatic__WEBPACK_IMPORTED_MODULE_0__["schemeAccent"],
+  dark2: d3_scale_chromatic__WEBPACK_IMPORTED_MODULE_0__["schemeDark2"],
+  paired: d3_scale_chromatic__WEBPACK_IMPORTED_MODULE_0__["schemePaired"],
+  pastel1: d3_scale_chromatic__WEBPACK_IMPORTED_MODULE_0__["schemePastel1"],
+  pastel2: d3_scale_chromatic__WEBPACK_IMPORTED_MODULE_0__["schemePastel2"],
+  set1: d3_scale_chromatic__WEBPACK_IMPORTED_MODULE_0__["schemeSet1"],
+  set2: d3_scale_chromatic__WEBPACK_IMPORTED_MODULE_0__["schemeSet2"],
+  set3: d3_scale_chromatic__WEBPACK_IMPORTED_MODULE_0__["schemeSet3"]
+};
+var categoricalColorSchemeIds = Object.keys(categoricalColorSchemes);
+var divergingColorSchemes = {
+  brown_blueGreen: d3_scale_chromatic__WEBPACK_IMPORTED_MODULE_0__["schemeBrBG"],
+  purpleRed_green: d3_scale_chromatic__WEBPACK_IMPORTED_MODULE_0__["schemePRGn"],
+  pink_yellowGreen: d3_scale_chromatic__WEBPACK_IMPORTED_MODULE_0__["schemePiYG"],
+  purple_orange: d3_scale_chromatic__WEBPACK_IMPORTED_MODULE_0__["schemePuOr"],
+  red_blue: d3_scale_chromatic__WEBPACK_IMPORTED_MODULE_0__["schemeRdBu"],
+  red_grey: d3_scale_chromatic__WEBPACK_IMPORTED_MODULE_0__["schemeRdGy"],
+  red_yellow_blue: d3_scale_chromatic__WEBPACK_IMPORTED_MODULE_0__["schemeRdYlBu"],
+  red_yellow_green: d3_scale_chromatic__WEBPACK_IMPORTED_MODULE_0__["schemeRdYlGn"],
+  spectral: d3_scale_chromatic__WEBPACK_IMPORTED_MODULE_0__["schemeSpectral"]
+};
+var divergingColorSchemeIds = Object.keys(divergingColorSchemes);
+var divergingColorInterpolators = {
+  brown_blueGreen: d3_scale_chromatic__WEBPACK_IMPORTED_MODULE_0__["interpolateBrBG"],
+  purpleRed_green: d3_scale_chromatic__WEBPACK_IMPORTED_MODULE_0__["interpolatePRGn"],
+  pink_yellowGreen: d3_scale_chromatic__WEBPACK_IMPORTED_MODULE_0__["interpolatePiYG"],
+  purple_orange: d3_scale_chromatic__WEBPACK_IMPORTED_MODULE_0__["interpolatePuOr"],
+  red_blue: d3_scale_chromatic__WEBPACK_IMPORTED_MODULE_0__["interpolateRdBu"],
+  red_grey: d3_scale_chromatic__WEBPACK_IMPORTED_MODULE_0__["interpolateRdGy"],
+  red_yellow_blue: d3_scale_chromatic__WEBPACK_IMPORTED_MODULE_0__["interpolateRdYlBu"],
+  red_yellow_green: d3_scale_chromatic__WEBPACK_IMPORTED_MODULE_0__["interpolateRdYlGn"],
+  spectral: d3_scale_chromatic__WEBPACK_IMPORTED_MODULE_0__["interpolateSpectral"]
+};
+var sequentialColorSchemes = {
+  blues: d3_scale_chromatic__WEBPACK_IMPORTED_MODULE_0__["schemeBlues"],
+  greens: d3_scale_chromatic__WEBPACK_IMPORTED_MODULE_0__["schemeGreens"],
+  greys: d3_scale_chromatic__WEBPACK_IMPORTED_MODULE_0__["schemeGreys"],
+  oranges: d3_scale_chromatic__WEBPACK_IMPORTED_MODULE_0__["schemeOranges"],
+  purples: d3_scale_chromatic__WEBPACK_IMPORTED_MODULE_0__["schemePurples"],
+  reds: d3_scale_chromatic__WEBPACK_IMPORTED_MODULE_0__["schemeReds"],
+  blue_green: d3_scale_chromatic__WEBPACK_IMPORTED_MODULE_0__["schemeBuGn"],
+  blue_purple: d3_scale_chromatic__WEBPACK_IMPORTED_MODULE_0__["schemeBuPu"],
+  green_blue: d3_scale_chromatic__WEBPACK_IMPORTED_MODULE_0__["schemeGnBu"],
+  orange_red: d3_scale_chromatic__WEBPACK_IMPORTED_MODULE_0__["schemeOrRd"],
+  purple_blue_green: d3_scale_chromatic__WEBPACK_IMPORTED_MODULE_0__["schemePuBuGn"],
+  purple_blue: d3_scale_chromatic__WEBPACK_IMPORTED_MODULE_0__["schemePuBu"],
+  purple_red: d3_scale_chromatic__WEBPACK_IMPORTED_MODULE_0__["schemePuRd"],
+  red_purple: d3_scale_chromatic__WEBPACK_IMPORTED_MODULE_0__["schemeRdPu"],
+  yellow_green_blue: d3_scale_chromatic__WEBPACK_IMPORTED_MODULE_0__["schemeYlGnBu"],
+  yellow_green: d3_scale_chromatic__WEBPACK_IMPORTED_MODULE_0__["schemeYlGn"],
+  yellow_orange_brown: d3_scale_chromatic__WEBPACK_IMPORTED_MODULE_0__["schemeYlOrBr"],
+  yellow_orange_red: d3_scale_chromatic__WEBPACK_IMPORTED_MODULE_0__["schemeYlOrRd"]
+};
+var sequentialColorSchemeIds = Object.keys(sequentialColorSchemes);
+var sequentialColorInterpolators = {
+  blues: d3_scale_chromatic__WEBPACK_IMPORTED_MODULE_0__["interpolateBlues"],
+  greens: d3_scale_chromatic__WEBPACK_IMPORTED_MODULE_0__["interpolateGreens"],
+  greys: d3_scale_chromatic__WEBPACK_IMPORTED_MODULE_0__["interpolateGreys"],
+  oranges: d3_scale_chromatic__WEBPACK_IMPORTED_MODULE_0__["interpolateOranges"],
+  purples: d3_scale_chromatic__WEBPACK_IMPORTED_MODULE_0__["interpolatePurples"],
+  reds: d3_scale_chromatic__WEBPACK_IMPORTED_MODULE_0__["interpolateReds"],
+  turbo: d3_scale_chromatic__WEBPACK_IMPORTED_MODULE_0__["interpolateTurbo"],
+  viridis: d3_scale_chromatic__WEBPACK_IMPORTED_MODULE_0__["interpolateViridis"],
+  inferno: d3_scale_chromatic__WEBPACK_IMPORTED_MODULE_0__["interpolateInferno"],
+  magma: d3_scale_chromatic__WEBPACK_IMPORTED_MODULE_0__["interpolateMagma"],
+  plasma: d3_scale_chromatic__WEBPACK_IMPORTED_MODULE_0__["interpolatePlasma"],
+  cividis: d3_scale_chromatic__WEBPACK_IMPORTED_MODULE_0__["interpolateCividis"],
+  warm: d3_scale_chromatic__WEBPACK_IMPORTED_MODULE_0__["interpolateWarm"],
+  cool: d3_scale_chromatic__WEBPACK_IMPORTED_MODULE_0__["interpolateCool"],
+  cubehelixDefault: d3_scale_chromatic__WEBPACK_IMPORTED_MODULE_0__["interpolateCubehelixDefault"],
+  blue_green: d3_scale_chromatic__WEBPACK_IMPORTED_MODULE_0__["interpolateBuGn"],
+  blue_purple: d3_scale_chromatic__WEBPACK_IMPORTED_MODULE_0__["interpolateBuPu"],
+  green_blue: d3_scale_chromatic__WEBPACK_IMPORTED_MODULE_0__["interpolateGnBu"],
+  orange_red: d3_scale_chromatic__WEBPACK_IMPORTED_MODULE_0__["interpolateOrRd"],
+  purple_blue_green: d3_scale_chromatic__WEBPACK_IMPORTED_MODULE_0__["interpolatePuBuGn"],
+  purple_blue: d3_scale_chromatic__WEBPACK_IMPORTED_MODULE_0__["interpolatePuBu"],
+  purple_red: d3_scale_chromatic__WEBPACK_IMPORTED_MODULE_0__["interpolatePuRd"],
+  red_purple: d3_scale_chromatic__WEBPACK_IMPORTED_MODULE_0__["interpolateRdPu"],
+  yellow_green_blue: d3_scale_chromatic__WEBPACK_IMPORTED_MODULE_0__["interpolateYlGnBu"],
+  yellow_green: d3_scale_chromatic__WEBPACK_IMPORTED_MODULE_0__["interpolateYlGn"],
+  yellow_orange_brown: d3_scale_chromatic__WEBPACK_IMPORTED_MODULE_0__["interpolateYlOrBr"],
+  yellow_orange_red: d3_scale_chromatic__WEBPACK_IMPORTED_MODULE_0__["interpolateYlOrRd"]
+};
+
+var colorSchemes = _objectSpread2(_objectSpread2(_objectSpread2({}, categoricalColorSchemes), divergingColorSchemes), sequentialColorSchemes);
+
+var colorSchemeIds = Object.keys(colorSchemes);
+
+var isCategoricalColorScheme = function isCategoricalColorScheme(scheme) {
+  return categoricalColorSchemeIds.includes(scheme);
+};
+
+var isDivergingColorScheme = function isDivergingColorScheme(scheme) {
+  return divergingColorSchemeIds.includes(scheme);
+};
+
+var isSequentialColorScheme = function isSequentialColorScheme(scheme) {
+  return sequentialColorSchemeIds.includes(scheme);
+};
+
+var cyclicalColorInterpolators = {
+  rainbow: d3_scale_chromatic__WEBPACK_IMPORTED_MODULE_0__["interpolateRainbow"],
+  sinebow: d3_scale_chromatic__WEBPACK_IMPORTED_MODULE_0__["interpolateSinebow"]
+};
+
+var colorInterpolators = _objectSpread2(_objectSpread2(_objectSpread2({}, divergingColorInterpolators), sequentialColorInterpolators), cyclicalColorInterpolators);
+
+var colorInterpolatorIds = Object.keys(colorInterpolators);
+
+function _arrayWithHoles(arr) {
+  if (Array.isArray(arr)) return arr;
+}
+
+function _iterableToArrayLimit(arr, i) {
+  if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return;
+  var _arr = [];
+  var _n = true;
+  var _d = false;
+  var _e = undefined;
+
+  try {
+    for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
+      _arr.push(_s.value);
+
+      if (i && _arr.length === i) break;
+    }
+  } catch (err) {
+    _d = true;
+    _e = err;
+  } finally {
+    try {
+      if (!_n && _i["return"] != null) _i["return"]();
+    } finally {
+      if (_d) throw _e;
+    }
+  }
+
+  return _arr;
+}
+
+function _arrayLikeToArray(arr, len) {
+  if (len == null || len > arr.length) len = arr.length;
+
+  for (var i = 0, arr2 = new Array(len); i < len; i++) {
+    arr2[i] = arr[i];
+  }
+
+  return arr2;
+}
+
+function _unsupportedIterableToArray(o, minLen) {
+  if (!o) return;
+  if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+  var n = Object.prototype.toString.call(o).slice(8, -1);
+  if (n === "Object" && o.constructor) n = o.constructor.name;
+  if (n === "Map" || n === "Set") return Array.from(n);
+  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+}
+
+function _nonIterableRest() {
+  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+
+function _slicedToArray(arr, i) {
+  return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
+}
+
+function _createForOfIteratorHelper(o) {
+  if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) {
+    if (Array.isArray(o) || (o = _unsupportedIterableToArray(o))) {
+      var i = 0;
+
+      var F = function F() {};
+
+      return {
+        s: F,
+        n: function n() {
+          if (i >= o.length) return {
+            done: true
+          };
+          return {
+            done: false,
+            value: o[i++]
+          };
+        },
+        e: function e(_e) {
+          throw _e;
+        },
+        f: F
+      };
+    }
+
+    throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+  }
+
+  var it,
+      normalCompletion = true,
+      didErr = false,
+      err;
+  return {
+    s: function s() {
+      it = o[Symbol.iterator]();
+    },
+    n: function n() {
+      var step = it.next();
+      normalCompletion = step.done;
+      return step;
+    },
+    e: function e(_e2) {
+      didErr = true;
+      err = _e2;
+    },
+    f: function f() {
+      try {
+        if (!normalCompletion && it["return"] != null) it["return"]();
+      } finally {
+        if (didErr) throw err;
+      }
+    }
+  };
+}
+
+var isInheritedColorConfigFromTheme = function isInheritedColorConfigFromTheme(config) {
+  return config.theme !== undefined;
+};
+
+var isInheritedColorConfigFromContext = function isInheritedColorConfigFromContext(config) {
+  return config.from !== undefined;
+};
+
+var getInheritedColorGenerator = function getInheritedColorGenerator(config, theme) {
+  if (typeof config === 'function') {
+    return function (datum) {
+      return config(datum);
+    };
+  }
+
+  if (lodash_isPlainObject__WEBPACK_IMPORTED_MODULE_1___default()(config)) {
+    if (isInheritedColorConfigFromTheme(config)) {
+      if (theme === undefined) {
+        throw new Error("Unable to use color from theme as no theme was provided");
+      }
+
+      var themeColor = lodash_get__WEBPACK_IMPORTED_MODULE_2___default()(theme, config.theme);
+
+      if (themeColor === undefined) {
+        throw new Error("Color from theme is undefined at path: '".concat(config.theme, "'"));
+      }
+
+      return function () {
+        return themeColor;
+      };
+    }
+
+    if (isInheritedColorConfigFromContext(config)) {
+      var getColor = function getColor(d) {
+        return lodash_get__WEBPACK_IMPORTED_MODULE_2___default()(d, config.from);
+      };
+
+      if (Array.isArray(config.modifiers)) {
+        var modifiers = [];
+
+        var _iterator = _createForOfIteratorHelper(config.modifiers),
+            _step;
+
+        try {
+          var _loop = function _loop() {
+            var modifier = _step.value;
+
+            var _modifier = _slicedToArray(modifier, 2),
+                modifierType = _modifier[0],
+                amount = _modifier[1];
+
+            if (modifierType === 'brighter') {
+              modifiers.push(function (color) {
+                return color.brighter(amount);
+              });
+            } else if (modifierType === 'darker') {
+              modifiers.push(function (color) {
+                return color.darker(amount);
+              });
+            } else if (modifierType === 'opacity') {
+              modifiers.push(function (color) {
+                color.opacity = amount;
+                return color;
+              });
+            } else {
+              throw new Error("Invalid color modifier: '".concat(modifierType, "', must be one of: 'brighter', 'darker', 'opacity'"));
+            }
+          };
+
+          for (_iterator.s(); !(_step = _iterator.n()).done;) {
+            _loop();
+          }
+        } catch (err) {
+          _iterator.e(err);
+        } finally {
+          _iterator.f();
+        }
+
+        if (modifiers.length === 0) return getColor;
+        return function (datum) {
+          return modifiers.reduce(function (color, modify) {
+            return modify(color);
+          }, Object(d3_color__WEBPACK_IMPORTED_MODULE_4__["rgb"])(getColor(datum))).toString();
+        };
+      }
+
+      return getColor;
+    }
+
+    throw new Error("Invalid color spec, you should either specify 'theme' or 'from' when using a config object");
+  }
+
+  return function () {
+    return config;
+  };
+};
+
+var useInheritedColor = function useInheritedColor(config, theme) {
+  return Object(react__WEBPACK_IMPORTED_MODULE_3__["useMemo"])(function () {
+    return getInheritedColorGenerator(config, theme);
+  }, [config, theme]);
+};
+
+var interpolateColor = function interpolateColor(color, springConfig) {
+  var colorComponents = Object(d3_color__WEBPACK_IMPORTED_MODULE_4__["rgb"])(color);
+
+  if (!springConfig) {
+    return {
+      colorR: colorComponents.r,
+      colorG: colorComponents.g,
+      colorB: colorComponents.b
+    };
+  }
+
+  var configWithPrecision = _objectSpread2(_objectSpread2({}, springConfig), {}, {
+    precision: 1
+  });
+
+  return {
+    colorR: Object(react_motion__WEBPACK_IMPORTED_MODULE_5__["spring"])(colorComponents.r, configWithPrecision),
+    colorG: Object(react_motion__WEBPACK_IMPORTED_MODULE_5__["spring"])(colorComponents.g, configWithPrecision),
+    colorB: Object(react_motion__WEBPACK_IMPORTED_MODULE_5__["spring"])(colorComponents.b, configWithPrecision)
+  };
+};
+
+var getInterpolatedColor = function getInterpolatedColor(_ref) {
+  var colorR = _ref.colorR,
+      colorG = _ref.colorG,
+      colorB = _ref.colorB;
+  return "rgb(".concat(Math.round(Math.max(colorR, 0)), ",").concat(Math.round(Math.max(colorG, 0)), ",").concat(Math.round(Math.max(colorB, 0)), ")");
+};
+
+var isOrdinalColorScaleConfigScheme = function isOrdinalColorScaleConfigScheme(config) {
+  return config.scheme !== undefined;
+};
+
+var isOrdinalColorScaleConfigDatumProperty = function isOrdinalColorScaleConfigDatumProperty(config) {
+  return config.datum !== undefined;
+};
+
+var getOrdinalColorScale = function getOrdinalColorScale(config, identity) {
+  if (typeof config === 'function') {
+    return config;
+  }
+
+  var getIdentity = typeof identity === 'function' ? identity : function (datum) {
+    return lodash_get__WEBPACK_IMPORTED_MODULE_2___default()(datum, identity);
+  };
+
+  if (Array.isArray(config)) {
+    var scale = Object(d3_scale__WEBPACK_IMPORTED_MODULE_6__["scaleOrdinal"])(config);
+
+    var generator = function generator(datum) {
+      return scale(getIdentity(datum));
+    };
+
+    generator.scale = scale;
+    return generator;
+  }
+
+  if (lodash_isPlainObject__WEBPACK_IMPORTED_MODULE_1___default()(config)) {
+    if (isOrdinalColorScaleConfigDatumProperty(config)) {
+      return function (datum) {
+        return lodash_get__WEBPACK_IMPORTED_MODULE_2___default()(datum, config.datum);
+      };
+    }
+
+    if (isOrdinalColorScaleConfigScheme(config)) {
+      if (isCategoricalColorScheme(config.scheme)) {
+        var _scale = Object(d3_scale__WEBPACK_IMPORTED_MODULE_6__["scaleOrdinal"])(colorSchemes[config.scheme]);
+
+        var _generator = function _generator(datum) {
+          return _scale(getIdentity(datum));
+        };
+
+        _generator.scale = _scale;
+        return _generator;
+      }
+
+      if (isDivergingColorScheme(config.scheme)) {
+        if (config.size !== undefined && (config.size < 3 || config.size > 11)) {
+          throw new Error("Invalid size '".concat(config.size, "' for diverging color scheme '").concat(config.scheme, "', must be between 3~11"));
+        }
+
+        var _scale2 = Object(d3_scale__WEBPACK_IMPORTED_MODULE_6__["scaleOrdinal"])(colorSchemes[config.scheme][config.size || 11]);
+
+        var _generator2 = function _generator2(d) {
+          return _scale2(getIdentity(d));
+        };
+
+        _generator2.scale = _scale2;
+        return _generator2;
+      }
+
+      if (isSequentialColorScheme(config.scheme)) {
+        if (config.size !== undefined && (config.size < 3 || config.size > 9)) {
+          throw new Error("Invalid size '".concat(config.size, "' for sequential color scheme '").concat(config.scheme, "', must be between 3~9"));
+        }
+
+        var _scale3 = Object(d3_scale__WEBPACK_IMPORTED_MODULE_6__["scaleOrdinal"])(colorSchemes[config.scheme][config.size || 9]);
+
+        var _generator3 = function _generator3(d) {
+          return _scale3(getIdentity(d));
+        };
+
+        _generator3.scale = _scale3;
+        return _generator3;
+      }
+    }
+
+    throw new Error("Invalid colors, when using an object, you should either pass a 'datum' or a 'scheme' property");
+  }
+
+  return function () {
+    return config;
+  };
+};
+
+var useOrdinalColorScale = function useOrdinalColorScale(config, identity) {
+  return Object(react__WEBPACK_IMPORTED_MODULE_3__["useMemo"])(function () {
+    return getOrdinalColorScale(config, identity);
+  }, [config, identity]);
+};
+
+var ordinalColorsPropType = prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.func, prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.arrayOf(prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.string), prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.shape({
+  scheme: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.oneOf(colorSchemeIds).isRequired,
+  size: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.number
+}), prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.shape({
+  datum: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.string.isRequired
+}), prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.string]);
+var colorPropertyAccessorPropType = prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.func, prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.string]);
+var inheritedColorPropType = prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.string, prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.func, prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.shape({
+  theme: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.string.isRequired
+}), prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.shape({
+  from: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.string.isRequired,
+  modifiers: prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.arrayOf(prop_types__WEBPACK_IMPORTED_MODULE_7___default.a.array)
+})]);
+
 
 /***/ }),
 
@@ -36826,6 +40029,53 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 
 /***/ }),
 
+/***/ "./node_modules/performance-now/lib/performance-now.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/performance-now/lib/performance-now.js ***!
+  \*************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(process) {// Generated by CoffeeScript 1.7.1
+(function () {
+  var getNanoSeconds, hrtime, loadTime;
+
+  if (typeof performance !== "undefined" && performance !== null && performance.now) {
+    module.exports = function () {
+      return performance.now();
+    };
+  } else if (typeof process !== "undefined" && process !== null && process.hrtime) {
+    module.exports = function () {
+      return (getNanoSeconds() - loadTime) / 1e6;
+    };
+
+    hrtime = process.hrtime;
+
+    getNanoSeconds = function getNanoSeconds() {
+      var hr;
+      hr = hrtime();
+      return hr[0] * 1e9 + hr[1];
+    };
+
+    loadTime = getNanoSeconds();
+  } else if (Date.now) {
+    module.exports = function () {
+      return Date.now() - loadTime;
+    };
+
+    loadTime = Date.now();
+  } else {
+    module.exports = function () {
+      return new Date().getTime() - loadTime;
+    };
+
+    loadTime = new Date().getTime();
+  }
+}).call(this);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../process/browser.js */ "./node_modules/process/browser.js")))
+
+/***/ }),
+
 /***/ "./node_modules/process/browser.js":
 /*!*****************************************!*\
   !*** ./node_modules/process/browser.js ***!
@@ -37853,6 +41103,148 @@ module.exports = ReactPropTypesSecret;
 
 /***/ }),
 
+/***/ "./node_modules/raf/index.js":
+/*!***********************************!*\
+  !*** ./node_modules/raf/index.js ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(global) {var now = __webpack_require__(/*! performance-now */ "./node_modules/raf/node_modules/performance-now/lib/performance-now.js"),
+    root = typeof window === 'undefined' ? global : window,
+    vendors = ['moz', 'webkit'],
+    suffix = 'AnimationFrame',
+    raf = root['request' + suffix],
+    caf = root['cancel' + suffix] || root['cancelRequest' + suffix];
+
+for (var i = 0; !raf && i < vendors.length; i++) {
+  raf = root[vendors[i] + 'Request' + suffix];
+  caf = root[vendors[i] + 'Cancel' + suffix] || root[vendors[i] + 'CancelRequest' + suffix];
+} // Some versions of FF have rAF but not cAF
+
+
+if (!raf || !caf) {
+  var last = 0,
+      id = 0,
+      queue = [],
+      frameDuration = 1000 / 60;
+
+  raf = function raf(callback) {
+    if (queue.length === 0) {
+      var _now = now(),
+          next = Math.max(0, frameDuration - (_now - last));
+
+      last = next + _now;
+      setTimeout(function () {
+        var cp = queue.slice(0); // Clear queue here to prevent
+        // callbacks from appending listeners
+        // to the current frame's queue
+
+        queue.length = 0;
+
+        for (var i = 0; i < cp.length; i++) {
+          if (!cp[i].cancelled) {
+            try {
+              cp[i].callback(last);
+            } catch (e) {
+              setTimeout(function () {
+                throw e;
+              }, 0);
+            }
+          }
+        }
+      }, Math.round(next));
+    }
+
+    queue.push({
+      handle: ++id,
+      callback: callback,
+      cancelled: false
+    });
+    return id;
+  };
+
+  caf = function caf(handle) {
+    for (var i = 0; i < queue.length; i++) {
+      if (queue[i].handle === handle) {
+        queue[i].cancelled = true;
+      }
+    }
+  };
+}
+
+module.exports = function (fn) {
+  // Wrap in a new function to prevent
+  // `cancel` potentially being assigned
+  // to the native rAF function
+  return raf.call(root, fn);
+};
+
+module.exports.cancel = function () {
+  caf.apply(root, arguments);
+};
+
+module.exports.polyfill = function (object) {
+  if (!object) {
+    object = root;
+  }
+
+  object.requestAnimationFrame = raf;
+  object.cancelAnimationFrame = caf;
+};
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js")))
+
+/***/ }),
+
+/***/ "./node_modules/raf/node_modules/performance-now/lib/performance-now.js":
+/*!******************************************************************************!*\
+  !*** ./node_modules/raf/node_modules/performance-now/lib/performance-now.js ***!
+  \******************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(process) {// Generated by CoffeeScript 1.12.2
+(function () {
+  var getNanoSeconds, hrtime, loadTime, moduleLoadTime, nodeLoadTime, upTime;
+
+  if (typeof performance !== "undefined" && performance !== null && performance.now) {
+    module.exports = function () {
+      return performance.now();
+    };
+  } else if (typeof process !== "undefined" && process !== null && process.hrtime) {
+    module.exports = function () {
+      return (getNanoSeconds() - nodeLoadTime) / 1e6;
+    };
+
+    hrtime = process.hrtime;
+
+    getNanoSeconds = function getNanoSeconds() {
+      var hr;
+      hr = hrtime();
+      return hr[0] * 1e9 + hr[1];
+    };
+
+    moduleLoadTime = getNanoSeconds();
+    upTime = process.uptime() * 1e9;
+    nodeLoadTime = moduleLoadTime - upTime;
+  } else if (Date.now) {
+    module.exports = function () {
+      return Date.now() - loadTime;
+    };
+
+    loadTime = Date.now();
+  } else {
+    module.exports = function () {
+      return new Date().getTime() - loadTime;
+    };
+
+    loadTime = new Date().getTime();
+  }
+}).call(this);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../../process/browser.js */ "./node_modules/process/browser.js")))
+
+/***/ }),
+
 /***/ "./node_modules/react-is/cjs/react-is.development.js":
 /*!***********************************************************!*\
   !*** ./node_modules/react-is/cjs/react-is.development.js ***!
@@ -38224,6 +41616,1749 @@ function polyfill(Component) {
 }
 
 
+
+/***/ }),
+
+/***/ "./node_modules/react-motion/lib/Motion.js":
+/*!*************************************************!*\
+  !*** ./node_modules/react-motion/lib/Motion.js ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+exports.__esModule = true;
+
+var _extends = Object.assign || function (target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i];
+
+    for (var key in source) {
+      if (Object.prototype.hasOwnProperty.call(source, key)) {
+        target[key] = source[key];
+      }
+    }
+  }
+
+  return target;
+};
+
+var _createClass = function () {
+  function defineProperties(target, props) {
+    for (var i = 0; i < props.length; i++) {
+      var descriptor = props[i];
+      descriptor.enumerable = descriptor.enumerable || false;
+      descriptor.configurable = true;
+      if ('value' in descriptor) descriptor.writable = true;
+      Object.defineProperty(target, descriptor.key, descriptor);
+    }
+  }
+
+  return function (Constructor, protoProps, staticProps) {
+    if (protoProps) defineProperties(Constructor.prototype, protoProps);
+    if (staticProps) defineProperties(Constructor, staticProps);
+    return Constructor;
+  };
+}();
+
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : {
+    'default': obj
+  };
+}
+
+function _classCallCheck(instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError('Cannot call a class as a function');
+  }
+}
+
+function _inherits(subClass, superClass) {
+  if (typeof superClass !== 'function' && superClass !== null) {
+    throw new TypeError('Super expression must either be null or a function, not ' + _typeof(superClass));
+  }
+
+  subClass.prototype = Object.create(superClass && superClass.prototype, {
+    constructor: {
+      value: subClass,
+      enumerable: false,
+      writable: true,
+      configurable: true
+    }
+  });
+  if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+}
+
+var _mapToZero = __webpack_require__(/*! ./mapToZero */ "./node_modules/react-motion/lib/mapToZero.js");
+
+var _mapToZero2 = _interopRequireDefault(_mapToZero);
+
+var _stripStyle = __webpack_require__(/*! ./stripStyle */ "./node_modules/react-motion/lib/stripStyle.js");
+
+var _stripStyle2 = _interopRequireDefault(_stripStyle);
+
+var _stepper3 = __webpack_require__(/*! ./stepper */ "./node_modules/react-motion/lib/stepper.js");
+
+var _stepper4 = _interopRequireDefault(_stepper3);
+
+var _performanceNow = __webpack_require__(/*! performance-now */ "./node_modules/performance-now/lib/performance-now.js");
+
+var _performanceNow2 = _interopRequireDefault(_performanceNow);
+
+var _raf = __webpack_require__(/*! raf */ "./node_modules/raf/index.js");
+
+var _raf2 = _interopRequireDefault(_raf);
+
+var _shouldStopAnimation = __webpack_require__(/*! ./shouldStopAnimation */ "./node_modules/react-motion/lib/shouldStopAnimation.js");
+
+var _shouldStopAnimation2 = _interopRequireDefault(_shouldStopAnimation);
+
+var _react = __webpack_require__(/*! react */ "react");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var msPerFrame = 1000 / 60;
+
+var Motion = function (_React$Component) {
+  _inherits(Motion, _React$Component);
+
+  _createClass(Motion, null, [{
+    key: 'propTypes',
+    value: {
+      // TOOD: warn against putting a config in here
+      defaultStyle: _propTypes2['default'].objectOf(_propTypes2['default'].number),
+      style: _propTypes2['default'].objectOf(_propTypes2['default'].oneOfType([_propTypes2['default'].number, _propTypes2['default'].object])).isRequired,
+      children: _propTypes2['default'].func.isRequired,
+      onRest: _propTypes2['default'].func
+    },
+    enumerable: true
+  }]);
+
+  function Motion(props) {
+    var _this = this;
+
+    _classCallCheck(this, Motion);
+
+    _React$Component.call(this, props);
+
+    this.wasAnimating = false;
+    this.animationID = null;
+    this.prevTime = 0;
+    this.accumulatedTime = 0;
+    this.unreadPropStyle = null;
+
+    this.clearUnreadPropStyle = function (destStyle) {
+      var dirty = false;
+      var _state = _this.state;
+      var currentStyle = _state.currentStyle;
+      var currentVelocity = _state.currentVelocity;
+      var lastIdealStyle = _state.lastIdealStyle;
+      var lastIdealVelocity = _state.lastIdealVelocity;
+
+      for (var key in destStyle) {
+        if (!Object.prototype.hasOwnProperty.call(destStyle, key)) {
+          continue;
+        }
+
+        var styleValue = destStyle[key];
+
+        if (typeof styleValue === 'number') {
+          if (!dirty) {
+            dirty = true;
+            currentStyle = _extends({}, currentStyle);
+            currentVelocity = _extends({}, currentVelocity);
+            lastIdealStyle = _extends({}, lastIdealStyle);
+            lastIdealVelocity = _extends({}, lastIdealVelocity);
+          }
+
+          currentStyle[key] = styleValue;
+          currentVelocity[key] = 0;
+          lastIdealStyle[key] = styleValue;
+          lastIdealVelocity[key] = 0;
+        }
+      }
+
+      if (dirty) {
+        _this.setState({
+          currentStyle: currentStyle,
+          currentVelocity: currentVelocity,
+          lastIdealStyle: lastIdealStyle,
+          lastIdealVelocity: lastIdealVelocity
+        });
+      }
+    };
+
+    this.startAnimationIfNecessary = function () {
+      // TODO: when config is {a: 10} and dest is {a: 10} do we raf once and
+      // call cb? No, otherwise accidental parent rerender causes cb trigger
+      _this.animationID = _raf2['default'](function (timestamp) {
+        // check if we need to animate in the first place
+        var propsStyle = _this.props.style;
+
+        if (_shouldStopAnimation2['default'](_this.state.currentStyle, propsStyle, _this.state.currentVelocity)) {
+          if (_this.wasAnimating && _this.props.onRest) {
+            _this.props.onRest();
+          } // no need to cancel animationID here; shouldn't have any in flight
+
+
+          _this.animationID = null;
+          _this.wasAnimating = false;
+          _this.accumulatedTime = 0;
+          return;
+        }
+
+        _this.wasAnimating = true;
+
+        var currentTime = timestamp || _performanceNow2['default']();
+
+        var timeDelta = currentTime - _this.prevTime;
+        _this.prevTime = currentTime;
+        _this.accumulatedTime = _this.accumulatedTime + timeDelta; // more than 10 frames? prolly switched browser tab. Restart
+
+        if (_this.accumulatedTime > msPerFrame * 10) {
+          _this.accumulatedTime = 0;
+        }
+
+        if (_this.accumulatedTime === 0) {
+          // no need to cancel animationID here; shouldn't have any in flight
+          _this.animationID = null;
+
+          _this.startAnimationIfNecessary();
+
+          return;
+        }
+
+        var currentFrameCompletion = (_this.accumulatedTime - Math.floor(_this.accumulatedTime / msPerFrame) * msPerFrame) / msPerFrame;
+        var framesToCatchUp = Math.floor(_this.accumulatedTime / msPerFrame);
+        var newLastIdealStyle = {};
+        var newLastIdealVelocity = {};
+        var newCurrentStyle = {};
+        var newCurrentVelocity = {};
+
+        for (var key in propsStyle) {
+          if (!Object.prototype.hasOwnProperty.call(propsStyle, key)) {
+            continue;
+          }
+
+          var styleValue = propsStyle[key];
+
+          if (typeof styleValue === 'number') {
+            newCurrentStyle[key] = styleValue;
+            newCurrentVelocity[key] = 0;
+            newLastIdealStyle[key] = styleValue;
+            newLastIdealVelocity[key] = 0;
+          } else {
+            var newLastIdealStyleValue = _this.state.lastIdealStyle[key];
+            var newLastIdealVelocityValue = _this.state.lastIdealVelocity[key];
+
+            for (var i = 0; i < framesToCatchUp; i++) {
+              var _stepper = _stepper4['default'](msPerFrame / 1000, newLastIdealStyleValue, newLastIdealVelocityValue, styleValue.val, styleValue.stiffness, styleValue.damping, styleValue.precision);
+
+              newLastIdealStyleValue = _stepper[0];
+              newLastIdealVelocityValue = _stepper[1];
+            }
+
+            var _stepper2 = _stepper4['default'](msPerFrame / 1000, newLastIdealStyleValue, newLastIdealVelocityValue, styleValue.val, styleValue.stiffness, styleValue.damping, styleValue.precision);
+
+            var nextIdealX = _stepper2[0];
+            var nextIdealV = _stepper2[1];
+            newCurrentStyle[key] = newLastIdealStyleValue + (nextIdealX - newLastIdealStyleValue) * currentFrameCompletion;
+            newCurrentVelocity[key] = newLastIdealVelocityValue + (nextIdealV - newLastIdealVelocityValue) * currentFrameCompletion;
+            newLastIdealStyle[key] = newLastIdealStyleValue;
+            newLastIdealVelocity[key] = newLastIdealVelocityValue;
+          }
+        }
+
+        _this.animationID = null; // the amount we're looped over above
+
+        _this.accumulatedTime -= framesToCatchUp * msPerFrame;
+
+        _this.setState({
+          currentStyle: newCurrentStyle,
+          currentVelocity: newCurrentVelocity,
+          lastIdealStyle: newLastIdealStyle,
+          lastIdealVelocity: newLastIdealVelocity
+        });
+
+        _this.unreadPropStyle = null;
+
+        _this.startAnimationIfNecessary();
+      });
+    };
+
+    this.state = this.defaultState();
+  }
+
+  Motion.prototype.defaultState = function defaultState() {
+    var _props = this.props;
+    var defaultStyle = _props.defaultStyle;
+    var style = _props.style;
+
+    var currentStyle = defaultStyle || _stripStyle2['default'](style);
+
+    var currentVelocity = _mapToZero2['default'](currentStyle);
+
+    return {
+      currentStyle: currentStyle,
+      currentVelocity: currentVelocity,
+      lastIdealStyle: currentStyle,
+      lastIdealVelocity: currentVelocity
+    };
+  }; // it's possible that currentStyle's value is stale: if props is immediately
+  // changed from 0 to 400 to spring(0) again, the async currentStyle is still
+  // at 0 (didn't have time to tick and interpolate even once). If we naively
+  // compare currentStyle with destVal it'll be 0 === 0 (no animation, stop).
+  // In reality currentStyle should be 400
+
+
+  Motion.prototype.componentDidMount = function componentDidMount() {
+    this.prevTime = _performanceNow2['default']();
+    this.startAnimationIfNecessary();
+  };
+
+  Motion.prototype.componentWillReceiveProps = function componentWillReceiveProps(props) {
+    if (this.unreadPropStyle != null) {
+      // previous props haven't had the chance to be set yet; set them here
+      this.clearUnreadPropStyle(this.unreadPropStyle);
+    }
+
+    this.unreadPropStyle = props.style;
+
+    if (this.animationID == null) {
+      this.prevTime = _performanceNow2['default']();
+      this.startAnimationIfNecessary();
+    }
+  };
+
+  Motion.prototype.componentWillUnmount = function componentWillUnmount() {
+    if (this.animationID != null) {
+      _raf2['default'].cancel(this.animationID);
+
+      this.animationID = null;
+    }
+  };
+
+  Motion.prototype.render = function render() {
+    var renderedChildren = this.props.children(this.state.currentStyle);
+    return renderedChildren && _react2['default'].Children.only(renderedChildren);
+  };
+
+  return Motion;
+}(_react2['default'].Component);
+
+exports['default'] = Motion;
+module.exports = exports['default']; // after checking for unreadPropStyle != null, we manually go set the
+// non-interpolating values (those that are a number, without a spring
+// config)
+
+/***/ }),
+
+/***/ "./node_modules/react-motion/lib/StaggeredMotion.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/react-motion/lib/StaggeredMotion.js ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+exports.__esModule = true;
+
+var _extends = Object.assign || function (target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i];
+
+    for (var key in source) {
+      if (Object.prototype.hasOwnProperty.call(source, key)) {
+        target[key] = source[key];
+      }
+    }
+  }
+
+  return target;
+};
+
+var _createClass = function () {
+  function defineProperties(target, props) {
+    for (var i = 0; i < props.length; i++) {
+      var descriptor = props[i];
+      descriptor.enumerable = descriptor.enumerable || false;
+      descriptor.configurable = true;
+      if ('value' in descriptor) descriptor.writable = true;
+      Object.defineProperty(target, descriptor.key, descriptor);
+    }
+  }
+
+  return function (Constructor, protoProps, staticProps) {
+    if (protoProps) defineProperties(Constructor.prototype, protoProps);
+    if (staticProps) defineProperties(Constructor, staticProps);
+    return Constructor;
+  };
+}();
+
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : {
+    'default': obj
+  };
+}
+
+function _classCallCheck(instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError('Cannot call a class as a function');
+  }
+}
+
+function _inherits(subClass, superClass) {
+  if (typeof superClass !== 'function' && superClass !== null) {
+    throw new TypeError('Super expression must either be null or a function, not ' + _typeof(superClass));
+  }
+
+  subClass.prototype = Object.create(superClass && superClass.prototype, {
+    constructor: {
+      value: subClass,
+      enumerable: false,
+      writable: true,
+      configurable: true
+    }
+  });
+  if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+}
+
+var _mapToZero = __webpack_require__(/*! ./mapToZero */ "./node_modules/react-motion/lib/mapToZero.js");
+
+var _mapToZero2 = _interopRequireDefault(_mapToZero);
+
+var _stripStyle = __webpack_require__(/*! ./stripStyle */ "./node_modules/react-motion/lib/stripStyle.js");
+
+var _stripStyle2 = _interopRequireDefault(_stripStyle);
+
+var _stepper3 = __webpack_require__(/*! ./stepper */ "./node_modules/react-motion/lib/stepper.js");
+
+var _stepper4 = _interopRequireDefault(_stepper3);
+
+var _performanceNow = __webpack_require__(/*! performance-now */ "./node_modules/performance-now/lib/performance-now.js");
+
+var _performanceNow2 = _interopRequireDefault(_performanceNow);
+
+var _raf = __webpack_require__(/*! raf */ "./node_modules/raf/index.js");
+
+var _raf2 = _interopRequireDefault(_raf);
+
+var _shouldStopAnimation = __webpack_require__(/*! ./shouldStopAnimation */ "./node_modules/react-motion/lib/shouldStopAnimation.js");
+
+var _shouldStopAnimation2 = _interopRequireDefault(_shouldStopAnimation);
+
+var _react = __webpack_require__(/*! react */ "react");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var msPerFrame = 1000 / 60;
+
+function shouldStopAnimationAll(currentStyles, styles, currentVelocities) {
+  for (var i = 0; i < currentStyles.length; i++) {
+    if (!_shouldStopAnimation2['default'](currentStyles[i], styles[i], currentVelocities[i])) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+var StaggeredMotion = function (_React$Component) {
+  _inherits(StaggeredMotion, _React$Component);
+
+  _createClass(StaggeredMotion, null, [{
+    key: 'propTypes',
+    value: {
+      // TOOD: warn against putting a config in here
+      defaultStyles: _propTypes2['default'].arrayOf(_propTypes2['default'].objectOf(_propTypes2['default'].number)),
+      styles: _propTypes2['default'].func.isRequired,
+      children: _propTypes2['default'].func.isRequired
+    },
+    enumerable: true
+  }]);
+
+  function StaggeredMotion(props) {
+    var _this = this;
+
+    _classCallCheck(this, StaggeredMotion);
+
+    _React$Component.call(this, props);
+
+    this.animationID = null;
+    this.prevTime = 0;
+    this.accumulatedTime = 0;
+    this.unreadPropStyles = null;
+
+    this.clearUnreadPropStyle = function (unreadPropStyles) {
+      var _state = _this.state;
+      var currentStyles = _state.currentStyles;
+      var currentVelocities = _state.currentVelocities;
+      var lastIdealStyles = _state.lastIdealStyles;
+      var lastIdealVelocities = _state.lastIdealVelocities;
+      var someDirty = false;
+
+      for (var i = 0; i < unreadPropStyles.length; i++) {
+        var unreadPropStyle = unreadPropStyles[i];
+        var dirty = false;
+
+        for (var key in unreadPropStyle) {
+          if (!Object.prototype.hasOwnProperty.call(unreadPropStyle, key)) {
+            continue;
+          }
+
+          var styleValue = unreadPropStyle[key];
+
+          if (typeof styleValue === 'number') {
+            if (!dirty) {
+              dirty = true;
+              someDirty = true;
+              currentStyles[i] = _extends({}, currentStyles[i]);
+              currentVelocities[i] = _extends({}, currentVelocities[i]);
+              lastIdealStyles[i] = _extends({}, lastIdealStyles[i]);
+              lastIdealVelocities[i] = _extends({}, lastIdealVelocities[i]);
+            }
+
+            currentStyles[i][key] = styleValue;
+            currentVelocities[i][key] = 0;
+            lastIdealStyles[i][key] = styleValue;
+            lastIdealVelocities[i][key] = 0;
+          }
+        }
+      }
+
+      if (someDirty) {
+        _this.setState({
+          currentStyles: currentStyles,
+          currentVelocities: currentVelocities,
+          lastIdealStyles: lastIdealStyles,
+          lastIdealVelocities: lastIdealVelocities
+        });
+      }
+    };
+
+    this.startAnimationIfNecessary = function () {
+      // TODO: when config is {a: 10} and dest is {a: 10} do we raf once and
+      // call cb? No, otherwise accidental parent rerender causes cb trigger
+      _this.animationID = _raf2['default'](function (timestamp) {
+        var destStyles = _this.props.styles(_this.state.lastIdealStyles); // check if we need to animate in the first place
+
+
+        if (shouldStopAnimationAll(_this.state.currentStyles, destStyles, _this.state.currentVelocities)) {
+          // no need to cancel animationID here; shouldn't have any in flight
+          _this.animationID = null;
+          _this.accumulatedTime = 0;
+          return;
+        }
+
+        var currentTime = timestamp || _performanceNow2['default']();
+
+        var timeDelta = currentTime - _this.prevTime;
+        _this.prevTime = currentTime;
+        _this.accumulatedTime = _this.accumulatedTime + timeDelta; // more than 10 frames? prolly switched browser tab. Restart
+
+        if (_this.accumulatedTime > msPerFrame * 10) {
+          _this.accumulatedTime = 0;
+        }
+
+        if (_this.accumulatedTime === 0) {
+          // no need to cancel animationID here; shouldn't have any in flight
+          _this.animationID = null;
+
+          _this.startAnimationIfNecessary();
+
+          return;
+        }
+
+        var currentFrameCompletion = (_this.accumulatedTime - Math.floor(_this.accumulatedTime / msPerFrame) * msPerFrame) / msPerFrame;
+        var framesToCatchUp = Math.floor(_this.accumulatedTime / msPerFrame);
+        var newLastIdealStyles = [];
+        var newLastIdealVelocities = [];
+        var newCurrentStyles = [];
+        var newCurrentVelocities = [];
+
+        for (var i = 0; i < destStyles.length; i++) {
+          var destStyle = destStyles[i];
+          var newCurrentStyle = {};
+          var newCurrentVelocity = {};
+          var newLastIdealStyle = {};
+          var newLastIdealVelocity = {};
+
+          for (var key in destStyle) {
+            if (!Object.prototype.hasOwnProperty.call(destStyle, key)) {
+              continue;
+            }
+
+            var styleValue = destStyle[key];
+
+            if (typeof styleValue === 'number') {
+              newCurrentStyle[key] = styleValue;
+              newCurrentVelocity[key] = 0;
+              newLastIdealStyle[key] = styleValue;
+              newLastIdealVelocity[key] = 0;
+            } else {
+              var newLastIdealStyleValue = _this.state.lastIdealStyles[i][key];
+              var newLastIdealVelocityValue = _this.state.lastIdealVelocities[i][key];
+
+              for (var j = 0; j < framesToCatchUp; j++) {
+                var _stepper = _stepper4['default'](msPerFrame / 1000, newLastIdealStyleValue, newLastIdealVelocityValue, styleValue.val, styleValue.stiffness, styleValue.damping, styleValue.precision);
+
+                newLastIdealStyleValue = _stepper[0];
+                newLastIdealVelocityValue = _stepper[1];
+              }
+
+              var _stepper2 = _stepper4['default'](msPerFrame / 1000, newLastIdealStyleValue, newLastIdealVelocityValue, styleValue.val, styleValue.stiffness, styleValue.damping, styleValue.precision);
+
+              var nextIdealX = _stepper2[0];
+              var nextIdealV = _stepper2[1];
+              newCurrentStyle[key] = newLastIdealStyleValue + (nextIdealX - newLastIdealStyleValue) * currentFrameCompletion;
+              newCurrentVelocity[key] = newLastIdealVelocityValue + (nextIdealV - newLastIdealVelocityValue) * currentFrameCompletion;
+              newLastIdealStyle[key] = newLastIdealStyleValue;
+              newLastIdealVelocity[key] = newLastIdealVelocityValue;
+            }
+          }
+
+          newCurrentStyles[i] = newCurrentStyle;
+          newCurrentVelocities[i] = newCurrentVelocity;
+          newLastIdealStyles[i] = newLastIdealStyle;
+          newLastIdealVelocities[i] = newLastIdealVelocity;
+        }
+
+        _this.animationID = null; // the amount we're looped over above
+
+        _this.accumulatedTime -= framesToCatchUp * msPerFrame;
+
+        _this.setState({
+          currentStyles: newCurrentStyles,
+          currentVelocities: newCurrentVelocities,
+          lastIdealStyles: newLastIdealStyles,
+          lastIdealVelocities: newLastIdealVelocities
+        });
+
+        _this.unreadPropStyles = null;
+
+        _this.startAnimationIfNecessary();
+      });
+    };
+
+    this.state = this.defaultState();
+  }
+
+  StaggeredMotion.prototype.defaultState = function defaultState() {
+    var _props = this.props;
+    var defaultStyles = _props.defaultStyles;
+    var styles = _props.styles;
+    var currentStyles = defaultStyles || styles().map(_stripStyle2['default']);
+    var currentVelocities = currentStyles.map(function (currentStyle) {
+      return _mapToZero2['default'](currentStyle);
+    });
+    return {
+      currentStyles: currentStyles,
+      currentVelocities: currentVelocities,
+      lastIdealStyles: currentStyles,
+      lastIdealVelocities: currentVelocities
+    };
+  };
+
+  StaggeredMotion.prototype.componentDidMount = function componentDidMount() {
+    this.prevTime = _performanceNow2['default']();
+    this.startAnimationIfNecessary();
+  };
+
+  StaggeredMotion.prototype.componentWillReceiveProps = function componentWillReceiveProps(props) {
+    if (this.unreadPropStyles != null) {
+      // previous props haven't had the chance to be set yet; set them here
+      this.clearUnreadPropStyle(this.unreadPropStyles);
+    }
+
+    this.unreadPropStyles = props.styles(this.state.lastIdealStyles);
+
+    if (this.animationID == null) {
+      this.prevTime = _performanceNow2['default']();
+      this.startAnimationIfNecessary();
+    }
+  };
+
+  StaggeredMotion.prototype.componentWillUnmount = function componentWillUnmount() {
+    if (this.animationID != null) {
+      _raf2['default'].cancel(this.animationID);
+
+      this.animationID = null;
+    }
+  };
+
+  StaggeredMotion.prototype.render = function render() {
+    var renderedChildren = this.props.children(this.state.currentStyles);
+    return renderedChildren && _react2['default'].Children.only(renderedChildren);
+  };
+
+  return StaggeredMotion;
+}(_react2['default'].Component);
+
+exports['default'] = StaggeredMotion;
+module.exports = exports['default']; // it's possible that currentStyle's value is stale: if props is immediately
+// changed from 0 to 400 to spring(0) again, the async currentStyle is still
+// at 0 (didn't have time to tick and interpolate even once). If we naively
+// compare currentStyle with destVal it'll be 0 === 0 (no animation, stop).
+// In reality currentStyle should be 400
+// after checking for unreadPropStyles != null, we manually go set the
+// non-interpolating values (those that are a number, without a spring
+// config)
+
+/***/ }),
+
+/***/ "./node_modules/react-motion/lib/TransitionMotion.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/react-motion/lib/TransitionMotion.js ***!
+  \***********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+exports.__esModule = true;
+
+var _extends = Object.assign || function (target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i];
+
+    for (var key in source) {
+      if (Object.prototype.hasOwnProperty.call(source, key)) {
+        target[key] = source[key];
+      }
+    }
+  }
+
+  return target;
+};
+
+var _createClass = function () {
+  function defineProperties(target, props) {
+    for (var i = 0; i < props.length; i++) {
+      var descriptor = props[i];
+      descriptor.enumerable = descriptor.enumerable || false;
+      descriptor.configurable = true;
+      if ('value' in descriptor) descriptor.writable = true;
+      Object.defineProperty(target, descriptor.key, descriptor);
+    }
+  }
+
+  return function (Constructor, protoProps, staticProps) {
+    if (protoProps) defineProperties(Constructor.prototype, protoProps);
+    if (staticProps) defineProperties(Constructor, staticProps);
+    return Constructor;
+  };
+}();
+
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : {
+    'default': obj
+  };
+}
+
+function _classCallCheck(instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError('Cannot call a class as a function');
+  }
+}
+
+function _inherits(subClass, superClass) {
+  if (typeof superClass !== 'function' && superClass !== null) {
+    throw new TypeError('Super expression must either be null or a function, not ' + _typeof(superClass));
+  }
+
+  subClass.prototype = Object.create(superClass && superClass.prototype, {
+    constructor: {
+      value: subClass,
+      enumerable: false,
+      writable: true,
+      configurable: true
+    }
+  });
+  if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+}
+
+var _mapToZero = __webpack_require__(/*! ./mapToZero */ "./node_modules/react-motion/lib/mapToZero.js");
+
+var _mapToZero2 = _interopRequireDefault(_mapToZero);
+
+var _stripStyle = __webpack_require__(/*! ./stripStyle */ "./node_modules/react-motion/lib/stripStyle.js");
+
+var _stripStyle2 = _interopRequireDefault(_stripStyle);
+
+var _stepper3 = __webpack_require__(/*! ./stepper */ "./node_modules/react-motion/lib/stepper.js");
+
+var _stepper4 = _interopRequireDefault(_stepper3);
+
+var _mergeDiff = __webpack_require__(/*! ./mergeDiff */ "./node_modules/react-motion/lib/mergeDiff.js");
+
+var _mergeDiff2 = _interopRequireDefault(_mergeDiff);
+
+var _performanceNow = __webpack_require__(/*! performance-now */ "./node_modules/performance-now/lib/performance-now.js");
+
+var _performanceNow2 = _interopRequireDefault(_performanceNow);
+
+var _raf = __webpack_require__(/*! raf */ "./node_modules/raf/index.js");
+
+var _raf2 = _interopRequireDefault(_raf);
+
+var _shouldStopAnimation = __webpack_require__(/*! ./shouldStopAnimation */ "./node_modules/react-motion/lib/shouldStopAnimation.js");
+
+var _shouldStopAnimation2 = _interopRequireDefault(_shouldStopAnimation);
+
+var _react = __webpack_require__(/*! react */ "react");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var msPerFrame = 1000 / 60; // the children function & (potential) styles function asks as param an
+// Array<TransitionPlainStyle>, where each TransitionPlainStyle is of the format
+// {key: string, data?: any, style: PlainStyle}. However, the way we keep
+// internal states doesn't contain such a data structure (check the state and
+// TransitionMotionState). So when children function and others ask for such
+// data we need to generate them on the fly by combining mergedPropsStyles and
+// currentStyles/lastIdealStyles
+
+function rehydrateStyles(mergedPropsStyles, unreadPropStyles, plainStyles) {
+  // Copy the value to a `const` so that Flow understands that the const won't
+  // change and will be non-nullable in the callback below.
+  var cUnreadPropStyles = unreadPropStyles;
+
+  if (cUnreadPropStyles == null) {
+    return mergedPropsStyles.map(function (mergedPropsStyle, i) {
+      return {
+        key: mergedPropsStyle.key,
+        data: mergedPropsStyle.data,
+        style: plainStyles[i]
+      };
+    });
+  }
+
+  return mergedPropsStyles.map(function (mergedPropsStyle, i) {
+    for (var j = 0; j < cUnreadPropStyles.length; j++) {
+      if (cUnreadPropStyles[j].key === mergedPropsStyle.key) {
+        return {
+          key: cUnreadPropStyles[j].key,
+          data: cUnreadPropStyles[j].data,
+          style: plainStyles[i]
+        };
+      }
+    }
+
+    return {
+      key: mergedPropsStyle.key,
+      data: mergedPropsStyle.data,
+      style: plainStyles[i]
+    };
+  });
+}
+
+function shouldStopAnimationAll(currentStyles, destStyles, currentVelocities, mergedPropsStyles) {
+  if (mergedPropsStyles.length !== destStyles.length) {
+    return false;
+  }
+
+  for (var i = 0; i < mergedPropsStyles.length; i++) {
+    if (mergedPropsStyles[i].key !== destStyles[i].key) {
+      return false;
+    }
+  } // we have the invariant that mergedPropsStyles and
+  // currentStyles/currentVelocities/last* are synced in terms of cells, see
+  // mergeAndSync comment for more info
+
+
+  for (var i = 0; i < mergedPropsStyles.length; i++) {
+    if (!_shouldStopAnimation2['default'](currentStyles[i], destStyles[i].style, currentVelocities[i])) {
+      return false;
+    }
+  }
+
+  return true;
+} // core key merging logic
+// things to do: say previously merged style is {a, b}, dest style (prop) is {b,
+// c}, previous current (interpolating) style is {a, b}
+// **invariant**: current[i] corresponds to merged[i] in terms of key
+// steps:
+// turn merged style into {a?, b, c}
+//    add c, value of c is destStyles.c
+//    maybe remove a, aka call willLeave(a), then merged is either {b, c} or {a, b, c}
+// turn current (interpolating) style from {a, b} into {a?, b, c}
+//    maybe remove a
+//    certainly add c, value of c is willEnter(c)
+// loop over merged and construct new current
+// dest doesn't change, that's owner's
+
+
+function mergeAndSync(willEnter, willLeave, didLeave, oldMergedPropsStyles, destStyles, oldCurrentStyles, oldCurrentVelocities, oldLastIdealStyles, oldLastIdealVelocities) {
+  var newMergedPropsStyles = _mergeDiff2['default'](oldMergedPropsStyles, destStyles, function (oldIndex, oldMergedPropsStyle) {
+    var leavingStyle = willLeave(oldMergedPropsStyle);
+
+    if (leavingStyle == null) {
+      didLeave({
+        key: oldMergedPropsStyle.key,
+        data: oldMergedPropsStyle.data
+      });
+      return null;
+    }
+
+    if (_shouldStopAnimation2['default'](oldCurrentStyles[oldIndex], leavingStyle, oldCurrentVelocities[oldIndex])) {
+      didLeave({
+        key: oldMergedPropsStyle.key,
+        data: oldMergedPropsStyle.data
+      });
+      return null;
+    }
+
+    return {
+      key: oldMergedPropsStyle.key,
+      data: oldMergedPropsStyle.data,
+      style: leavingStyle
+    };
+  });
+
+  var newCurrentStyles = [];
+  var newCurrentVelocities = [];
+  var newLastIdealStyles = [];
+  var newLastIdealVelocities = [];
+
+  for (var i = 0; i < newMergedPropsStyles.length; i++) {
+    var newMergedPropsStyleCell = newMergedPropsStyles[i];
+    var foundOldIndex = null;
+
+    for (var j = 0; j < oldMergedPropsStyles.length; j++) {
+      if (oldMergedPropsStyles[j].key === newMergedPropsStyleCell.key) {
+        foundOldIndex = j;
+        break;
+      }
+    } // TODO: key search code
+
+
+    if (foundOldIndex == null) {
+      var plainStyle = willEnter(newMergedPropsStyleCell);
+      newCurrentStyles[i] = plainStyle;
+      newLastIdealStyles[i] = plainStyle;
+
+      var velocity = _mapToZero2['default'](newMergedPropsStyleCell.style);
+
+      newCurrentVelocities[i] = velocity;
+      newLastIdealVelocities[i] = velocity;
+    } else {
+      newCurrentStyles[i] = oldCurrentStyles[foundOldIndex];
+      newLastIdealStyles[i] = oldLastIdealStyles[foundOldIndex];
+      newCurrentVelocities[i] = oldCurrentVelocities[foundOldIndex];
+      newLastIdealVelocities[i] = oldLastIdealVelocities[foundOldIndex];
+    }
+  }
+
+  return [newMergedPropsStyles, newCurrentStyles, newCurrentVelocities, newLastIdealStyles, newLastIdealVelocities];
+}
+
+var TransitionMotion = function (_React$Component) {
+  _inherits(TransitionMotion, _React$Component);
+
+  _createClass(TransitionMotion, null, [{
+    key: 'propTypes',
+    value: {
+      defaultStyles: _propTypes2['default'].arrayOf(_propTypes2['default'].shape({
+        key: _propTypes2['default'].string.isRequired,
+        data: _propTypes2['default'].any,
+        style: _propTypes2['default'].objectOf(_propTypes2['default'].number).isRequired
+      })),
+      styles: _propTypes2['default'].oneOfType([_propTypes2['default'].func, _propTypes2['default'].arrayOf(_propTypes2['default'].shape({
+        key: _propTypes2['default'].string.isRequired,
+        data: _propTypes2['default'].any,
+        style: _propTypes2['default'].objectOf(_propTypes2['default'].oneOfType([_propTypes2['default'].number, _propTypes2['default'].object])).isRequired
+      }))]).isRequired,
+      children: _propTypes2['default'].func.isRequired,
+      willEnter: _propTypes2['default'].func,
+      willLeave: _propTypes2['default'].func,
+      didLeave: _propTypes2['default'].func
+    },
+    enumerable: true
+  }, {
+    key: 'defaultProps',
+    value: {
+      willEnter: function willEnter(styleThatEntered) {
+        return _stripStyle2['default'](styleThatEntered.style);
+      },
+      // recall: returning null makes the current unmounting TransitionStyle
+      // disappear immediately
+      willLeave: function willLeave() {
+        return null;
+      },
+      didLeave: function didLeave() {}
+    },
+    enumerable: true
+  }]);
+
+  function TransitionMotion(props) {
+    var _this = this;
+
+    _classCallCheck(this, TransitionMotion);
+
+    _React$Component.call(this, props);
+
+    this.unmounting = false;
+    this.animationID = null;
+    this.prevTime = 0;
+    this.accumulatedTime = 0;
+    this.unreadPropStyles = null;
+
+    this.clearUnreadPropStyle = function (unreadPropStyles) {
+      var _mergeAndSync = mergeAndSync(_this.props.willEnter, _this.props.willLeave, _this.props.didLeave, _this.state.mergedPropsStyles, unreadPropStyles, _this.state.currentStyles, _this.state.currentVelocities, _this.state.lastIdealStyles, _this.state.lastIdealVelocities);
+
+      var mergedPropsStyles = _mergeAndSync[0];
+      var currentStyles = _mergeAndSync[1];
+      var currentVelocities = _mergeAndSync[2];
+      var lastIdealStyles = _mergeAndSync[3];
+      var lastIdealVelocities = _mergeAndSync[4];
+
+      for (var i = 0; i < unreadPropStyles.length; i++) {
+        var unreadPropStyle = unreadPropStyles[i].style;
+        var dirty = false;
+
+        for (var key in unreadPropStyle) {
+          if (!Object.prototype.hasOwnProperty.call(unreadPropStyle, key)) {
+            continue;
+          }
+
+          var styleValue = unreadPropStyle[key];
+
+          if (typeof styleValue === 'number') {
+            if (!dirty) {
+              dirty = true;
+              currentStyles[i] = _extends({}, currentStyles[i]);
+              currentVelocities[i] = _extends({}, currentVelocities[i]);
+              lastIdealStyles[i] = _extends({}, lastIdealStyles[i]);
+              lastIdealVelocities[i] = _extends({}, lastIdealVelocities[i]);
+              mergedPropsStyles[i] = {
+                key: mergedPropsStyles[i].key,
+                data: mergedPropsStyles[i].data,
+                style: _extends({}, mergedPropsStyles[i].style)
+              };
+            }
+
+            currentStyles[i][key] = styleValue;
+            currentVelocities[i][key] = 0;
+            lastIdealStyles[i][key] = styleValue;
+            lastIdealVelocities[i][key] = 0;
+            mergedPropsStyles[i].style[key] = styleValue;
+          }
+        }
+      } // unlike the other 2 components, we can't detect staleness and optionally
+      // opt out of setState here. each style object's data might contain new
+      // stuff we're not/cannot compare
+
+
+      _this.setState({
+        currentStyles: currentStyles,
+        currentVelocities: currentVelocities,
+        mergedPropsStyles: mergedPropsStyles,
+        lastIdealStyles: lastIdealStyles,
+        lastIdealVelocities: lastIdealVelocities
+      });
+    };
+
+    this.startAnimationIfNecessary = function () {
+      if (_this.unmounting) {
+        return;
+      } // TODO: when config is {a: 10} and dest is {a: 10} do we raf once and
+      // call cb? No, otherwise accidental parent rerender causes cb trigger
+
+
+      _this.animationID = _raf2['default'](function (timestamp) {
+        // https://github.com/chenglou/react-motion/pull/420
+        // > if execution passes the conditional if (this.unmounting), then
+        // executes async defaultRaf and after that component unmounts and after
+        // that the callback of defaultRaf is called, then setState will be called
+        // on unmounted component.
+        if (_this.unmounting) {
+          return;
+        }
+
+        var propStyles = _this.props.styles;
+        var destStyles = typeof propStyles === 'function' ? propStyles(rehydrateStyles(_this.state.mergedPropsStyles, _this.unreadPropStyles, _this.state.lastIdealStyles)) : propStyles; // check if we need to animate in the first place
+
+        if (shouldStopAnimationAll(_this.state.currentStyles, destStyles, _this.state.currentVelocities, _this.state.mergedPropsStyles)) {
+          // no need to cancel animationID here; shouldn't have any in flight
+          _this.animationID = null;
+          _this.accumulatedTime = 0;
+          return;
+        }
+
+        var currentTime = timestamp || _performanceNow2['default']();
+
+        var timeDelta = currentTime - _this.prevTime;
+        _this.prevTime = currentTime;
+        _this.accumulatedTime = _this.accumulatedTime + timeDelta; // more than 10 frames? prolly switched browser tab. Restart
+
+        if (_this.accumulatedTime > msPerFrame * 10) {
+          _this.accumulatedTime = 0;
+        }
+
+        if (_this.accumulatedTime === 0) {
+          // no need to cancel animationID here; shouldn't have any in flight
+          _this.animationID = null;
+
+          _this.startAnimationIfNecessary();
+
+          return;
+        }
+
+        var currentFrameCompletion = (_this.accumulatedTime - Math.floor(_this.accumulatedTime / msPerFrame) * msPerFrame) / msPerFrame;
+        var framesToCatchUp = Math.floor(_this.accumulatedTime / msPerFrame);
+
+        var _mergeAndSync2 = mergeAndSync(_this.props.willEnter, _this.props.willLeave, _this.props.didLeave, _this.state.mergedPropsStyles, destStyles, _this.state.currentStyles, _this.state.currentVelocities, _this.state.lastIdealStyles, _this.state.lastIdealVelocities);
+
+        var newMergedPropsStyles = _mergeAndSync2[0];
+        var newCurrentStyles = _mergeAndSync2[1];
+        var newCurrentVelocities = _mergeAndSync2[2];
+        var newLastIdealStyles = _mergeAndSync2[3];
+        var newLastIdealVelocities = _mergeAndSync2[4];
+
+        for (var i = 0; i < newMergedPropsStyles.length; i++) {
+          var newMergedPropsStyle = newMergedPropsStyles[i].style;
+          var newCurrentStyle = {};
+          var newCurrentVelocity = {};
+          var newLastIdealStyle = {};
+          var newLastIdealVelocity = {};
+
+          for (var key in newMergedPropsStyle) {
+            if (!Object.prototype.hasOwnProperty.call(newMergedPropsStyle, key)) {
+              continue;
+            }
+
+            var styleValue = newMergedPropsStyle[key];
+
+            if (typeof styleValue === 'number') {
+              newCurrentStyle[key] = styleValue;
+              newCurrentVelocity[key] = 0;
+              newLastIdealStyle[key] = styleValue;
+              newLastIdealVelocity[key] = 0;
+            } else {
+              var newLastIdealStyleValue = newLastIdealStyles[i][key];
+              var newLastIdealVelocityValue = newLastIdealVelocities[i][key];
+
+              for (var j = 0; j < framesToCatchUp; j++) {
+                var _stepper = _stepper4['default'](msPerFrame / 1000, newLastIdealStyleValue, newLastIdealVelocityValue, styleValue.val, styleValue.stiffness, styleValue.damping, styleValue.precision);
+
+                newLastIdealStyleValue = _stepper[0];
+                newLastIdealVelocityValue = _stepper[1];
+              }
+
+              var _stepper2 = _stepper4['default'](msPerFrame / 1000, newLastIdealStyleValue, newLastIdealVelocityValue, styleValue.val, styleValue.stiffness, styleValue.damping, styleValue.precision);
+
+              var nextIdealX = _stepper2[0];
+              var nextIdealV = _stepper2[1];
+              newCurrentStyle[key] = newLastIdealStyleValue + (nextIdealX - newLastIdealStyleValue) * currentFrameCompletion;
+              newCurrentVelocity[key] = newLastIdealVelocityValue + (nextIdealV - newLastIdealVelocityValue) * currentFrameCompletion;
+              newLastIdealStyle[key] = newLastIdealStyleValue;
+              newLastIdealVelocity[key] = newLastIdealVelocityValue;
+            }
+          }
+
+          newLastIdealStyles[i] = newLastIdealStyle;
+          newLastIdealVelocities[i] = newLastIdealVelocity;
+          newCurrentStyles[i] = newCurrentStyle;
+          newCurrentVelocities[i] = newCurrentVelocity;
+        }
+
+        _this.animationID = null; // the amount we're looped over above
+
+        _this.accumulatedTime -= framesToCatchUp * msPerFrame;
+
+        _this.setState({
+          currentStyles: newCurrentStyles,
+          currentVelocities: newCurrentVelocities,
+          lastIdealStyles: newLastIdealStyles,
+          lastIdealVelocities: newLastIdealVelocities,
+          mergedPropsStyles: newMergedPropsStyles
+        });
+
+        _this.unreadPropStyles = null;
+
+        _this.startAnimationIfNecessary();
+      });
+    };
+
+    this.state = this.defaultState();
+  }
+
+  TransitionMotion.prototype.defaultState = function defaultState() {
+    var _props = this.props;
+    var defaultStyles = _props.defaultStyles;
+    var styles = _props.styles;
+    var willEnter = _props.willEnter;
+    var willLeave = _props.willLeave;
+    var didLeave = _props.didLeave;
+    var destStyles = typeof styles === 'function' ? styles(defaultStyles) : styles; // this is special. for the first time around, we don't have a comparison
+    // between last (no last) and current merged props. we'll compute last so:
+    // say default is {a, b} and styles (dest style) is {b, c}, we'll
+    // fabricate last as {a, b}
+
+    var oldMergedPropsStyles = undefined;
+
+    if (defaultStyles == null) {
+      oldMergedPropsStyles = destStyles;
+    } else {
+      oldMergedPropsStyles = defaultStyles.map(function (defaultStyleCell) {
+        // TODO: key search code
+        for (var i = 0; i < destStyles.length; i++) {
+          if (destStyles[i].key === defaultStyleCell.key) {
+            return destStyles[i];
+          }
+        }
+
+        return defaultStyleCell;
+      });
+    }
+
+    var oldCurrentStyles = defaultStyles == null ? destStyles.map(function (s) {
+      return _stripStyle2['default'](s.style);
+    }) : defaultStyles.map(function (s) {
+      return _stripStyle2['default'](s.style);
+    });
+    var oldCurrentVelocities = defaultStyles == null ? destStyles.map(function (s) {
+      return _mapToZero2['default'](s.style);
+    }) : defaultStyles.map(function (s) {
+      return _mapToZero2['default'](s.style);
+    });
+
+    var _mergeAndSync3 = mergeAndSync( // Because this is an old-style createReactClass component, Flow doesn't
+    // understand that the willEnter and willLeave props have default values
+    // and will always be present.
+    willEnter, willLeave, didLeave, oldMergedPropsStyles, destStyles, oldCurrentStyles, oldCurrentVelocities, oldCurrentStyles, // oldLastIdealStyles really
+    oldCurrentVelocities);
+
+    var mergedPropsStyles = _mergeAndSync3[0];
+    var currentStyles = _mergeAndSync3[1];
+    var currentVelocities = _mergeAndSync3[2];
+    var lastIdealStyles = _mergeAndSync3[3];
+    var lastIdealVelocities = _mergeAndSync3[4]; // oldLastIdealVelocities really
+
+    return {
+      currentStyles: currentStyles,
+      currentVelocities: currentVelocities,
+      lastIdealStyles: lastIdealStyles,
+      lastIdealVelocities: lastIdealVelocities,
+      mergedPropsStyles: mergedPropsStyles
+    };
+  }; // after checking for unreadPropStyles != null, we manually go set the
+  // non-interpolating values (those that are a number, without a spring
+  // config)
+
+
+  TransitionMotion.prototype.componentDidMount = function componentDidMount() {
+    this.prevTime = _performanceNow2['default']();
+    this.startAnimationIfNecessary();
+  };
+
+  TransitionMotion.prototype.componentWillReceiveProps = function componentWillReceiveProps(props) {
+    if (this.unreadPropStyles) {
+      // previous props haven't had the chance to be set yet; set them here
+      this.clearUnreadPropStyle(this.unreadPropStyles);
+    }
+
+    var styles = props.styles;
+
+    if (typeof styles === 'function') {
+      this.unreadPropStyles = styles(rehydrateStyles(this.state.mergedPropsStyles, this.unreadPropStyles, this.state.lastIdealStyles));
+    } else {
+      this.unreadPropStyles = styles;
+    }
+
+    if (this.animationID == null) {
+      this.prevTime = _performanceNow2['default']();
+      this.startAnimationIfNecessary();
+    }
+  };
+
+  TransitionMotion.prototype.componentWillUnmount = function componentWillUnmount() {
+    this.unmounting = true;
+
+    if (this.animationID != null) {
+      _raf2['default'].cancel(this.animationID);
+
+      this.animationID = null;
+    }
+  };
+
+  TransitionMotion.prototype.render = function render() {
+    var hydratedStyles = rehydrateStyles(this.state.mergedPropsStyles, this.unreadPropStyles, this.state.currentStyles);
+    var renderedChildren = this.props.children(hydratedStyles);
+    return renderedChildren && _react2['default'].Children.only(renderedChildren);
+  };
+
+  return TransitionMotion;
+}(_react2['default'].Component);
+
+exports['default'] = TransitionMotion;
+module.exports = exports['default']; // list of styles, each containing interpolating values. Part of what's passed
+// to children function. Notice that this is
+// Array<ActualInterpolatingStyleObject>, without the wrapper that is {key: ...,
+// data: ... style: ActualInterpolatingStyleObject}. Only mergedPropsStyles
+// contains the key & data info (so that we only have a single source of truth
+// for these, and to save space). Check the comment for `rehydrateStyles` to
+// see how we regenerate the entirety of what's passed to children function
+// the array that keeps track of currently rendered stuff! Including stuff
+// that you've unmounted but that's still animating. This is where it lives
+// it's possible that currentStyle's value is stale: if props is immediately
+// changed from 0 to 400 to spring(0) again, the async currentStyle is still
+// at 0 (didn't have time to tick and interpolate even once). If we naively
+// compare currentStyle with destVal it'll be 0 === 0 (no animation, stop).
+// In reality currentStyle should be 400
+
+/***/ }),
+
+/***/ "./node_modules/react-motion/lib/mapToZero.js":
+/*!****************************************************!*\
+  !*** ./node_modules/react-motion/lib/mapToZero.js ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+// currently used to initiate the velocity style object to 0
+
+
+exports.__esModule = true;
+exports['default'] = mapToZero;
+
+function mapToZero(obj) {
+  var ret = {};
+
+  for (var key in obj) {
+    if (Object.prototype.hasOwnProperty.call(obj, key)) {
+      ret[key] = 0;
+    }
+  }
+
+  return ret;
+}
+
+module.exports = exports['default'];
+
+/***/ }),
+
+/***/ "./node_modules/react-motion/lib/mergeDiff.js":
+/*!****************************************************!*\
+  !*** ./node_modules/react-motion/lib/mergeDiff.js ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+// core keys merging algorithm. If previous render's keys are [a, b], and the
+// next render's [c, b, d], what's the final merged keys and ordering?
+// - c and a must both be before b
+// - b before d
+// - ordering between a and c ambiguous
+// this reduces to merging two partially ordered lists (e.g. lists where not
+// every item has a definite ordering, like comparing a and c above). For the
+// ambiguous ordering we deterministically choose to place the next render's
+// item after the previous'; so c after a
+// this is called a topological sorting. Except the existing algorithms don't
+// work well with js bc of the amount of allocation, and isn't optimized for our
+// current use-case bc the runtime is linear in terms of edges (see wiki for
+// meaning), which is huge when two lists have many common elements
+
+
+exports.__esModule = true;
+exports['default'] = mergeDiff;
+
+function mergeDiff(prev, next, onRemove) {
+  // bookkeeping for easier access of a key's index below. This is 2 allocations +
+  // potentially triggering chrome hash map mode for objs (so it might be faster
+  var prevKeyIndex = {};
+
+  for (var i = 0; i < prev.length; i++) {
+    prevKeyIndex[prev[i].key] = i;
+  }
+
+  var nextKeyIndex = {};
+
+  for (var i = 0; i < next.length; i++) {
+    nextKeyIndex[next[i].key] = i;
+  } // first, an overly elaborate way of merging prev and next, eliminating
+  // duplicates (in terms of keys). If there's dupe, keep the item in next).
+  // This way of writing it saves allocations
+
+
+  var ret = [];
+
+  for (var i = 0; i < next.length; i++) {
+    ret[i] = next[i];
+  }
+
+  for (var i = 0; i < prev.length; i++) {
+    if (!Object.prototype.hasOwnProperty.call(nextKeyIndex, prev[i].key)) {
+      // this is called my TM's `mergeAndSync`, which calls willLeave. We don't
+      // merge in keys that the user desires to kill
+      var fill = onRemove(i, prev[i]);
+
+      if (fill != null) {
+        ret.push(fill);
+      }
+    }
+  } // now all the items all present. Core sorting logic to have the right order
+
+
+  return ret.sort(function (a, b) {
+    var nextOrderA = nextKeyIndex[a.key];
+    var nextOrderB = nextKeyIndex[b.key];
+    var prevOrderA = prevKeyIndex[a.key];
+    var prevOrderB = prevKeyIndex[b.key];
+
+    if (nextOrderA != null && nextOrderB != null) {
+      // both keys in next
+      return nextKeyIndex[a.key] - nextKeyIndex[b.key];
+    } else if (prevOrderA != null && prevOrderB != null) {
+      // both keys in prev
+      return prevKeyIndex[a.key] - prevKeyIndex[b.key];
+    } else if (nextOrderA != null) {
+      // key a in next, key b in prev
+      // how to determine the order between a and b? We find a "pivot" (term
+      // abuse), a key present in both prev and next, that is sandwiched between
+      // a and b. In the context of our above example, if we're comparing a and
+      // d, b's (the only) pivot
+      for (var i = 0; i < next.length; i++) {
+        var pivot = next[i].key;
+
+        if (!Object.prototype.hasOwnProperty.call(prevKeyIndex, pivot)) {
+          continue;
+        }
+
+        if (nextOrderA < nextKeyIndex[pivot] && prevOrderB > prevKeyIndex[pivot]) {
+          return -1;
+        } else if (nextOrderA > nextKeyIndex[pivot] && prevOrderB < prevKeyIndex[pivot]) {
+          return 1;
+        }
+      } // pluggable. default to: next bigger than prev
+
+
+      return 1;
+    } // prevOrderA, nextOrderB
+
+
+    for (var i = 0; i < next.length; i++) {
+      var pivot = next[i].key;
+
+      if (!Object.prototype.hasOwnProperty.call(prevKeyIndex, pivot)) {
+        continue;
+      }
+
+      if (nextOrderB < nextKeyIndex[pivot] && prevOrderA > prevKeyIndex[pivot]) {
+        return 1;
+      } else if (nextOrderB > nextKeyIndex[pivot] && prevOrderA < prevKeyIndex[pivot]) {
+        return -1;
+      }
+    } // pluggable. default to: next bigger than prev
+
+
+    return -1;
+  });
+}
+
+module.exports = exports['default']; // to loop through and find a key's index each time), but I no longer care
+
+/***/ }),
+
+/***/ "./node_modules/react-motion/lib/presets.js":
+/*!**************************************************!*\
+  !*** ./node_modules/react-motion/lib/presets.js ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports["default"] = {
+  noWobble: {
+    stiffness: 170,
+    damping: 26
+  },
+  // the default, if nothing provided
+  gentle: {
+    stiffness: 120,
+    damping: 14
+  },
+  wobbly: {
+    stiffness: 180,
+    damping: 12
+  },
+  stiff: {
+    stiffness: 210,
+    damping: 20
+  }
+};
+module.exports = exports["default"];
+
+/***/ }),
+
+/***/ "./node_modules/react-motion/lib/react-motion.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/react-motion/lib/react-motion.js ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+function _interopRequire(obj) {
+  return obj && obj.__esModule ? obj['default'] : obj;
+}
+
+var _Motion = __webpack_require__(/*! ./Motion */ "./node_modules/react-motion/lib/Motion.js");
+
+exports.Motion = _interopRequire(_Motion);
+
+var _StaggeredMotion = __webpack_require__(/*! ./StaggeredMotion */ "./node_modules/react-motion/lib/StaggeredMotion.js");
+
+exports.StaggeredMotion = _interopRequire(_StaggeredMotion);
+
+var _TransitionMotion = __webpack_require__(/*! ./TransitionMotion */ "./node_modules/react-motion/lib/TransitionMotion.js");
+
+exports.TransitionMotion = _interopRequire(_TransitionMotion);
+
+var _spring = __webpack_require__(/*! ./spring */ "./node_modules/react-motion/lib/spring.js");
+
+exports.spring = _interopRequire(_spring);
+
+var _presets = __webpack_require__(/*! ./presets */ "./node_modules/react-motion/lib/presets.js");
+
+exports.presets = _interopRequire(_presets);
+
+var _stripStyle = __webpack_require__(/*! ./stripStyle */ "./node_modules/react-motion/lib/stripStyle.js");
+
+exports.stripStyle = _interopRequire(_stripStyle); // deprecated, dummy warning function
+
+var _reorderKeys = __webpack_require__(/*! ./reorderKeys */ "./node_modules/react-motion/lib/reorderKeys.js");
+
+exports.reorderKeys = _interopRequire(_reorderKeys);
+
+/***/ }),
+
+/***/ "./node_modules/react-motion/lib/reorderKeys.js":
+/*!******************************************************!*\
+  !*** ./node_modules/react-motion/lib/reorderKeys.js ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports['default'] = reorderKeys;
+var hasWarned = false;
+
+function reorderKeys() {
+  if (true) {
+    if (!hasWarned) {
+      hasWarned = true;
+      console.error('`reorderKeys` has been removed, since it is no longer needed for TransitionMotion\'s new styles array API.');
+    }
+  }
+}
+
+module.exports = exports['default'];
+
+/***/ }),
+
+/***/ "./node_modules/react-motion/lib/shouldStopAnimation.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/react-motion/lib/shouldStopAnimation.js ***!
+  \**************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+// usage assumption: currentStyle values have already been rendered but it says
+// nothing of whether currentStyle is stale (see unreadPropStyle)
+
+
+exports.__esModule = true;
+exports['default'] = shouldStopAnimation;
+
+function shouldStopAnimation(currentStyle, style, currentVelocity) {
+  for (var key in style) {
+    if (!Object.prototype.hasOwnProperty.call(style, key)) {
+      continue;
+    }
+
+    if (currentVelocity[key] !== 0) {
+      return false;
+    }
+
+    var styleValue = typeof style[key] === 'number' ? style[key] : style[key].val; // stepper will have already taken care of rounding precision errors, so
+    // won't have such thing as 0.9999 !=== 1
+
+    if (currentStyle[key] !== styleValue) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+module.exports = exports['default'];
+
+/***/ }),
+
+/***/ "./node_modules/react-motion/lib/spring.js":
+/*!*************************************************!*\
+  !*** ./node_modules/react-motion/lib/spring.js ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _extends = Object.assign || function (target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i];
+
+    for (var key in source) {
+      if (Object.prototype.hasOwnProperty.call(source, key)) {
+        target[key] = source[key];
+      }
+    }
+  }
+
+  return target;
+};
+
+exports['default'] = spring;
+
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : {
+    'default': obj
+  };
+}
+
+var _presets = __webpack_require__(/*! ./presets */ "./node_modules/react-motion/lib/presets.js");
+
+var _presets2 = _interopRequireDefault(_presets);
+
+var defaultConfig = _extends({}, _presets2['default'].noWobble, {
+  precision: 0.01
+});
+
+function spring(val, config) {
+  return _extends({}, defaultConfig, config, {
+    val: val
+  });
+}
+
+module.exports = exports['default'];
+
+/***/ }),
+
+/***/ "./node_modules/react-motion/lib/stepper.js":
+/*!**************************************************!*\
+  !*** ./node_modules/react-motion/lib/stepper.js ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+// stepper is used a lot. Saves allocation to return the same array wrapper.
+// This is fine and danger-free against mutations because the callsite
+// immediately destructures it and gets the numbers inside without passing the
+
+
+exports.__esModule = true;
+exports["default"] = stepper;
+var reusedTuple = [0, 0];
+
+function stepper(secondPerFrame, x, v, destX, k, b, precision) {
+  // Spring stiffness, in kg / s^2
+  // for animations, destX is really spring length (spring at rest). initial
+  // position is considered as the stretched/compressed position of a spring
+  var Fspring = -k * (x - destX); // Damping, in kg / s
+
+  var Fdamper = -b * v; // usually we put mass here, but for animation purposes, specifying mass is a
+  // bit redundant. you could simply adjust k and b accordingly
+  // let a = (Fspring + Fdamper) / mass;
+
+  var a = Fspring + Fdamper;
+  var newV = v + a * secondPerFrame;
+  var newX = x + newV * secondPerFrame;
+
+  if (Math.abs(newV) < precision && Math.abs(newX - destX) < precision) {
+    reusedTuple[0] = destX;
+    reusedTuple[1] = 0;
+    return reusedTuple;
+  }
+
+  reusedTuple[0] = newX;
+  reusedTuple[1] = newV;
+  return reusedTuple;
+}
+
+module.exports = exports["default"]; // array reference around.
+
+/***/ }),
+
+/***/ "./node_modules/react-motion/lib/stripStyle.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/react-motion/lib/stripStyle.js ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+// turn {x: {val: 1, stiffness: 1, damping: 2}, y: 2} generated by
+// `{x: spring(1, {stiffness: 1, damping: 2}), y: 2}` into {x: 1, y: 2}
+
+
+exports.__esModule = true;
+exports['default'] = stripStyle;
+
+function stripStyle(style) {
+  var ret = {};
+
+  for (var key in style) {
+    if (!Object.prototype.hasOwnProperty.call(style, key)) {
+      continue;
+    }
+
+    ret[key] = typeof style[key] === 'number' ? style[key] : style[key].val;
+  }
+
+  return ret;
+}
+
+module.exports = exports['default'];
 
 /***/ }),
 
@@ -40023,13 +45158,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var reactR__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! reactR */ "reactR");
 /* harmony import */ var reactR__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(reactR__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _nivo_calendar__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @nivo/calendar */ "./node_modules/@nivo/calendar/dist/nivo-calendar.es.js");
+/* harmony import */ var _nivo_bump__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @nivo/bump */ "./node_modules/@nivo/bump/dist/nivo-bump.es.js");
+
 
 
 
 Object(reactR__WEBPACK_IMPORTED_MODULE_0__["reactWidget"])(
   'calendar',
   'output',
-  { ResponsiveCalendar: _nivo_calendar__WEBPACK_IMPORTED_MODULE_1__["ResponsiveCalendar"], ResponsiveCalendarCanvas: _nivo_calendar__WEBPACK_IMPORTED_MODULE_1__["ResponsiveCalendarCanvas"] },
+  { ResponsiveCalendar: _nivo_calendar__WEBPACK_IMPORTED_MODULE_1__["ResponsiveCalendar"], ResponsiveCalendarCanvas: _nivo_calendar__WEBPACK_IMPORTED_MODULE_1__["ResponsiveCalendarCanvas"], ResponsiveAreaBump: _nivo_bump__WEBPACK_IMPORTED_MODULE_2__["ResponsiveAreaBump"] },
   {},
 );
 
