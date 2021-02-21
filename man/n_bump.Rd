@@ -40,16 +40,6 @@ the y-axis, it only shows the ranking of each serie at a given time.
 If you'd like to show the ranking and also graph the y-axis values, you can
 also you use the AreaBump visualization.
 }
-\examples{
-library(nivor)
-
-# generate data
-
-# the simplest use
-n_area_bump(data)
-
-# an example of a slightly more complex setup
-}
 \seealso{
 \href{https://nivo.rocks/bump/}{Additional arguments}
 }

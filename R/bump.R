@@ -155,16 +155,6 @@ n_area_bump <- function(
 #' @return a nivo Bump component
 #' @export
 #' @seealso \href{https://nivo.rocks/bump/}{Additional arguments}
-#'
-#' @examples
-#' library(nivor)
-#'
-#' # generate data
-#'
-#' # the simplest use
-#' n_area_bump(data)
-#'
-#' # an example of a slightly more complex setup
 n_bump <- function(
   data = NULL,
   series = NULL,
