@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function reference • nivor</title>
+<title>Bump Visualization — n_bump • nivor</title>
 
 
 <!-- jquery -->
@@ -39,7 +39,10 @@
 
 
 
-<meta property="og:title" content="Function reference" />
+<meta property="og:title" content="Bump Visualization — n_bump" />
+<meta property="og:description" content="The Bump chart can be used to show the ranking of several series over time.
+It is quite similar to line charts, but instead of graphing some measure on
+the y-axis, it only shows the ranking of each serie at a given time." />
 
 
 
@@ -58,7 +61,7 @@
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    <div class="container template-reference-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -100,66 +103,69 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Reference</h1>
+    <h1>Bump Visualization</h1>
+    
+    <div class="hidden name"><code>n_bump.Rd</code></div>
     </div>
 
-    <table class="ref-index">
+    <div class="ref-description">
+    <p>The Bump chart can be used to show the ranking of several series over time.
+It is quite similar to line charts, but instead of graphing some measure on
+the y-axis, it only shows the ranking of each serie at a given time.</p>
+    </div>
 
-    <colgroup>
-      
-      <col class="alias" />
-      <col class="title" />
-    </colgroup>
+    <pre class="usage"><span class='fu'>n_bump</span><span class='op'>(</span>
+  data <span class='op'>=</span> <span class='cn'>NULL</span>,
+  series <span class='op'>=</span> <span class='cn'>NULL</span>,
+  x <span class='op'>=</span> <span class='cn'>NULL</span>,
+  <span class='va'>...</span>,
+  width <span class='op'>=</span> <span class='cn'>NULL</span>,
+  height <span class='op'>=</span> <span class='cn'>NULL</span>,
+  element_id <span class='op'>=</span> <span class='cn'>NULL</span>
+<span class='op'>)</span></pre>
 
-    <tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-          <p class="section-desc"></p>
-        </th>
-      </tr>
-      
-      
-    </tbody><tbody>
-      
-      
-      <tr>
-        
-        <td>
-          <p><code><a href="calendar-shiny.html">calendarOutput()</a></code> <code><a href="calendar-shiny.html">renderCalendar()</a></code> <code><a href="calendar-shiny.html">calendar_html()</a></code> </p>
-        </td>
-        <td><p>Shiny bindings for calendar</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="n_area_bump.html">n_area_bump()</a></code> </p>
-        </td>
-        <td><p>AreaBump Visualization</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="n_bump.html">n_bump()</a></code> </p>
-        </td>
-        <td><p>Bump Visualization</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="n_calendar.html">n_calendar()</a></code> </p>
-        </td>
-        <td><p>Calendar Visualization</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="n_line.html">n_line()</a></code> </p>
-        </td>
-        <td><p>Line Visualization</p></td>
-      </tr>
-    </tbody>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>data</th>
+      <td><p>data set in data.frame.</p></td>
+    </tr>
+    <tr>
+      <th>series, x</th>
+      <td><p>column names of series and x value. if not provided, it will
+use the first column as x value, and others as series.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>additional arguments.</p></td>
+    </tr>
+    <tr>
+      <th>width, height</th>
+      <td><p>Must be a valid CSS unit (like <code>'100%'</code>,
+<code>'400px'</code>, <code>'auto'</code>) or a number, which will be coerced to a
+string and have <code>'px'</code> appended.</p></td>
+    </tr>
+    <tr>
+      <th>element_id</th>
+      <td><p>element id of widgets.</p></td>
+    </tr>
     </table>
-  </div>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>a nivo Bump component</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>If you'd like to show the ranking and also graph the y-axis values, you can
+also you use the AreaBump visualization.</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p><a href='https://nivo.rocks/bump/'>Additional arguments</a></p></div>
+
+  </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
       <h2 data-toc-skip>Contents</h2>
