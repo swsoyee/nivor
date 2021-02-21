@@ -114,15 +114,14 @@
 #'   )
 #' )
 n_line <- function(
-  data = NULL,
-  series = NULL,
-  x = NULL,
-  render = c("svg", "canvas"),
-  ...,
-  width = NULL,
-  height = NULL,
-  element_id = NULL) {
-
+                   data = NULL,
+                   series = NULL,
+                   x = NULL,
+                   render = c("svg", "canvas"),
+                   ...,
+                   width = NULL,
+                   height = NULL,
+                   element_id = NULL) {
   render <- match.arg(render, c("svg", "canvas"))
 
   # describe a React component to send to the browser for rendering.
