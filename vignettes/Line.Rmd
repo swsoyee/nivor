@@ -1,0 +1,92 @@
+---
+title: "Line"
+---
+
+## Setup
+
+```{r common}
+library(nivor)
+
+set.seed(1)
+generator <- function(n) {
+  round(runif(n, min = 0, max = 50), 0)
+}
+```
+
+## Stacked Lines
+
+```{r stacked lines}
+data <- data.frame(
+  group = paste("Group", 1:6),
+  JavaScript = generator(6),
+  ReasonML = generator(6),
+  TypeScript = generator(6),
+  Elm = generator(6),
+  CoffeeScript = generator(6)
+)
+
+n_line(
+  data = data,
+  width = 800,
+  height = 400,
+  margin = list(
+    top = 30,
+    right = 30,
+    bottom = 60,
+    left = 80
+  ),
+  animate = TRUE,
+  enableSlices = "x",
+  yScale = list(
+    type = "linear",
+    stacked = TRUE
+  ),
+  curve = "linear"
+)
+```
+
+You can stack lines using the **yScale.stacked** property. Please note that stacking is only supported for linear scales.
+
+## Time Scale
+
+```{r time scale}
+data <- data.frame(
+  date = seq.Date(
+    from = as.Date("2021-01-01"),
+    length.out = 10,
+    by = "days"
+  ),
+  "fake corp. A" = c(7, 5, 11, 9, 12, 16, 13, 13, NA, NA),
+  "fake corp. B" = c(NA, NA, 14, 14, 15, 11, 10, 12, 9, 7)
+)
+
+n_line(
+  data = data,
+  width = 800,
+  height = 400,
+  margin = list(
+    top = 30,
+    right = 30,
+    bottom = 60,
+    left = 80
+  ),
+  animate = TRUE,
+  curve = "monotoneX",
+  axisLeft = list(
+    legend = "linear scale",
+    legendOffset = 12
+  ),
+  enablePointLabel = TRUE,
+  pointSize = 16,
+  pointBorderWidth = 1,
+  pointBorderColor = list(
+    from = "color",
+    modifiers = list(list("darker", 0.3))
+  ),
+  useMesh = TRUE,
+  enableSlices = FALSE
+)
+```
+
+Known issue: **xScale** are not work.
+

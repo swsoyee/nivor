@@ -18,3 +18,4 @@
 ^\.eslintrc\.js$
 ^package-lock\.json$
 ^CODE_OF_CONDUCT\.md$
+^vignettes/articles$
