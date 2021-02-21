@@ -1,10 +1,15 @@
 import { reactWidget } from 'reactR';
 import { ResponsiveCalendar, ResponsiveCalendarCanvas } from '@nivo/calendar';
-import { ResponsiveAreaBump } from '@nivo/bump';
+import { ResponsiveAreaBump, ResponsiveBump } from '@nivo/bump';
 
 reactWidget(
   'calendar',
   'output',
-  { ResponsiveCalendar, ResponsiveCalendarCanvas, ResponsiveAreaBump },
+  { 
+    ResponsiveCalendar, 
+    ResponsiveCalendarCanvas, 
+    ResponsiveAreaBump, 
+    ResponsiveBump
+  },
   {},
 );

@@ -11,7 +11,7 @@
 #' @param width,height Must be a valid CSS unit (like \code{'100\%'},
 #'   \code{'400px'}, \code{'auto'}) or a number, which will be coerced to a
 #'   string and have \code{'px'} appended.
-#' @param element_id element id of widgets
+#' @param element_id element id of widgets.
 #'
 #' @import htmlwidgets
 #' @return a nivo AreaBump component
@@ -113,6 +113,71 @@ n_area_bump <- function(
   component <- reactR::reactMarkup(
     htmltools::tag(
       "ResponsiveAreaBump",
+      list(
+        data = .convert_data(data),
+        # assume extra arguments are props
+        ...
+      )
+    )
+  )
+
+  # create widget
+  htmlwidgets::createWidget(
+    name = "calendar", # TODO it's a bug, should be rename to nivo
+    component,
+    width = width,
+    height = height,
+    package = "nivor",
+    elementId = element_id
+  )
+}
+
+
+#' Bump Visualization
+#'
+#' The Bump chart can be used to show the ranking of several series over time.
+#' It is quite similar to line charts, but instead of graphing some measure on
+#' the y-axis, it only shows the ranking of each serie at a given time.
+#'
+#' If you'd like to show the ranking and also graph the y-axis values, you can
+#' also you use the AreaBump visualization.
+#'
+#' @param data data set in data.frame.
+#' @param series,x column names of series and x value. if not provided, it will
+#' use the first column as x value, and others as series.
+#' @param ... additional arguments.
+#' @param width,height Must be a valid CSS unit (like \code{'100\%'},
+#'   \code{'400px'}, \code{'auto'}) or a number, which will be coerced to a
+#'   string and have \code{'px'} appended.
+#' @param element_id element id of widgets.
+#'
+#' @import htmlwidgets
+#' @return a nivo Bump component
+#' @export
+#' @seealso \href{https://nivo.rocks/bump/}{Additional arguments}
+#'
+#' @examples
+#' library(nivor)
+#'
+#' # generate data
+#'
+#' # the simplest use
+#' n_area_bump(data)
+#'
+#' # an example of a slightly more complex setup
+n_bump <- function(
+  data = NULL,
+  series = NULL,
+  x = NULL,
+  ...,
+  width = NULL,
+  height = NULL,
+  element_id = NULL) {
+
+  # describe a React component to send to the browser for rendering.
+  component <- reactR::reactMarkup(
+    htmltools::tag(
+      "ResponsiveBump",
       list(
         data = .convert_data(data),
         # assume extra arguments are props

@@ -2,6 +2,7 @@
 
 export(calendarOutput)
 export(n_area_bump)
+export(n_bump)
 export(n_calendar)
 export(renderCalendar)
 import(htmlwidgets)
