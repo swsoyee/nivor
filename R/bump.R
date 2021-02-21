@@ -155,21 +155,91 @@ n_area_bump <- function(
 #' @return a nivo Bump component
 #' @export
 #' @seealso \href{https://nivo.rocks/bump/}{Additional arguments}
+#' @examples
+#' library(nivor)
+#'
+#' # generate data
+#' data <- data.frame(
+#'   group = 2000:2005,
+#'   "Serie 1" = c(3, 6, 2, 4, 1, 5),
+#'   "Serie 2" = c(1, 4, 5, 2, 3, 6),
+#'   "Serie 3" = c(2, 3, 1, 5, 6, 4),
+#'   "Serie 4" = c(4, 1, 3, 6, 5, 2),
+#'   "Serie 5" = c(6, 5, 4, 1, 2, 3),
+#'   "Serie 6" = c(5, 2, 6, 3, 4, 1)
+#' )
+#'
+#' # the simplest use
+#' n_bump(data)
+#'
+#' # an example of a slightly more complex setup
+#' n_bump(
+#'   data,
+#'   margin = list(
+#'     top = 40,
+#'     right = 100,
+#'     bottom = 40,
+#'     left = 60
+#'   ),
+#'   colors = list(
+#'     scheme = "spectral"
+#'   ),
+#'   lineWidth = 3,
+#'   activeLineWidth = 6,
+#'   inactiveLineWidth = 3,
+#'   inactiveOpacity = 0.15,
+#'   pointSize = 10,
+#'   activePointSize = 16,
+#'   inactivePointSize = 0,
+#'   pointColor = list(
+#'     theme = "background"
+#'   ),
+#'   pointBorderWidth = 3,
+#'   activePointBorderWidth = 3,
+#'   pointBorderColor = list(
+#'     from = "serie.color"
+#'   ),
+#'   axisTop = list(
+#'     tickSize = 5,
+#'     tickPadding = 5,
+#'     tickRotation = 0,
+#'     legend = "",
+#'     legendPosition = "middle",
+#'     legendOffset = -36
+#'   ),
+#'   axisRight = NULL,
+#'   axisBottom = list(
+#'     tickSize = 5,
+#'     tickPadding = 5,
+#'     tickRotation = 0,
+#'     legend = "",
+#'     legendPosition = "middle",
+#'     legendOffset = 32
+#'   ),
+#'   axisLeft = list(
+#'     tickSize = 5,
+#'     tickPadding = 5,
+#'     tickRotation = 0,
+#'     legend = "ranking",
+#'     legendPosition = "middle",
+#'     legendOffset = -40
+#'   )
+#' )
 n_bump <- function(
-  data = NULL,
-  series = NULL,
-  x = NULL,
-  ...,
-  width = NULL,
-  height = NULL,
-  element_id = NULL) {
+                   data = NULL,
+                   series = NULL,
+                   x = NULL,
+                   ...,
+                   width = NULL,
+                   height = NULL,
+                   element_id = NULL) {
 
   # describe a React component to send to the browser for rendering.
   component <- reactR::reactMarkup(
     htmltools::tag(
       "ResponsiveBump",
       list(
-        data = .convert_data(data),
+        data = .convert_data(data, fill = TRUE),
         # assume extra arguments are props
         ...
       )

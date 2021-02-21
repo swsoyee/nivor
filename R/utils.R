@@ -4,11 +4,12 @@
 #' @param series series name (column name). if not provided, use all column but
 #' the first column.
 #' @param x column name of x value. if not provided, use the first column.
+#' @param fill if TRUE, then expand the result list.
 #'
 #' @noRd
 #' @return data in list for NIVO visualization
 #' @keywords internal
-.convert_data <- function(data, series, x) {
+.convert_data <- function(data, series, x, fill = FALSE) {
   if (missing(data)) {
     stop("data should be passed in.")
   }
@@ -20,7 +21,7 @@
 
   x <- data[, ifelse(missing(x), 1, x)]
 
-  lapply(series, function(serie) {
+  result <- lapply(series, function(serie) {
     list(
       id = serie,
       data = unname(
@@ -35,4 +36,13 @@
       )
     )
   })
+
+  if (fill) {
+    difference <- abs(length(series) - length(x))
+    while (difference) {
+      result <- append(result, result[1])
+      difference <- difference - 1
+    }
+  }
+  result
 }

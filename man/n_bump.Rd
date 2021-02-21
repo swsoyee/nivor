@@ -40,6 +40,77 @@ the y-axis, it only shows the ranking of each serie at a given time.
 If you'd like to show the ranking and also graph the y-axis values, you can
 also you use the AreaBump visualization.
 }
+\examples{
+library(nivor)
+
+# generate data
+data <- data.frame(
+  group = 2000:2005,
+  "Serie 1" = c(3, 6, 2, 4, 1, 5),
+  "Serie 2" = c(1, 4, 5, 2, 3, 6),
+  "Serie 3" = c(2, 3, 1, 5, 6, 4),
+  "Serie 4" = c(4, 1, 3, 6, 5, 2),
+  "Serie 5" = c(6, 5, 4, 1, 2, 3),
+  "Serie 6" = c(5, 2, 6, 3, 4, 1)
+)
+
+# the simplest use
+n_bump(data)
+
+# an example of a slightly more complex setup
+n_bump(
+  data,
+  margin = list(
+    top = 40,
+    right = 100,
+    bottom = 40,
+    left = 60
+  ),
+  colors = list(
+    scheme = "spectral"
+  ),
+  lineWidth = 3,
+  activeLineWidth = 6,
+  inactiveLineWidth = 3,
+  inactiveOpacity = 0.15,
+  pointSize = 10,
+  activePointSize = 16,
+  inactivePointSize = 0,
+  pointColor = list(
+    theme = "background"
+  ),
+  pointBorderWidth = 3,
+  activePointBorderWidth = 3,
+  pointBorderColor = list(
+    from = "serie.color"
+  ),
+  axisTop = list(
+    tickSize = 5,
+    tickPadding = 5,
+    tickRotation = 0,
+    legend = "",
+    legendPosition = "middle",
+    legendOffset = -36
+  ),
+  axisRight = NULL,
+  axisBottom = list(
+    tickSize = 5,
+    tickPadding = 5,
+    tickRotation = 0,
+    legend = "",
+    legendPosition = "middle",
+    legendOffset = 32
+  ),
+  axisLeft = list(
+    tickSize = 5,
+    tickPadding = 5,
+    tickRotation = 0,
+    legend = "ranking",
+    legendPosition = "middle",
+    legendOffset = -40
+  )
+)
+}
 \seealso{
 \href{https://nivo.rocks/bump/}{Additional arguments}
 }
