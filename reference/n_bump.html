@@ -177,6 +177,77 @@ also you use the AreaBump visualization.</p>
 
     <div class='dont-index'><p><a href='https://nivo.rocks/bump/'>Additional arguments</a></p></div>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'>nivor</span><span class='op'>)</span>
+
+<span class='co'># generate data</span>
+<span class='va'>data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>
+  group <span class='op'>=</span> <span class='fl'>2000</span><span class='op'>:</span><span class='fl'>2005</span>,
+  <span class='st'>"Serie 1"</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>3</span>, <span class='fl'>6</span>, <span class='fl'>2</span>, <span class='fl'>4</span>, <span class='fl'>1</span>, <span class='fl'>5</span><span class='op'>)</span>,
+  <span class='st'>"Serie 2"</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>4</span>, <span class='fl'>5</span>, <span class='fl'>2</span>, <span class='fl'>3</span>, <span class='fl'>6</span><span class='op'>)</span>,
+  <span class='st'>"Serie 3"</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>3</span>, <span class='fl'>1</span>, <span class='fl'>5</span>, <span class='fl'>6</span>, <span class='fl'>4</span><span class='op'>)</span>,
+  <span class='st'>"Serie 4"</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>4</span>, <span class='fl'>1</span>, <span class='fl'>3</span>, <span class='fl'>6</span>, <span class='fl'>5</span>, <span class='fl'>2</span><span class='op'>)</span>,
+  <span class='st'>"Serie 5"</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>6</span>, <span class='fl'>5</span>, <span class='fl'>4</span>, <span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span><span class='op'>)</span>,
+  <span class='st'>"Serie 6"</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>5</span>, <span class='fl'>2</span>, <span class='fl'>6</span>, <span class='fl'>3</span>, <span class='fl'>4</span>, <span class='fl'>1</span><span class='op'>)</span>
+<span class='op'>)</span>
+
+<span class='co'># the simplest use</span>
+<span class='fu'>n_bump</span><span class='op'>(</span><span class='va'>data</span><span class='op'>)</span>
+
+<span class='co'># an example of a slightly more complex setup</span>
+<span class='fu'>n_bump</span><span class='op'>(</span>
+  <span class='va'>data</span>,
+  margin <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
+    top <span class='op'>=</span> <span class='fl'>40</span>,
+    right <span class='op'>=</span> <span class='fl'>100</span>,
+    bottom <span class='op'>=</span> <span class='fl'>40</span>,
+    left <span class='op'>=</span> <span class='fl'>60</span>
+  <span class='op'>)</span>,
+  colors <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
+    scheme <span class='op'>=</span> <span class='st'>"spectral"</span>
+  <span class='op'>)</span>,
+  lineWidth <span class='op'>=</span> <span class='fl'>3</span>,
+  activeLineWidth <span class='op'>=</span> <span class='fl'>6</span>,
+  inactiveLineWidth <span class='op'>=</span> <span class='fl'>3</span>,
+  inactiveOpacity <span class='op'>=</span> <span class='fl'>0.15</span>,
+  pointSize <span class='op'>=</span> <span class='fl'>10</span>,
+  activePointSize <span class='op'>=</span> <span class='fl'>16</span>,
+  inactivePointSize <span class='op'>=</span> <span class='fl'>0</span>,
+  pointColor <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
+    theme <span class='op'>=</span> <span class='st'>"background"</span>
+  <span class='op'>)</span>,
+  pointBorderWidth <span class='op'>=</span> <span class='fl'>3</span>,
+  activePointBorderWidth <span class='op'>=</span> <span class='fl'>3</span>,
+  pointBorderColor <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
+    from <span class='op'>=</span> <span class='st'>"serie.color"</span>
+  <span class='op'>)</span>,
+  axisTop <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
+    tickSize <span class='op'>=</span> <span class='fl'>5</span>,
+    tickPadding <span class='op'>=</span> <span class='fl'>5</span>,
+    tickRotation <span class='op'>=</span> <span class='fl'>0</span>,
+    legend <span class='op'>=</span> <span class='st'>""</span>,
+    legendPosition <span class='op'>=</span> <span class='st'>"middle"</span>,
+    legendOffset <span class='op'>=</span> <span class='op'>-</span><span class='fl'>36</span>
+  <span class='op'>)</span>,
+  axisRight <span class='op'>=</span> <span class='cn'>NULL</span>,
+  axisBottom <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
+    tickSize <span class='op'>=</span> <span class='fl'>5</span>,
+    tickPadding <span class='op'>=</span> <span class='fl'>5</span>,
+    tickRotation <span class='op'>=</span> <span class='fl'>0</span>,
+    legend <span class='op'>=</span> <span class='st'>""</span>,
+    legendPosition <span class='op'>=</span> <span class='st'>"middle"</span>,
+    legendOffset <span class='op'>=</span> <span class='fl'>32</span>
+  <span class='op'>)</span>,
+  axisLeft <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
+    tickSize <span class='op'>=</span> <span class='fl'>5</span>,
+    tickPadding <span class='op'>=</span> <span class='fl'>5</span>,
+    tickRotation <span class='op'>=</span> <span class='fl'>0</span>,
+    legend <span class='op'>=</span> <span class='st'>"ranking"</span>,
+    legendPosition <span class='op'>=</span> <span class='st'>"middle"</span>,
+    legendOffset <span class='op'>=</span> <span class='op'>-</span><span class='fl'>40</span>
+  <span class='op'>)</span>
+<span class='op'>)</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
