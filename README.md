@@ -29,9 +29,9 @@ install.packages("nivor")
 
 This is a basic example which shows you how to solve a common problem:
 
-### AreaBump
-
 ``` r
+library(nivor)
+
 data <- data.frame(
   year = 2000:2005,
   JavaScript = runif(6, min = 0, max = 50),
@@ -40,8 +40,19 @@ data <- data.frame(
   Elm = runif(6, min = 0, max = 50),
   CoffeeScript = runif(6, min = 0, max = 50)
 )
+```
 
-# the simplest use
+### Line
+
+``` r
+n_line(data)
+```
+
+![Line](man/figures/Line.png)
+
+### AreaBump
+
+``` r
 n_area_bump(data)
 ```
 
@@ -50,8 +61,6 @@ n_area_bump(data)
 ### Calendar
 
 ``` r
-library(nivor)
-
 df <- data.frame(
   day = seq.Date(
     from = as.Date("2020-04-01"),
@@ -61,7 +70,6 @@ df <- data.frame(
   value = round(runif(600) * 1000, 0)
 )
 
-# the simplest use
 n_calendar(df)
 ```
 
