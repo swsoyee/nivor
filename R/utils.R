@@ -23,13 +23,15 @@
   lapply(series, function(serie) {
     list(
       id = serie,
-      data = mapply(
-        function(x, y) {
-          list(x = x, y = y)
-        },
-        x,
-        data[, serie],
-        SIMPLIFY = FALSE
+      data = unname(
+        mapply(
+          function(x, y) {
+            list(x = x, y = y)
+          },
+          x,
+          data[, serie],
+          SIMPLIFY = FALSE
+        )
       )
     )
   })
