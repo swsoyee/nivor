@@ -49,7 +49,7 @@ data <- data.frame(
   CoffeeScript = runif(6, min = 0, max = 50)
 )
 
-# using
+# the simplest use
 n_area_bump(data)
 
 # an example of a slightly more complex setup
