@@ -58,6 +58,24 @@ n_area_bump(data)
 
 ![AreaBump](man/figures/AreaBump.png)
 
+### Bump
+
+``` r
+data <- data.frame(
+  group = 2000:2005,
+  "Serie 1" = c(3, 6, 2, 4, 1, 5),
+  "Serie 2" = c(1, 4, 5, 2, 3, 6),
+  "Serie 3" = c(2, 3, 1, 5, 6, 4),
+  "Serie 4" = c(4, 1, 3, 6, 5, 2),
+  "Serie 5" = c(6, 5, 4, 1, 2, 3),
+  "Serie 6" = c(5, 2, 6, 3, 4, 1)
+)
+
+n_bump(data)
+```
+
+![Calendar](man/figures/Bump.png)
+
 ### Calendar
 
 ``` r
@@ -73,7 +91,7 @@ df <- data.frame(
 n_calendar(df)
 ```
 
-![Calendar](man/figures/calendar.png)
+![Calendar](man/figures/Calendar.png)
 
 ## Code of Conduct
 
