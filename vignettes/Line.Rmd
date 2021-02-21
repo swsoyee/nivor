@@ -1,6 +1,12 @@
 ---
-title: "Line"
+title: "Line Chart"
+output: html_document
 ---
+
+<!--
+%\VignetteEngine{knitr::rmarkdown}
+%\VignetteIndexEntry{Line Chart}
+-->
 
 ## Setup
 
