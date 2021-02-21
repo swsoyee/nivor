@@ -24,3 +24,5 @@ Imports:
     reactR,
     utils
 VignetteBuilder: knitr
+URL: https://github.com/swsoyee/nivor
+BugReports: https://github.com/swsoyee/nivor/issues
