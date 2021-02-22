@@ -56,7 +56,6 @@ data <- data.frame(
 n_line(data)
 
 # an example of a slightly more complex setup
-
 n_line(
   data = data,
   margin = list(
