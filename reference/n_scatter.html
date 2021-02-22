@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Line Visualization — n_line • nivor</title>
+<title>ScatterPlot Visualization — n_scatter • nivor</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Line Visualization — n_line" />
-<meta property="og:description" content="Line chart with stacking ability." />
+<meta property="og:title" content="ScatterPlot Visualization — n_scatter" />
+<meta property="og:description" content="ScatterPlot Visualization" />
 
 
 
@@ -120,19 +120,21 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Line Visualization</h1>
-    <small class="dont-index">Source: <a href='https://github.com/swsoyee/nivor/blob/master/R/line.R'><code>R/line.R</code></a></small>
-    <div class="hidden name"><code>n_line.Rd</code></div>
+    <h1>ScatterPlot Visualization</h1>
+    <small class="dont-index">Source: <a href='https://github.com/swsoyee/nivor/blob/master/R/scatter.R'><code>R/scatter.R</code></a></small>
+    <div class="hidden name"><code>n_scatter.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Line chart with stacking ability.</p>
+    <p>ScatterPlot Visualization</p>
     </div>
 
-    <pre class="usage"><span class='fu'>n_line</span><span class='op'>(</span>
-  data <span class='op'>=</span> <span class='cn'>NULL</span>,
-  series <span class='op'>=</span> <span class='cn'>NULL</span>,
-  x <span class='op'>=</span> <span class='cn'>NULL</span>,
+    <pre class="usage"><span class='fu'>n_scatter</span><span class='op'>(</span>
+  <span class='va'>data</span>,
+  <span class='va'>x</span>,
+  <span class='va'>y</span>,
+  z <span class='op'>=</span> <span class='cn'>NULL</span>,
+  group <span class='op'>=</span> <span class='cn'>NULL</span>,
   render <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"svg"</span>, <span class='st'>"canvas"</span><span class='op'>)</span>,
   <span class='va'>...</span>,
   width <span class='op'>=</span> <span class='cn'>NULL</span>,
@@ -148,9 +150,12 @@
       <td><p>data set in data.frame.</p></td>
     </tr>
     <tr>
-      <th>series, x</th>
-      <td><p>column names of series and x value. if not provided, it will
-use the first column as x value, and others as series.</p></td>
+      <th>x, y, z</th>
+      <td><p>column names of x, y and z (if any, for size) value.</p></td>
+    </tr>
+    <tr>
+      <th>group</th>
+      <td><p>column name of group.</p></td>
     </tr>
     <tr>
       <th>render</th>
@@ -176,92 +181,54 @@ string and have <code>'px'</code> appended.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>a nivo Line component</p>
+    <p>a nivo ScatterPlot component</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><a href='https://nivo.rocks/line/'>Additional arguments</a></p></div>
+    <div class='dont-index'><p><a href='https://nivo.rocks/scatterplot/'>Additional arguments</a></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/swsoyee/nivor'>nivor</a></span><span class='op'>)</span>
 
-<span class='co'># generate data</span>
-<span class='va'>data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>
-  year <span class='op'>=</span> <span class='fl'>2000</span><span class='op'>:</span><span class='fl'>2005</span>,
-  JavaScript <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span><span class='op'>(</span><span class='fl'>6</span>, min <span class='op'>=</span> <span class='fl'>0</span>, max <span class='op'>=</span> <span class='fl'>50</span><span class='op'>)</span>,
-  ReasonML <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span><span class='op'>(</span><span class='fl'>6</span>, min <span class='op'>=</span> <span class='fl'>0</span>, max <span class='op'>=</span> <span class='fl'>50</span><span class='op'>)</span>,
-  TypeScript <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span><span class='op'>(</span><span class='fl'>6</span>, min <span class='op'>=</span> <span class='fl'>0</span>, max <span class='op'>=</span> <span class='fl'>50</span><span class='op'>)</span>,
-  Elm <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span><span class='op'>(</span><span class='fl'>6</span>, min <span class='op'>=</span> <span class='fl'>0</span>, max <span class='op'>=</span> <span class='fl'>50</span><span class='op'>)</span>,
-  CoffeeScript <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span><span class='op'>(</span><span class='fl'>6</span>, min <span class='op'>=</span> <span class='fl'>0</span>, max <span class='op'>=</span> <span class='fl'>50</span><span class='op'>)</span>
+<span class='co'># the simplest use</span>
+<span class='fu'>n_scatter</span><span class='op'>(</span>
+  data <span class='op'>=</span> <span class='va'>iris</span>,
+  x <span class='op'>=</span> <span class='st'>"Sepal.Width"</span>,
+  y <span class='op'>=</span> <span class='st'>"Sepal.Length"</span>,
+  group <span class='op'>=</span> <span class='st'>"Species"</span>
 <span class='op'>)</span>
 
-<span class='co'># the simplest use</span>
-<span class='fu'>n_line</span><span class='op'>(</span><span class='va'>data</span><span class='op'>)</span>
-
 <span class='co'># an example of a slightly more complex setup</span>
-<span class='fu'>n_line</span><span class='op'>(</span>
-  data <span class='op'>=</span> <span class='va'>data</span>,
-  margin <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
-    top <span class='op'>=</span> <span class='fl'>50</span>,
-    right <span class='op'>=</span> <span class='fl'>110</span>,
-    bottom <span class='op'>=</span> <span class='fl'>50</span>,
-    left <span class='op'>=</span> <span class='fl'>60</span>
-  <span class='op'>)</span>,
-  xScale <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
-    type <span class='op'>=</span> <span class='st'>"point"</span>
-  <span class='op'>)</span>,
-  yScale <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
-    type <span class='op'>=</span> <span class='st'>"linear"</span>,
-    min <span class='op'>=</span> <span class='st'>"auto"</span>,
-    max <span class='op'>=</span> <span class='st'>"auto"</span>,
-    stacked <span class='op'>=</span> <span class='cn'>TRUE</span>,
-    reverse <span class='op'>=</span> <span class='cn'>FALSE</span>
-  <span class='op'>)</span>,
-  yFormat <span class='op'>=</span> <span class='st'>" &gt;-.2f"</span>,
-  axisTop <span class='op'>=</span> <span class='cn'>NA</span>,
-  axisRight <span class='op'>=</span> <span class='cn'>NA</span>,
+<span class='fu'>n_scatter</span><span class='op'>(</span>
+  data <span class='op'>=</span> <span class='va'>iris</span>,
+  x <span class='op'>=</span> <span class='st'>"Sepal.Width"</span>,
+  y <span class='op'>=</span> <span class='st'>"Sepal.Length"</span>,
+  group <span class='op'>=</span> <span class='st'>"Species"</span>,
+  margin <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>top <span class='op'>=</span> <span class='fl'>60</span>, right <span class='op'>=</span> <span class='fl'>140</span>, bottom <span class='op'>=</span> <span class='fl'>70</span>, left <span class='op'>=</span> <span class='fl'>90</span><span class='op'>)</span>,
+  xFormat <span class='op'>=</span> <span class='fu'>htmlwidgets</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/htmlwidgets/man/JS.html'>JS</a></span><span class='op'>(</span><span class='st'>'function(e){return e+" cm"}'</span><span class='op'>)</span>,
+  yFormat <span class='op'>=</span> <span class='fu'>htmlwidgets</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/htmlwidgets/man/JS.html'>JS</a></span><span class='op'>(</span><span class='st'>'function(e){return e+" cm"}'</span><span class='op'>)</span>,
   axisBottom <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
     orient <span class='op'>=</span> <span class='st'>"bottom"</span>,
     tickSize <span class='op'>=</span> <span class='fl'>5</span>,
     tickPadding <span class='op'>=</span> <span class='fl'>5</span>,
     tickRotation <span class='op'>=</span> <span class='fl'>0</span>,
-    legend <span class='op'>=</span> <span class='st'>"year"</span>,
-    legendOffset <span class='op'>=</span> <span class='fl'>36</span>,
-    legendPosition <span class='op'>=</span> <span class='st'>"middle"</span>
+    legend <span class='op'>=</span> <span class='st'>"Sepal.Width"</span>,
+    legendPosition <span class='op'>=</span> <span class='st'>"middle"</span>,
+    legendOffset <span class='op'>=</span> <span class='fl'>46</span>
   <span class='op'>)</span>,
-  axisLeft <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
-    orient <span class='op'>=</span> <span class='st'>"left"</span>,
-    tickSize <span class='op'>=</span> <span class='fl'>5</span>,
-    tickPadding <span class='op'>=</span> <span class='fl'>5</span>,
-    tickRotation <span class='op'>=</span> <span class='fl'>0</span>,
-    legend <span class='op'>=</span> <span class='st'>"count"</span>,
-    legendOffset <span class='op'>=</span> <span class='op'>-</span><span class='fl'>40</span>,
-    legendPosition <span class='op'>=</span> <span class='st'>"middle"</span>
-  <span class='op'>)</span>,
-  pointSize <span class='op'>=</span> <span class='fl'>10</span>,
-  pointColor <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
-    theme <span class='op'>=</span> <span class='st'>"background"</span>
-  <span class='op'>)</span>,
-  pointBorderWidth <span class='op'>=</span> <span class='fl'>2</span>,
-  pointBorderColor <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
-    from <span class='op'>=</span> <span class='st'>"serieColor"</span>
-  <span class='op'>)</span>,
-  pointLabelYOffset <span class='op'>=</span> <span class='op'>-</span><span class='fl'>12</span>,
-  useMesh <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  blendMode <span class='op'>=</span> <span class='st'>"multiply"</span>,
   legends <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
     <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
       anchor <span class='op'>=</span> <span class='st'>"bottom-right"</span>,
       direction <span class='op'>=</span> <span class='st'>"column"</span>,
       justify <span class='op'>=</span> <span class='cn'>FALSE</span>,
-      translateX <span class='op'>=</span> <span class='fl'>100</span>,
+      translateX <span class='op'>=</span> <span class='fl'>130</span>,
       translateY <span class='op'>=</span> <span class='fl'>0</span>,
-      itemsSpacing <span class='op'>=</span> <span class='fl'>0</span>,
+      itemWidth <span class='op'>=</span> <span class='fl'>100</span>,
+      itemHeight <span class='op'>=</span> <span class='fl'>12</span>,
+      itemsSpacing <span class='op'>=</span> <span class='fl'>5</span>,
       itemDirection <span class='op'>=</span> <span class='st'>"left-to-right"</span>,
-      itemWidth <span class='op'>=</span> <span class='fl'>80</span>,
-      itemHeight <span class='op'>=</span> <span class='fl'>20</span>,
-      itemOpacity <span class='op'>=</span> <span class='fl'>0.75</span>,
       symbolSize <span class='op'>=</span> <span class='fl'>12</span>,
       symbolShape <span class='op'>=</span> <span class='st'>"circle"</span>,
-      symbolBorderColor <span class='op'>=</span> <span class='st'>"rgba(0, 0, 0, .5)"</span>,
       effects <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
         <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
           on <span class='op'>=</span> <span class='st'>"hover"</span>,
@@ -272,6 +239,20 @@ string and have <code>'px'</code> appended.</p></td>
         <span class='op'>)</span>
       <span class='op'>)</span>
     <span class='op'>)</span>
+  <span class='op'>)</span>
+<span class='op'>)</span>
+
+<span class='co'># use z attribute for the size</span>
+<span class='fu'>n_scatter</span><span class='op'>(</span>
+  data <span class='op'>=</span> <span class='va'>iris</span>,
+  y <span class='op'>=</span> <span class='st'>"Sepal.Width"</span>,
+  x <span class='op'>=</span> <span class='st'>"Sepal.Length"</span>,
+  z <span class='op'>=</span> <span class='st'>"Petal.Length"</span>,
+  group <span class='op'>=</span> <span class='st'>"Species"</span>,
+  nodeSize <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
+    key <span class='op'>=</span> <span class='st'>"z"</span>,
+    values <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>4</span><span class='op'>)</span>,
+    sizes <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fl'>9</span>, <span class='fl'>32</span><span class='op'>)</span>
   <span class='op'>)</span>
 <span class='op'>)</span>
 </div></pre>
