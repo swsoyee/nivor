@@ -37,7 +37,23 @@ install.packages("nivor")
 This is a basic example which shows you how to solve a common problem:
 ```{r load, eval=FALSE}
 library(nivor)
+```
 
+### Scatter
+
+```{r Scatter, eval=FALSE}
+n_scatter(
+  data = iris,
+  x = "Sepal.Width",
+  y = "Sepal.Length",
+  group = "Species"
+)
+```
+![ScatterPlot](man/figures/ScatterPlot.png)
+
+### Line 
+
+```{r Line, eval=FALSE}
 data <- data.frame(
   year = 2000:2005,
   JavaScript = runif(6, min = 0, max = 50),
@@ -46,11 +62,7 @@ data <- data.frame(
   Elm = runif(6, min = 0, max = 50),
   CoffeeScript = runif(6, min = 0, max = 50)
 )
-```
 
-### Line 
-
-```{r Line, eval=FALSE}
 n_line(data)
 ```
 ![Line](man/figures/Line.png)

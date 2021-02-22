@@ -31,7 +31,24 @@ This is a basic example which shows you how to solve a common problem:
 
 ``` r
 library(nivor)
+```
 
+### Scatter
+
+``` r
+n_scatter(
+  data = iris,
+  x = "Sepal.Width",
+  y = "Sepal.Length",
+  group = "Species"
+)
+```
+
+![ScatterPlot](man/figures/ScatterPlot.png)
+
+### Line
+
+``` r
 data <- data.frame(
   year = 2000:2005,
   JavaScript = runif(6, min = 0, max = 50),
@@ -40,11 +57,7 @@ data <- data.frame(
   Elm = runif(6, min = 0, max = 50),
   CoffeeScript = runif(6, min = 0, max = 50)
 )
-```
 
-### Line
-
-``` r
 n_line(data)
 ```
 
