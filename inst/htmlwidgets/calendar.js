@@ -239,6 +239,776 @@ module.exports = _setPrototypeOf;
 
 /***/ }),
 
+/***/ "./node_modules/@nivo/annotations/dist/nivo-annotations.es.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/@nivo/annotations/dist/nivo-annotations.es.js ***!
+  \********************************************************************/
+/*! exports provided: Annotation, annotationSpecPropType, bindAnnotations, computeAnnotation, defaultProps, getLinkAngle, renderAnnotationsToCanvas, useAnnotations, useComputedAnnotation, useComputedAnnotations */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Annotation", function() { return Annotation; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "annotationSpecPropType", function() { return annotationSpecPropType; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "bindAnnotations", function() { return bindAnnotations; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "computeAnnotation", function() { return computeAnnotation; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "defaultProps", function() { return defaultProps; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getLinkAngle", function() { return getLinkAngle; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "renderAnnotationsToCanvas", function() { return renderAnnotationsToCanvas; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "useAnnotations", function() { return useAnnotations; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "useComputedAnnotation", function() { return useComputedAnnotation; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "useComputedAnnotations", function() { return useComputedAnnotations; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var lodash_isPlainObject__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! lodash/isPlainObject */ "./node_modules/lodash/isPlainObject.js");
+/* harmony import */ var lodash_isPlainObject__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(lodash_isPlainObject__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var lodash_filter__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! lodash/filter */ "./node_modules/lodash/filter.js");
+/* harmony import */ var lodash_filter__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(lodash_filter__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var lodash_omit__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! lodash/omit */ "./node_modules/lodash/omit.js");
+/* harmony import */ var lodash_omit__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(lodash_omit__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _nivo_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @nivo/core */ "./node_modules/@nivo/core/dist/nivo-core.es.js");
+/* harmony import */ var react_spring__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-spring */ "./node_modules/react-spring/web.js");
+
+
+
+
+
+
+
+var annotationSpecPropType = prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.shape({
+  match: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.func, prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.object]).isRequired,
+  type: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.oneOf(['circle', 'rect', 'dot']).isRequired,
+  noteX: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.number, prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.shape({
+    abs: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.number.isRequired
+  })]).isRequired,
+  noteY: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.number, prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.shape({
+    abs: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.number.isRequired
+  })]).isRequired,
+  noteWidth: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.number,
+  noteTextOffset: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.number,
+  note: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.node, prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.func]).isRequired,
+  offset: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.number
+});
+var defaultProps = {
+  noteWidth: 120,
+  noteTextOffset: 8,
+  animate: true,
+  motionStiffness: 90,
+  motionDamping: 13
+};
+
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+function ownKeys(object, enumerableOnly) {
+  var keys = Object.keys(object);
+
+  if (Object.getOwnPropertySymbols) {
+    var symbols = Object.getOwnPropertySymbols(object);
+    if (enumerableOnly) symbols = symbols.filter(function (sym) {
+      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+    });
+    keys.push.apply(keys, symbols);
+  }
+
+  return keys;
+}
+
+function _objectSpread2(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i] != null ? arguments[i] : {};
+
+    if (i % 2) {
+      ownKeys(Object(source), true).forEach(function (key) {
+        _defineProperty(target, key, source[key]);
+      });
+    } else if (Object.getOwnPropertyDescriptors) {
+      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+    } else {
+      ownKeys(Object(source)).forEach(function (key) {
+        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+      });
+    }
+  }
+
+  return target;
+}
+
+var defaultPositionAccessor = function defaultPositionAccessor(item) {
+  return {
+    x: item.x,
+    y: item.y
+  };
+};
+
+var bindAnnotations = function bindAnnotations(_ref) {
+  var items = _ref.items,
+      annotations = _ref.annotations,
+      _ref$getPosition = _ref.getPosition,
+      getPosition = _ref$getPosition === void 0 ? defaultPositionAccessor : _ref$getPosition,
+      getDimensions = _ref.getDimensions;
+  return annotations.reduce(function (acc, annotation) {
+    lodash_filter__WEBPACK_IMPORTED_MODULE_3___default()(items, annotation.match).forEach(function (item) {
+      var position = getPosition(item);
+      var dimensions = getDimensions(item, annotation.offset || 0);
+      acc.push(_objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2({}, lodash_omit__WEBPACK_IMPORTED_MODULE_4___default()(annotation, ['match', 'offset'])), position), dimensions), {}, {
+        datum: item,
+        size: annotation.size || dimensions.size
+      }));
+    });
+    return acc;
+  }, []);
+};
+
+var getLinkAngle = function getLinkAngle(sourceX, sourceY, targetX, targetY) {
+  var angle = Math.atan2(targetY - sourceY, targetX - sourceX);
+  return Object(_nivo_core__WEBPACK_IMPORTED_MODULE_5__["absoluteAngleDegrees"])(Object(_nivo_core__WEBPACK_IMPORTED_MODULE_5__["radiansToDegrees"])(angle));
+};
+
+var computeAnnotation = function computeAnnotation(_ref2) {
+  var type = _ref2.type,
+      x = _ref2.x,
+      y = _ref2.y,
+      size = _ref2.size,
+      width = _ref2.width,
+      height = _ref2.height,
+      noteX = _ref2.noteX,
+      noteY = _ref2.noteY,
+      _ref2$noteWidth = _ref2.noteWidth,
+      noteWidth = _ref2$noteWidth === void 0 ? defaultProps.noteWidth : _ref2$noteWidth,
+      _ref2$noteTextOffset = _ref2.noteTextOffset,
+      noteTextOffset = _ref2$noteTextOffset === void 0 ? defaultProps.noteTextOffset : _ref2$noteTextOffset;
+  var computedNoteX;
+  var computedNoteY;
+
+  if (lodash_isPlainObject__WEBPACK_IMPORTED_MODULE_2___default()(noteX)) {
+    if (noteX.abs !== undefined) {
+      computedNoteX = noteX.abs;
+    }
+  } else {
+    computedNoteX = x + noteX;
+  }
+
+  if (lodash_isPlainObject__WEBPACK_IMPORTED_MODULE_2___default()(noteY)) {
+    if (noteY.abs !== undefined) {
+      computedNoteY = noteY.abs;
+    }
+  } else {
+    computedNoteY = y + noteY;
+  }
+
+  var computedX = x;
+  var computedY = y;
+  var angle = getLinkAngle(x, y, computedNoteX, computedNoteY);
+
+  if (type === 'circle') {
+    var position = Object(_nivo_core__WEBPACK_IMPORTED_MODULE_5__["positionFromAngle"])(Object(_nivo_core__WEBPACK_IMPORTED_MODULE_5__["degreesToRadians"])(angle), size / 2);
+    computedX += position.x;
+    computedY += position.y;
+  }
+
+  if (type === 'rect') {
+    var eighth = Math.round((angle + 90) / 45) % 8;
+
+    if (eighth === 0) {
+      computedY -= height / 2;
+    }
+
+    if (eighth === 1) {
+      computedX += width / 2;
+      computedY -= height / 2;
+    }
+
+    if (eighth === 2) {
+      computedX += width / 2;
+    }
+
+    if (eighth === 3) {
+      computedX += width / 2;
+      computedY += height / 2;
+    }
+
+    if (eighth === 4) {
+      computedY += height / 2;
+    }
+
+    if (eighth === 5) {
+      computedX -= width / 2;
+      computedY += height / 2;
+    }
+
+    if (eighth === 6) {
+      computedX -= width / 2;
+    }
+
+    if (eighth === 7) {
+      computedX -= width / 2;
+      computedY -= height / 2;
+    }
+  }
+
+  var textX = computedNoteX;
+  var textY = computedNoteY - noteTextOffset;
+  var noteLineX = computedNoteX;
+  var noteLineY = computedNoteY;
+
+  if ((angle + 90) % 360 > 180) {
+    textX -= noteWidth;
+    noteLineX -= noteWidth;
+  } else {
+    noteLineX += noteWidth;
+  }
+
+  return {
+    points: [[computedX, computedY], [computedNoteX, computedNoteY], [noteLineX, noteLineY]],
+    text: [textX, textY],
+    angle: angle + 90
+  };
+};
+
+var useAnnotations = function useAnnotations(_ref) {
+  var items = _ref.items,
+      annotations = _ref.annotations,
+      getPosition = _ref.getPosition,
+      getDimensions = _ref.getDimensions;
+  return Object(react__WEBPACK_IMPORTED_MODULE_0__["useMemo"])(function () {
+    return bindAnnotations({
+      items: items,
+      annotations: annotations,
+      getPosition: getPosition,
+      getDimensions: getDimensions
+    });
+  }, [items, annotations, getPosition, getDimensions]);
+};
+
+var useComputedAnnotations = function useComputedAnnotations(_ref2) {
+  var annotations = _ref2.annotations,
+      containerWidth = _ref2.containerWidth,
+      containerHeight = _ref2.containerHeight;
+  return Object(react__WEBPACK_IMPORTED_MODULE_0__["useMemo"])(function () {
+    return annotations.map(function (annotation) {
+      return _objectSpread2(_objectSpread2({}, annotation), {}, {
+        computed: computeAnnotation(_objectSpread2({
+          containerWidth: containerWidth,
+          containerHeight: containerHeight
+        }, annotation))
+      });
+    });
+  }, [annotations, containerWidth, containerHeight]);
+};
+
+var useComputedAnnotation = function useComputedAnnotation(_ref3) {
+  var type = _ref3.type,
+      containerWidth = _ref3.containerWidth,
+      containerHeight = _ref3.containerHeight,
+      x = _ref3.x,
+      y = _ref3.y,
+      size = _ref3.size,
+      width = _ref3.width,
+      height = _ref3.height,
+      noteX = _ref3.noteX,
+      noteY = _ref3.noteY,
+      noteWidth = _ref3.noteWidth,
+      noteTextOffset = _ref3.noteTextOffset;
+  return Object(react__WEBPACK_IMPORTED_MODULE_0__["useMemo"])(function () {
+    return computeAnnotation({
+      type: type,
+      containerWidth: containerWidth,
+      containerHeight: containerHeight,
+      x: x,
+      y: y,
+      size: size,
+      width: width,
+      height: height,
+      noteX: noteX,
+      noteY: noteY,
+      noteWidth: noteWidth,
+      noteTextOffset: noteTextOffset
+    });
+  }, [type, containerWidth, containerHeight, x, y, size, width, height, noteX, noteY, noteWidth, noteTextOffset]);
+};
+
+var AnnotationNote = /*#__PURE__*/Object(react__WEBPACK_IMPORTED_MODULE_0__["memo"])(function (_ref) {
+  var datum = _ref.datum,
+      x = _ref.x,
+      y = _ref.y,
+      note = _ref.note;
+  var theme = Object(_nivo_core__WEBPACK_IMPORTED_MODULE_5__["useTheme"])();
+
+  var _useMotionConfig = Object(_nivo_core__WEBPACK_IMPORTED_MODULE_5__["useMotionConfig"])(),
+      animate = _useMotionConfig.animate,
+      springConfiig = _useMotionConfig.config;
+
+  var animatedProps = Object(react_spring__WEBPACK_IMPORTED_MODULE_6__["useSpring"])({
+    x: x,
+    y: y,
+    config: springConfiig,
+    immediate: !animate
+  });
+
+  if (typeof note === 'function') {
+    return note({
+      x: x,
+      y: y,
+      datum: datum
+    });
+  }
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, theme.annotations.text.outlineWidth > 0 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_spring__WEBPACK_IMPORTED_MODULE_6__["animated"].text, {
+    x: animatedProps.x,
+    y: animatedProps.y,
+    style: _objectSpread2(_objectSpread2({}, theme.annotations.text), {}, {
+      strokeLinejoin: 'round',
+      strokeWidth: theme.annotations.text.outlineWidth * 2,
+      stroke: theme.annotations.text.outlineColor
+    })
+  }, note), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_spring__WEBPACK_IMPORTED_MODULE_6__["animated"].text, {
+    x: animatedProps.x,
+    y: animatedProps.y,
+    style: lodash_omit__WEBPACK_IMPORTED_MODULE_4___default()(theme.annotations.text, ['outlineWidth', 'outlineColor'])
+  }, note));
+});
+AnnotationNote.displayName = 'AnnotationNote';
+AnnotationNote.defaultProps = {};
+
+function _arrayWithHoles(arr) {
+  if (Array.isArray(arr)) return arr;
+}
+
+function _iterableToArrayLimit(arr, i) {
+  if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return;
+  var _arr = [];
+  var _n = true;
+  var _d = false;
+  var _e = undefined;
+
+  try {
+    for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
+      _arr.push(_s.value);
+
+      if (i && _arr.length === i) break;
+    }
+  } catch (err) {
+    _d = true;
+    _e = err;
+  } finally {
+    try {
+      if (!_n && _i["return"] != null) _i["return"]();
+    } finally {
+      if (_d) throw _e;
+    }
+  }
+
+  return _arr;
+}
+
+function _arrayLikeToArray(arr, len) {
+  if (len == null || len > arr.length) len = arr.length;
+
+  for (var i = 0, arr2 = new Array(len); i < len; i++) {
+    arr2[i] = arr[i];
+  }
+
+  return arr2;
+}
+
+function _unsupportedIterableToArray(o, minLen) {
+  if (!o) return;
+  if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+  var n = Object.prototype.toString.call(o).slice(8, -1);
+  if (n === "Object" && o.constructor) n = o.constructor.name;
+  if (n === "Map" || n === "Set") return Array.from(n);
+  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+}
+
+function _nonIterableRest() {
+  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+
+function _slicedToArray(arr, i) {
+  return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
+}
+
+function _iterableToArray(iter) {
+  if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter);
+}
+
+function _toArray(arr) {
+  return _arrayWithHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableRest();
+}
+
+function _objectWithoutPropertiesLoose(source, excluded) {
+  if (source == null) return {};
+  var target = {};
+  var sourceKeys = Object.keys(source);
+  var key, i;
+
+  for (i = 0; i < sourceKeys.length; i++) {
+    key = sourceKeys[i];
+    if (excluded.indexOf(key) >= 0) continue;
+    target[key] = source[key];
+  }
+
+  return target;
+}
+
+function _objectWithoutProperties(source, excluded) {
+  if (source == null) return {};
+
+  var target = _objectWithoutPropertiesLoose(source, excluded);
+
+  var key, i;
+
+  if (Object.getOwnPropertySymbols) {
+    var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
+
+    for (i = 0; i < sourceSymbolKeys.length; i++) {
+      key = sourceSymbolKeys[i];
+      if (excluded.indexOf(key) >= 0) continue;
+      if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue;
+      target[key] = source[key];
+    }
+  }
+
+  return target;
+}
+
+var AnnotationLink = /*#__PURE__*/Object(react__WEBPACK_IMPORTED_MODULE_0__["memo"])(function (_ref) {
+  var isOutline = _ref.isOutline,
+      props = _objectWithoutProperties(_ref, ["isOutline"]);
+
+  var theme = Object(_nivo_core__WEBPACK_IMPORTED_MODULE_5__["useTheme"])();
+
+  var _props$points = _toArray(props.points),
+      point = _props$points[0],
+      points = _props$points.slice(1);
+
+  var path = points.reduce(function (acc, _ref2) {
+    var _ref3 = _slicedToArray(_ref2, 2),
+        x = _ref3[0],
+        y = _ref3[1];
+
+    return "".concat(acc, " L").concat(x, ",").concat(y);
+  }, "M".concat(point[0], ",").concat(point[1]));
+  var animatedPath = Object(_nivo_core__WEBPACK_IMPORTED_MODULE_5__["useAnimatedPath"])(path);
+
+  if (isOutline && theme.annotations.link.outlineWidth <= 0) {
+    return null;
+  }
+
+  var style = _objectSpread2({}, theme.annotations.link);
+
+  if (isOutline) {
+    style.strokeLinecap = 'square';
+    style.strokeWidth = theme.annotations.link.strokeWidth + theme.annotations.link.outlineWidth * 2;
+    style.stroke = theme.annotations.link.outlineColor;
+  }
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_spring__WEBPACK_IMPORTED_MODULE_6__["animated"].path, {
+    fill: "none",
+    d: animatedPath,
+    style: style
+  });
+});
+AnnotationLink.displayName = 'AnnotationLink';
+AnnotationLink.defaultProps = {
+  isOutline: false
+};
+var CircleAnnotationOutline = /*#__PURE__*/Object(react__WEBPACK_IMPORTED_MODULE_0__["memo"])(function (_ref) {
+  var x = _ref.x,
+      y = _ref.y,
+      size = _ref.size;
+  var theme = Object(_nivo_core__WEBPACK_IMPORTED_MODULE_5__["useTheme"])();
+
+  var _useMotionConfig = Object(_nivo_core__WEBPACK_IMPORTED_MODULE_5__["useMotionConfig"])(),
+      animate = _useMotionConfig.animate,
+      springConfig = _useMotionConfig.config;
+
+  var animatedProps = Object(react_spring__WEBPACK_IMPORTED_MODULE_6__["useSpring"])({
+    x: x,
+    y: y,
+    radius: size / 2,
+    config: springConfig,
+    immediate: !animate
+  });
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, theme.annotations.outline.outlineWidth > 0 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_spring__WEBPACK_IMPORTED_MODULE_6__["animated"].circle, {
+    cx: animatedProps.x,
+    cy: animatedProps.y,
+    r: animatedProps.radius,
+    style: _objectSpread2(_objectSpread2({}, theme.annotations.outline), {}, {
+      fill: 'none',
+      strokeWidth: theme.annotations.outline.strokeWidth + theme.annotations.outline.outlineWidth * 2,
+      stroke: theme.annotations.outline.outlineColor
+    })
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_spring__WEBPACK_IMPORTED_MODULE_6__["animated"].circle, {
+    cx: animatedProps.x,
+    cy: animatedProps.y,
+    r: animatedProps.radius,
+    style: theme.annotations.outline
+  }));
+});
+CircleAnnotationOutline.displayName = 'CircleAnnotationOutline';
+var DotAnnotationOutline = /*#__PURE__*/Object(react__WEBPACK_IMPORTED_MODULE_0__["memo"])(function (_ref) {
+  var x = _ref.x,
+      y = _ref.y,
+      size = _ref.size;
+  var theme = Object(_nivo_core__WEBPACK_IMPORTED_MODULE_5__["useTheme"])();
+
+  var _useMotionConfig = Object(_nivo_core__WEBPACK_IMPORTED_MODULE_5__["useMotionConfig"])(),
+      animate = _useMotionConfig.animate,
+      springConfig = _useMotionConfig.config;
+
+  var animatedProps = Object(react_spring__WEBPACK_IMPORTED_MODULE_6__["useSpring"])({
+    x: x,
+    y: y,
+    radius: size / 2,
+    config: springConfig,
+    immediate: !animate
+  });
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, theme.annotations.outline.outlineWidth > 0 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_spring__WEBPACK_IMPORTED_MODULE_6__["animated"].circle, {
+    cx: animatedProps.x,
+    cy: animatedProps.y,
+    r: animatedProps.radius,
+    style: _objectSpread2(_objectSpread2({}, theme.annotations.outline), {}, {
+      fill: 'none',
+      strokeWidth: theme.annotations.outline.outlineWidth * 2,
+      stroke: theme.annotations.outline.outlineColor
+    })
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_spring__WEBPACK_IMPORTED_MODULE_6__["animated"].circle, {
+    cx: animatedProps.x,
+    cy: animatedProps.y,
+    r: animatedProps.radius,
+    style: theme.annotations.symbol
+  }));
+});
+DotAnnotationOutline.displayName = 'DotAnnotationOutline';
+DotAnnotationOutline.defaultProps = {
+  size: 4
+};
+var RectAnnotationOutline = /*#__PURE__*/Object(react__WEBPACK_IMPORTED_MODULE_0__["memo"])(function (_ref) {
+  var x = _ref.x,
+      y = _ref.y,
+      width = _ref.width,
+      height = _ref.height;
+  var theme = Object(_nivo_core__WEBPACK_IMPORTED_MODULE_5__["useTheme"])();
+
+  var _useMotionConfig = Object(_nivo_core__WEBPACK_IMPORTED_MODULE_5__["useMotionConfig"])(),
+      animate = _useMotionConfig.animate,
+      springConfig = _useMotionConfig.config;
+
+  var animatedProps = Object(react_spring__WEBPACK_IMPORTED_MODULE_6__["useSpring"])({
+    x: x - width / 2,
+    y: y - height / 2,
+    width: width,
+    height: height,
+    config: springConfig,
+    immediate: !animate
+  });
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, theme.annotations.outline.outlineWidth > 0 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_spring__WEBPACK_IMPORTED_MODULE_6__["animated"].rect, {
+    x: animatedProps.x,
+    y: animatedProps.y,
+    width: animatedProps.width,
+    height: animatedProps.height,
+    style: _objectSpread2(_objectSpread2({}, theme.annotations.outline), {}, {
+      fill: 'none',
+      strokeWidth: theme.annotations.outline.strokeWidth + theme.annotations.outline.outlineWidth * 2,
+      stroke: theme.annotations.outline.outlineColor
+    })
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_spring__WEBPACK_IMPORTED_MODULE_6__["animated"].rect, {
+    x: animatedProps.x,
+    y: animatedProps.y,
+    width: animatedProps.width,
+    height: animatedProps.height,
+    style: theme.annotations.outline
+  }));
+});
+RectAnnotationOutline.displayName = 'RectAnnotationOutline';
+var Annotation = /*#__PURE__*/Object(react__WEBPACK_IMPORTED_MODULE_0__["memo"])(function (_ref) {
+  var datum = _ref.datum,
+      type = _ref.type,
+      containerWidth = _ref.containerWidth,
+      containerHeight = _ref.containerHeight,
+      x = _ref.x,
+      y = _ref.y,
+      size = _ref.size,
+      width = _ref.width,
+      height = _ref.height,
+      noteX = _ref.noteX,
+      noteY = _ref.noteY,
+      noteWidth = _ref.noteWidth,
+      noteTextOffset = _ref.noteTextOffset,
+      note = _ref.note;
+  var computed = useComputedAnnotation({
+    type: type,
+    containerWidth: containerWidth,
+    containerHeight: containerHeight,
+    x: x,
+    y: y,
+    size: size,
+    width: width,
+    height: height,
+    noteX: noteX,
+    noteY: noteY,
+    noteWidth: noteWidth,
+    noteTextOffset: noteTextOffset
+  });
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(AnnotationLink, {
+    points: computed.points,
+    isOutline: true
+  }), type === 'circle' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(CircleAnnotationOutline, {
+    x: x,
+    y: y,
+    size: size
+  }), type === 'dot' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(DotAnnotationOutline, {
+    x: x,
+    y: y,
+    size: size
+  }), type === 'rect' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(RectAnnotationOutline, {
+    x: x,
+    y: y,
+    width: width,
+    height: height
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(AnnotationLink, {
+    points: computed.points
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(AnnotationNote, {
+    datum: datum,
+    x: computed.text[0],
+    y: computed.text[1],
+    note: note
+  }));
+});
+Annotation.displayName = 'Annotation';
+Annotation.defaultProps = {
+  noteWidth: defaultProps.noteWidth,
+  noteTextOffset: defaultProps.noteTextOffset
+};
+
+var drawPoints = function drawPoints(ctx, points) {
+  points.forEach(function (_ref, index) {
+    var _ref2 = _slicedToArray(_ref, 2),
+        x = _ref2[0],
+        y = _ref2[1];
+
+    if (index === 0) {
+      ctx.moveTo(x, y);
+    } else {
+      ctx.lineTo(x, y);
+    }
+  });
+};
+
+var renderAnnotationsToCanvas = function renderAnnotationsToCanvas(ctx, _ref3) {
+  var annotations = _ref3.annotations,
+      theme = _ref3.theme;
+  if (annotations.length === 0) return;
+  ctx.save();
+  annotations.forEach(function (annotation) {
+    if (theme.annotations.link.outlineWidth > 0) {
+      ctx.lineCap = 'square';
+      ctx.strokeStyle = theme.annotations.link.outlineColor;
+      ctx.lineWidth = theme.annotations.link.strokeWidth + theme.annotations.link.outlineWidth * 2;
+      ctx.beginPath();
+      drawPoints(ctx, annotation.computed.points);
+      ctx.stroke();
+      ctx.lineCap = 'butt';
+    }
+
+    if (annotation.type === 'circle' && theme.annotations.outline.outlineWidth > 0) {
+      ctx.strokeStyle = theme.annotations.outline.outlineColor;
+      ctx.lineWidth = theme.annotations.outline.strokeWidth + theme.annotations.outline.outlineWidth * 2;
+      ctx.beginPath();
+      ctx.arc(annotation.x, annotation.y, annotation.size / 2, 0, 2 * Math.PI);
+      ctx.stroke();
+    }
+
+    if (annotation.type === 'dot' && theme.annotations.symbol.outlineWidth > 0) {
+      ctx.strokeStyle = theme.annotations.symbol.outlineColor;
+      ctx.lineWidth = theme.annotations.symbol.outlineWidth * 2;
+      ctx.beginPath();
+      ctx.arc(annotation.x, annotation.y, annotation.size / 2, 0, 2 * Math.PI);
+      ctx.stroke();
+    }
+
+    if (annotation.type === 'rect' && theme.annotations.outline.outlineWidth > 0) {
+      ctx.strokeStyle = theme.annotations.outline.outlineColor;
+      ctx.lineWidth = theme.annotations.outline.strokeWidth + theme.annotations.outline.outlineWidth * 2;
+      ctx.beginPath();
+      ctx.rect(annotation.x - annotation.width / 2, annotation.y - annotation.height / 2, annotation.width, annotation.height);
+      ctx.stroke();
+    }
+
+    ctx.strokeStyle = theme.annotations.link.stroke;
+    ctx.lineWidth = theme.annotations.link.strokeWidth;
+    ctx.beginPath();
+    drawPoints(ctx, annotation.computed.points);
+    ctx.stroke();
+
+    if (annotation.type === 'circle') {
+      ctx.strokeStyle = theme.annotations.outline.stroke;
+      ctx.lineWidth = theme.annotations.outline.strokeWidth;
+      ctx.beginPath();
+      ctx.arc(annotation.x, annotation.y, annotation.size / 2, 0, 2 * Math.PI);
+      ctx.stroke();
+    }
+
+    if (annotation.type === 'dot') {
+      ctx.fillStyle = theme.annotations.symbol.fill;
+      ctx.beginPath();
+      ctx.arc(annotation.x, annotation.y, annotation.size / 2, 0, 2 * Math.PI);
+      ctx.fill();
+    }
+
+    if (annotation.type === 'rect') {
+      ctx.strokeStyle = theme.annotations.outline.stroke;
+      ctx.lineWidth = theme.annotations.outline.strokeWidth;
+      ctx.beginPath();
+      ctx.rect(annotation.x - annotation.width / 2, annotation.y - annotation.height / 2, annotation.width, annotation.height);
+      ctx.stroke();
+    }
+
+    if (typeof annotation.note === 'function') {
+      annotation.note(ctx, {
+        datum: annotation.datum,
+        x: annotation.computed.text[0],
+        y: annotation.computed.text[1],
+        theme: theme
+      });
+    } else {
+      ctx.font = "".concat(theme.annotations.text.fontSize, "px ").concat(theme.annotations.text.fontFamily);
+      ctx.fillStyle = theme.annotations.text.fill;
+      ctx.strokeStyle = theme.annotations.text.outlineColor;
+      ctx.lineWidth = theme.annotations.text.outlineWidth * 2;
+
+      if (theme.annotations.text.outlineWidth > 0) {
+        ctx.lineJoin = 'round';
+        ctx.strokeText(annotation.note, annotation.computed.text[0], annotation.computed.text[1]);
+        ctx.lineJoin = 'miter';
+      }
+
+      ctx.fillText(annotation.note, annotation.computed.text[0], annotation.computed.text[1]);
+    }
+  });
+  ctx.restore();
+};
+
+
+
+/***/ }),
+
 /***/ "./node_modules/@nivo/axes/dist/nivo-axes.es.js":
 /*!******************************************************!*\
   !*** ./node_modules/@nivo/axes/dist/nivo-axes.es.js ***!
@@ -10775,6 +11545,1108 @@ var computeYSlices = function computeYSlices(data) {
 
 var scalePropType = prop_types__WEBPACK_IMPORTED_MODULE_0___default.a.oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_0___default.a.shape(linearScalePropTypes), prop_types__WEBPACK_IMPORTED_MODULE_0___default.a.shape(pointScalePropTypes), prop_types__WEBPACK_IMPORTED_MODULE_0___default.a.shape(timeScalePropTypes), prop_types__WEBPACK_IMPORTED_MODULE_0___default.a.shape(logScalePropTypes), prop_types__WEBPACK_IMPORTED_MODULE_0___default.a.shape(symLogScalePropTypes), prop_types__WEBPACK_IMPORTED_MODULE_0___default.a.shape(bandScalePropTypes)]);
 
+
+/***/ }),
+
+/***/ "./node_modules/@nivo/scatterplot/dist/nivo-scatterplot.es.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/@nivo/scatterplot/dist/nivo-scatterplot.es.js ***!
+  \********************************************************************/
+/*! exports provided: NodePropType, ResponsiveScatterPlot, ResponsiveScatterPlotCanvas, ScatterPlot, ScatterPlotCanvas, ScatterPlotCanvasDefaultProps, ScatterPlotCanvasPropTypes, ScatterPlotDefaultProps, ScatterPlotPropTypes, useScatterPlot, useScatterPlotAnnotations */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* WEBPACK VAR INJECTION */(function(global) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NodePropType", function() { return NodePropType; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ResponsiveScatterPlot", function() { return ResponsiveScatterPlot; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ResponsiveScatterPlotCanvas", function() { return ResponsiveScatterPlotCanvas; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ScatterPlot", function() { return ScatterPlot$1; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ScatterPlotCanvas", function() { return ScatterPlotCanvas$1; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ScatterPlotCanvasDefaultProps", function() { return ScatterPlotCanvasDefaultProps; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ScatterPlotCanvasPropTypes", function() { return ScatterPlotCanvasPropTypes; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ScatterPlotDefaultProps", function() { return ScatterPlotDefaultProps; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ScatterPlotPropTypes", function() { return ScatterPlotPropTypes; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "useScatterPlot", function() { return useScatterPlot; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "useScatterPlotAnnotations", function() { return useScatterPlotAnnotations; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _nivo_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @nivo/core */ "./node_modules/@nivo/core/dist/nivo-core.es.js");
+/* harmony import */ var _nivo_axes__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @nivo/axes */ "./node_modules/@nivo/axes/dist/nivo-axes.es.js");
+/* harmony import */ var _nivo_legends__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @nivo/legends */ "./node_modules/@nivo/legends/dist/nivo-legends.es.js");
+/* harmony import */ var _nivo_colors__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @nivo/colors */ "./node_modules/@nivo/colors/dist/nivo-colors.es.js");
+/* harmony import */ var _nivo_scales__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @nivo/scales */ "./node_modules/@nivo/scales/dist/nivo-scales.es.js");
+/* harmony import */ var _nivo_annotations__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @nivo/annotations */ "./node_modules/@nivo/annotations/dist/nivo-annotations.es.js");
+/* harmony import */ var lodash_get__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! lodash/get */ "./node_modules/lodash/get.js");
+/* harmony import */ var lodash_get__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(lodash_get__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var lodash_isString__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! lodash/isString */ "./node_modules/lodash/isString.js");
+/* harmony import */ var lodash_isString__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(lodash_isString__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var lodash_isNumber__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! lodash/isNumber */ "./node_modules/lodash/isNumber.js");
+/* harmony import */ var lodash_isNumber__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(lodash_isNumber__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var lodash_isPlainObject__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! lodash/isPlainObject */ "./node_modules/lodash/isPlainObject.js");
+/* harmony import */ var lodash_isPlainObject__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(lodash_isPlainObject__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var d3_scale__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! d3-scale */ "./node_modules/d3-scale/src/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_12__);
+/* harmony import */ var _nivo_tooltip__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @nivo/tooltip */ "./node_modules/@nivo/tooltip/dist/nivo-tooltip.es.js");
+/* harmony import */ var react_motion__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! react-motion */ "./node_modules/react-motion/lib/react-motion.js");
+/* harmony import */ var react_motion__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(react_motion__WEBPACK_IMPORTED_MODULE_14__);
+/* harmony import */ var _nivo_voronoi__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @nivo/voronoi */ "./node_modules/@nivo/voronoi/dist/nivo-voronoi.es.js");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+function ownKeys(object, enumerableOnly) {
+  var keys = Object.keys(object);
+
+  if (Object.getOwnPropertySymbols) {
+    var symbols = Object.getOwnPropertySymbols(object);
+    if (enumerableOnly) symbols = symbols.filter(function (sym) {
+      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+    });
+    keys.push.apply(keys, symbols);
+  }
+
+  return keys;
+}
+
+function _objectSpread2(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i] != null ? arguments[i] : {};
+
+    if (i % 2) {
+      ownKeys(Object(source), true).forEach(function (key) {
+        _defineProperty(target, key, source[key]);
+      });
+    } else if (Object.getOwnPropertyDescriptors) {
+      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+    } else {
+      ownKeys(Object(source)).forEach(function (key) {
+        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+      });
+    }
+  }
+
+  return target;
+}
+
+function _arrayLikeToArray(arr, len) {
+  if (len == null || len > arr.length) len = arr.length;
+
+  for (var i = 0, arr2 = new Array(len); i < len; i++) {
+    arr2[i] = arr[i];
+  }
+
+  return arr2;
+}
+
+function _arrayWithoutHoles(arr) {
+  if (Array.isArray(arr)) return _arrayLikeToArray(arr);
+}
+
+function _iterableToArray(iter) {
+  if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter);
+}
+
+function _unsupportedIterableToArray(o, minLen) {
+  if (!o) return;
+  if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+  var n = Object.prototype.toString.call(o).slice(8, -1);
+  if (n === "Object" && o.constructor) n = o.constructor.name;
+  if (n === "Map" || n === "Set") return Array.from(n);
+  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+}
+
+function _nonIterableSpread() {
+  throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+
+function _toConsumableArray(arr) {
+  return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
+}
+
+var getNodeSizeGenerator = function getNodeSizeGenerator(size) {
+  if (typeof size === 'function') return size;
+  if (lodash_isNumber__WEBPACK_IMPORTED_MODULE_9___default()(size)) return function () {
+    return size;
+  };
+
+  if (lodash_isPlainObject__WEBPACK_IMPORTED_MODULE_10___default()(size)) {
+    if (!lodash_isString__WEBPACK_IMPORTED_MODULE_8___default()(size.key)) {
+      throw new Error('symbolSize is invalid, key should be a string pointing to the property to use to determine node size');
+    }
+
+    if (!Array.isArray(size.values) || size.values.length !== 2) {
+      throw new Error('symbolSize is invalid, values spec should be an array containing two values, min and max');
+    }
+
+    if (!Array.isArray(size.sizes) || size.sizes.length !== 2) {
+      throw new Error('symbolSize is invalid, sizes spec should be an array containing two values, min and max');
+    }
+
+    var sizeScale = Object(d3_scale__WEBPACK_IMPORTED_MODULE_11__["scaleLinear"])().domain([size.values[0], size.values[1]]).range([size.sizes[0], size.sizes[1]]);
+    return function (d) {
+      return sizeScale(lodash_get__WEBPACK_IMPORTED_MODULE_7___default()(d, size.key));
+    };
+  }
+
+  throw new Error('symbolSize is invalid, it should be either a function, a number or an object');
+};
+
+var computePoints = function computePoints(_ref) {
+  var series = _ref.series,
+      formatX = _ref.formatX,
+      formatY = _ref.formatY;
+  return series.reduce(function (agg, serie) {
+    return [].concat(_toConsumableArray(agg), _toConsumableArray(serie.data.map(function (d, i) {
+      return {
+        index: agg.length + i,
+        id: "".concat(serie.id, ".").concat(i),
+        x: d.position.x,
+        y: d.position.y,
+        data: _objectSpread2(_objectSpread2({}, d.data), {}, {
+          id: "".concat(serie.id, ".").concat(i),
+          serieId: serie.id,
+          formattedX: formatX(d.data.x),
+          formattedY: formatY(d.data.y)
+        })
+      };
+    })));
+  }, []);
+};
+
+var useNodeSize = function useNodeSize(size) {
+  return Object(react__WEBPACK_IMPORTED_MODULE_0__["useMemo"])(function () {
+    return getNodeSizeGenerator(size);
+  }, [size]);
+};
+
+var useScatterPlot = function useScatterPlot(_ref) {
+  var data = _ref.data,
+      xScaleSpec = _ref.xScaleSpec,
+      xFormat = _ref.xFormat,
+      yScaleSpec = _ref.yScaleSpec,
+      yFormat = _ref.yFormat,
+      width = _ref.width,
+      height = _ref.height,
+      nodeSize = _ref.nodeSize,
+      colors = _ref.colors;
+
+  var _useMemo = Object(react__WEBPACK_IMPORTED_MODULE_0__["useMemo"])(function () {
+    return Object(_nivo_scales__WEBPACK_IMPORTED_MODULE_5__["computeXYScalesForSeries"])(data, xScaleSpec, yScaleSpec, width, height);
+  }, [data, xScaleSpec, yScaleSpec, width, height]),
+      series = _useMemo.series,
+      xScale = _useMemo.xScale,
+      yScale = _useMemo.yScale;
+
+  var formatX = Object(_nivo_core__WEBPACK_IMPORTED_MODULE_1__["useValueFormatter"])(xFormat);
+  var formatY = Object(_nivo_core__WEBPACK_IMPORTED_MODULE_1__["useValueFormatter"])(yFormat);
+  var rawNodes = Object(react__WEBPACK_IMPORTED_MODULE_0__["useMemo"])(function () {
+    return computePoints({
+      series: series,
+      formatX: formatX,
+      formatY: formatY
+    });
+  }, [series, formatX, formatY]);
+  var getNodeSize = useNodeSize(nodeSize);
+  var getColor = Object(_nivo_colors__WEBPACK_IMPORTED_MODULE_4__["useOrdinalColorScale"])(colors, 'serieId');
+  var nodes = Object(react__WEBPACK_IMPORTED_MODULE_0__["useMemo"])(function () {
+    return rawNodes.map(function (rawNode) {
+      return _objectSpread2(_objectSpread2({}, rawNode), {}, {
+        size: getNodeSize(rawNode.data),
+        style: {
+          color: getColor(rawNode.data)
+        }
+      });
+    });
+  }, [rawNodes, getNodeSize, getColor]);
+  var legendData = Object(react__WEBPACK_IMPORTED_MODULE_0__["useMemo"])(function () {
+    return series.map(function (serie) {
+      return {
+        id: serie.id,
+        label: serie.id,
+        color: getColor({
+          serieId: serie.id
+        })
+      };
+    });
+  }, [series, getColor]);
+  return {
+    xScale: xScale,
+    yScale: yScale,
+    nodes: nodes,
+    legendData: legendData
+  };
+};
+
+var useScatterPlotAnnotations = function useScatterPlotAnnotations(items, annotations) {
+  return Object(_nivo_annotations__WEBPACK_IMPORTED_MODULE_6__["useAnnotations"])({
+    items: items,
+    annotations: annotations,
+    getDimensions: function getDimensions(node, offset) {
+      var size = node.size + offset * 2;
+      return {
+        size: size,
+        width: size,
+        height: size
+      };
+    }
+  });
+};
+
+var Node = function Node(_ref) {
+  var x = _ref.x,
+      y = _ref.y,
+      size = _ref.size,
+      color = _ref.color,
+      blendMode = _ref.blendMode,
+      onMouseEnter = _ref.onMouseEnter,
+      onMouseMove = _ref.onMouseMove,
+      onMouseLeave = _ref.onMouseLeave,
+      onClick = _ref.onClick;
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("circle", {
+    cx: x,
+    cy: y,
+    r: size / 2,
+    fill: color,
+    style: {
+      mixBlendMode: blendMode
+    },
+    onMouseEnter: onMouseEnter,
+    onMouseMove: onMouseMove,
+    onMouseLeave: onMouseLeave,
+    onClick: onClick
+  });
+};
+
+var Node$1 = /*#__PURE__*/Object(react__WEBPACK_IMPORTED_MODULE_0__["memo"])(Node);
+
+var Tooltip = function Tooltip(_ref) {
+  var node = _ref.node;
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_nivo_tooltip__WEBPACK_IMPORTED_MODULE_13__["BasicTooltip"], {
+    id: node.data.serieId,
+    value: "x: ".concat(node.data.formattedX, ", y: ").concat(node.data.formattedY),
+    enableChip: true,
+    color: node.style.color
+  });
+};
+
+var Tooltip$1 = /*#__PURE__*/Object(react__WEBPACK_IMPORTED_MODULE_0__["memo"])(Tooltip);
+var commonPropTypes = {
+  data: prop_types__WEBPACK_IMPORTED_MODULE_12___default.a.arrayOf(prop_types__WEBPACK_IMPORTED_MODULE_12___default.a.shape({
+    id: prop_types__WEBPACK_IMPORTED_MODULE_12___default.a.oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_12___default.a.string, prop_types__WEBPACK_IMPORTED_MODULE_12___default.a.number]).isRequired,
+    data: prop_types__WEBPACK_IMPORTED_MODULE_12___default.a.arrayOf(prop_types__WEBPACK_IMPORTED_MODULE_12___default.a.shape({
+      x: prop_types__WEBPACK_IMPORTED_MODULE_12___default.a.oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_12___default.a.number, prop_types__WEBPACK_IMPORTED_MODULE_12___default.a.string, prop_types__WEBPACK_IMPORTED_MODULE_12___default.a.instanceOf(Date)]).isRequired,
+      y: prop_types__WEBPACK_IMPORTED_MODULE_12___default.a.oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_12___default.a.number, prop_types__WEBPACK_IMPORTED_MODULE_12___default.a.string, prop_types__WEBPACK_IMPORTED_MODULE_12___default.a.instanceOf(Date)]).isRequired
+    })).isRequired
+  })).isRequired,
+  xScale: _nivo_scales__WEBPACK_IMPORTED_MODULE_5__["scalePropType"].isRequired,
+  xFormat: prop_types__WEBPACK_IMPORTED_MODULE_12___default.a.any,
+  yScale: _nivo_scales__WEBPACK_IMPORTED_MODULE_5__["scalePropType"].isRequired,
+  yFormat: prop_types__WEBPACK_IMPORTED_MODULE_12___default.a.any,
+  layers: prop_types__WEBPACK_IMPORTED_MODULE_12___default.a.arrayOf(prop_types__WEBPACK_IMPORTED_MODULE_12___default.a.oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_12___default.a.oneOf(['grid', 'axes', 'nodes', 'markers', 'mesh', 'legends', 'annotations']), prop_types__WEBPACK_IMPORTED_MODULE_12___default.a.func])).isRequired,
+  enableGridX: prop_types__WEBPACK_IMPORTED_MODULE_12___default.a.bool.isRequired,
+  enableGridY: prop_types__WEBPACK_IMPORTED_MODULE_12___default.a.bool.isRequired,
+  axisTop: _nivo_axes__WEBPACK_IMPORTED_MODULE_2__["axisPropType"],
+  axisRight: _nivo_axes__WEBPACK_IMPORTED_MODULE_2__["axisPropType"],
+  axisBottom: _nivo_axes__WEBPACK_IMPORTED_MODULE_2__["axisPropType"],
+  axisLeft: _nivo_axes__WEBPACK_IMPORTED_MODULE_2__["axisPropType"],
+  annotations: prop_types__WEBPACK_IMPORTED_MODULE_12___default.a.arrayOf(_nivo_annotations__WEBPACK_IMPORTED_MODULE_6__["annotationSpecPropType"]).isRequired,
+  nodeSize: prop_types__WEBPACK_IMPORTED_MODULE_12___default.a.oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_12___default.a.number, prop_types__WEBPACK_IMPORTED_MODULE_12___default.a.shape({
+    key: prop_types__WEBPACK_IMPORTED_MODULE_12___default.a.string.isRequired,
+    values: prop_types__WEBPACK_IMPORTED_MODULE_12___default.a.arrayOf(prop_types__WEBPACK_IMPORTED_MODULE_12___default.a.number).isRequired,
+    sizes: prop_types__WEBPACK_IMPORTED_MODULE_12___default.a.arrayOf(prop_types__WEBPACK_IMPORTED_MODULE_12___default.a.number).isRequired
+  }), prop_types__WEBPACK_IMPORTED_MODULE_12___default.a.func]).isRequired,
+  renderNode: prop_types__WEBPACK_IMPORTED_MODULE_12___default.a.oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_12___default.a.func, prop_types__WEBPACK_IMPORTED_MODULE_12___default.a.object]).isRequired,
+  colors: _nivo_colors__WEBPACK_IMPORTED_MODULE_4__["ordinalColorsPropType"].isRequired,
+  blendMode: _nivo_core__WEBPACK_IMPORTED_MODULE_1__["blendModePropType"].isRequired,
+  isInteractive: prop_types__WEBPACK_IMPORTED_MODULE_12___default.a.bool.isRequired,
+  debugMesh: prop_types__WEBPACK_IMPORTED_MODULE_12___default.a.bool.isRequired,
+  onMouseEnter: prop_types__WEBPACK_IMPORTED_MODULE_12___default.a.func,
+  onMouseMove: prop_types__WEBPACK_IMPORTED_MODULE_12___default.a.func,
+  onMouseLeave: prop_types__WEBPACK_IMPORTED_MODULE_12___default.a.func,
+  onClick: prop_types__WEBPACK_IMPORTED_MODULE_12___default.a.func,
+  tooltip: prop_types__WEBPACK_IMPORTED_MODULE_12___default.a.oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_12___default.a.func, prop_types__WEBPACK_IMPORTED_MODULE_12___default.a.object]).isRequired,
+  markers: prop_types__WEBPACK_IMPORTED_MODULE_12___default.a.arrayOf(prop_types__WEBPACK_IMPORTED_MODULE_12___default.a.shape({
+    axis: prop_types__WEBPACK_IMPORTED_MODULE_12___default.a.oneOf(['x', 'y']).isRequired,
+    value: prop_types__WEBPACK_IMPORTED_MODULE_12___default.a.oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_12___default.a.number, prop_types__WEBPACK_IMPORTED_MODULE_12___default.a.string]).isRequired,
+    style: prop_types__WEBPACK_IMPORTED_MODULE_12___default.a.object
+  })),
+  legends: prop_types__WEBPACK_IMPORTED_MODULE_12___default.a.arrayOf(prop_types__WEBPACK_IMPORTED_MODULE_12___default.a.shape(_nivo_legends__WEBPACK_IMPORTED_MODULE_3__["LegendPropShape"])).isRequired
+};
+
+var ScatterPlotPropTypes = _objectSpread2(_objectSpread2({}, commonPropTypes), {}, {
+  role: prop_types__WEBPACK_IMPORTED_MODULE_12___default.a.string.isRequired,
+  useMesh: prop_types__WEBPACK_IMPORTED_MODULE_12___default.a.bool.isRequired
+}, _nivo_core__WEBPACK_IMPORTED_MODULE_1__["motionPropTypes"]);
+
+var ScatterPlotCanvasPropTypes = _objectSpread2(_objectSpread2({}, commonPropTypes), {}, {
+  pixelRatio: prop_types__WEBPACK_IMPORTED_MODULE_12___default.a.number.isRequired
+});
+
+var commonDefaultProps = {
+  xScale: {
+    type: 'linear',
+    min: 0,
+    max: 'auto'
+  },
+  yScale: {
+    type: 'linear',
+    min: 0,
+    max: 'auto'
+  },
+  enableGridX: true,
+  enableGridY: true,
+  axisBottom: {},
+  axisLeft: {},
+  nodeSize: 9,
+  renderNode: Node$1,
+  colors: {
+    scheme: 'nivo'
+  },
+  blendMode: 'normal',
+  isInteractive: true,
+  debugMesh: false,
+  tooltip: Tooltip$1,
+  markers: [],
+  legends: [],
+  annotations: []
+};
+
+var ScatterPlotDefaultProps = _objectSpread2(_objectSpread2({}, commonDefaultProps), {}, {
+  layers: ['grid', 'axes', 'nodes', 'markers', 'mesh', 'legends', 'annotations'],
+  role: 'img',
+  useMesh: true,
+  animate: true,
+  motionStiffness: 90,
+  motionDamping: 15
+});
+
+var ScatterPlotCanvasDefaultProps = _objectSpread2(_objectSpread2({}, commonDefaultProps), {}, {
+  layers: ['grid', 'axes', 'nodes', 'mesh', 'legends', 'annotations'],
+  pixelRatio: global.window && global.window.devicePixelRatio ? global.window.devicePixelRatio : 1
+});
+
+var NodePropType = prop_types__WEBPACK_IMPORTED_MODULE_12___default.a.shape({
+  id: prop_types__WEBPACK_IMPORTED_MODULE_12___default.a.string.isRequired,
+  x: prop_types__WEBPACK_IMPORTED_MODULE_12___default.a.number.isRequired,
+  y: prop_types__WEBPACK_IMPORTED_MODULE_12___default.a.number.isRequired,
+  size: prop_types__WEBPACK_IMPORTED_MODULE_12___default.a.number.isRequired,
+  data: prop_types__WEBPACK_IMPORTED_MODULE_12___default.a.shape({
+    id: prop_types__WEBPACK_IMPORTED_MODULE_12___default.a.string.isRequired,
+    serieId: prop_types__WEBPACK_IMPORTED_MODULE_12___default.a.oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_12___default.a.string, prop_types__WEBPACK_IMPORTED_MODULE_12___default.a.number]).isRequired,
+    x: prop_types__WEBPACK_IMPORTED_MODULE_12___default.a.oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_12___default.a.number, prop_types__WEBPACK_IMPORTED_MODULE_12___default.a.string, prop_types__WEBPACK_IMPORTED_MODULE_12___default.a.instanceOf(Date)]).isRequired,
+    formattedX: prop_types__WEBPACK_IMPORTED_MODULE_12___default.a.oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_12___default.a.string, prop_types__WEBPACK_IMPORTED_MODULE_12___default.a.number]).isRequired,
+    y: prop_types__WEBPACK_IMPORTED_MODULE_12___default.a.oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_12___default.a.number, prop_types__WEBPACK_IMPORTED_MODULE_12___default.a.string, prop_types__WEBPACK_IMPORTED_MODULE_12___default.a.instanceOf(Date)]).isRequired,
+    formattedY: prop_types__WEBPACK_IMPORTED_MODULE_12___default.a.oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_12___default.a.string, prop_types__WEBPACK_IMPORTED_MODULE_12___default.a.number]).isRequired
+  }).isRequired,
+  style: prop_types__WEBPACK_IMPORTED_MODULE_12___default.a.shape({
+    color: prop_types__WEBPACK_IMPORTED_MODULE_12___default.a.string.isRequired
+  }).isRequired
+});
+
+var NodeWrapper = function NodeWrapper(_ref) {
+  var node = _ref.node,
+      NodeComponent = _ref.renderNode,
+      x = _ref.x,
+      y = _ref.y,
+      size = _ref.size,
+      color = _ref.color,
+      isInteractive = _ref.isInteractive,
+      onMouseEnter = _ref.onMouseEnter,
+      onMouseMove = _ref.onMouseMove,
+      onMouseLeave = _ref.onMouseLeave,
+      onClick = _ref.onClick,
+      tooltip = _ref.tooltip,
+      blendMode = _ref.blendMode;
+
+  var _useTooltip = Object(_nivo_tooltip__WEBPACK_IMPORTED_MODULE_13__["useTooltip"])(),
+      showTooltipFromEvent = _useTooltip.showTooltipFromEvent,
+      hideTooltip = _useTooltip.hideTooltip;
+
+  var handleMouseEnter = Object(react__WEBPACK_IMPORTED_MODULE_0__["useCallback"])(function (event) {
+    showTooltipFromEvent( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(tooltip, {
+      node: node
+    }), event);
+    onMouseEnter && onMouseEnter(node, event);
+  }, [node, tooltip, showTooltipFromEvent, onMouseEnter]);
+  var handleMouseMove = Object(react__WEBPACK_IMPORTED_MODULE_0__["useCallback"])(function (event) {
+    showTooltipFromEvent( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(tooltip, {
+      node: node
+    }), event);
+    onMouseMove && onMouseMove(node, event);
+  }, [node, tooltip, showTooltipFromEvent, onMouseMove]);
+  var handleMouseLeave = Object(react__WEBPACK_IMPORTED_MODULE_0__["useCallback"])(function (event) {
+    hideTooltip();
+    onMouseLeave && onMouseLeave(node, event);
+  }, [node, hideTooltip, onMouseLeave]);
+  var handleClick = Object(react__WEBPACK_IMPORTED_MODULE_0__["useCallback"])(function (event) {
+    onClick && onClick(node, event);
+  }, [node, onClick]);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(NodeComponent, {
+    node: node,
+    x: x,
+    y: y,
+    size: size,
+    color: color,
+    blendMode: blendMode,
+    onMouseEnter: isInteractive ? handleMouseEnter : undefined,
+    onMouseMove: isInteractive ? handleMouseMove : undefined,
+    onMouseLeave: isInteractive ? handleMouseLeave : undefined,
+    onClick: isInteractive && onClick ? handleClick : undefined
+  });
+};
+
+var NodeWrapper$1 = /*#__PURE__*/Object(react__WEBPACK_IMPORTED_MODULE_0__["memo"])(NodeWrapper);
+
+var AnimatedNodes = function AnimatedNodes(_ref) {
+  var nodes = _ref.nodes,
+      renderNode = _ref.renderNode,
+      isInteractive = _ref.isInteractive,
+      onMouseEnter = _ref.onMouseEnter,
+      onMouseMove = _ref.onMouseMove,
+      onMouseLeave = _ref.onMouseLeave,
+      onClick = _ref.onClick,
+      tooltip = _ref.tooltip,
+      blendMode = _ref.blendMode;
+
+  var _useMotionConfig = Object(_nivo_core__WEBPACK_IMPORTED_MODULE_1__["useMotionConfig"])(),
+      springConfig = _useMotionConfig.springConfig;
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_motion__WEBPACK_IMPORTED_MODULE_14__["TransitionMotion"], {
+    styles: nodes.map(function (node) {
+      return {
+        key: node.id,
+        data: node,
+        style: {
+          x: Object(react_motion__WEBPACK_IMPORTED_MODULE_14__["spring"])(node.x, springConfig),
+          y: Object(react_motion__WEBPACK_IMPORTED_MODULE_14__["spring"])(node.y, springConfig),
+          size: Object(react_motion__WEBPACK_IMPORTED_MODULE_14__["spring"])(node.size, springConfig)
+        }
+      };
+    })
+  }, function (interpolatedStyles) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, interpolatedStyles.map(function (_ref2) {
+      var key = _ref2.key,
+          style = _ref2.style,
+          node = _ref2.data;
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(NodeWrapper$1, {
+        key: key,
+        node: node,
+        renderNode: renderNode,
+        x: style.x,
+        y: style.y,
+        size: style.size,
+        color: node.style.color,
+        isInteractive: isInteractive,
+        onMouseEnter: onMouseEnter,
+        onMouseMove: onMouseMove,
+        onMouseLeave: onMouseLeave,
+        onClick: onClick,
+        tooltip: tooltip,
+        blendMode: blendMode
+      });
+    }));
+  });
+};
+
+var AnimatedNodes$1 = /*#__PURE__*/Object(react__WEBPACK_IMPORTED_MODULE_0__["memo"])(AnimatedNodes);
+
+var ScatterPlotAnnotations = function ScatterPlotAnnotations(_ref) {
+  var nodes = _ref.nodes,
+      annotations = _ref.annotations,
+      innerWidth = _ref.innerWidth,
+      innerHeight = _ref.innerHeight;
+  var boundAnnotations = useScatterPlotAnnotations(nodes, annotations);
+  return boundAnnotations.map(function (annotation, i) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_nivo_annotations__WEBPACK_IMPORTED_MODULE_6__["Annotation"], Object.assign({
+      key: i
+    }, annotation, {
+      containerWidth: innerWidth,
+      containerHeight: innerHeight
+    }));
+  });
+};
+
+var StaticNodes = function StaticNodes(_ref) {
+  var nodes = _ref.nodes,
+      renderNode = _ref.renderNode,
+      isInteractive = _ref.isInteractive,
+      onMouseEnter = _ref.onMouseEnter,
+      onMouseMove = _ref.onMouseMove,
+      onMouseLeave = _ref.onMouseLeave,
+      onClick = _ref.onClick,
+      tooltip = _ref.tooltip,
+      blendMode = _ref.blendMode;
+  return nodes.map(function (node) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(NodeWrapper$1, {
+      key: node.id,
+      node: node,
+      renderNode: renderNode,
+      x: node.x,
+      y: node.y,
+      size: node.size,
+      color: node.style.color,
+      isInteractive: isInteractive,
+      onMouseEnter: onMouseEnter,
+      onMouseMove: onMouseMove,
+      onMouseLeave: onMouseLeave,
+      onClick: onClick,
+      tooltip: tooltip,
+      blendMode: blendMode
+    });
+  });
+};
+
+var StaticNodes$1 = /*#__PURE__*/Object(react__WEBPACK_IMPORTED_MODULE_0__["memo"])(StaticNodes);
+
+var Mesh = function Mesh(_ref) {
+  var nodes = _ref.nodes,
+      width = _ref.width,
+      height = _ref.height,
+      onMouseEnter = _ref.onMouseEnter,
+      onMouseMove = _ref.onMouseMove,
+      onMouseLeave = _ref.onMouseLeave,
+      onClick = _ref.onClick,
+      tooltip = _ref.tooltip,
+      debug = _ref.debug;
+
+  var _useTooltip = Object(_nivo_tooltip__WEBPACK_IMPORTED_MODULE_13__["useTooltip"])(),
+      showTooltipFromEvent = _useTooltip.showTooltipFromEvent,
+      hideTooltip = _useTooltip.hideTooltip;
+
+  var handleMouseEnter = Object(react__WEBPACK_IMPORTED_MODULE_0__["useCallback"])(function (node, event) {
+    showTooltipFromEvent( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(tooltip, {
+      node: node
+    }), event);
+    onMouseEnter && onMouseEnter(node, event);
+  }, [showTooltipFromEvent, tooltip, onMouseEnter]);
+  var handleMouseMove = Object(react__WEBPACK_IMPORTED_MODULE_0__["useCallback"])(function (node, event) {
+    showTooltipFromEvent( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(tooltip, {
+      node: node
+    }), event);
+    onMouseMove && onMouseMove(node, event);
+  }, [showTooltipFromEvent, tooltip, onMouseMove]);
+  var handleMouseLeave = Object(react__WEBPACK_IMPORTED_MODULE_0__["useCallback"])(function (node, event) {
+    hideTooltip();
+    onMouseLeave && onMouseLeave(node, event);
+  }, [hideTooltip, onMouseLeave]);
+  var handleClick = Object(react__WEBPACK_IMPORTED_MODULE_0__["useCallback"])(function (node, event) {
+    onClick && onClick(node, event);
+  }, [onClick]);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_nivo_voronoi__WEBPACK_IMPORTED_MODULE_15__["Mesh"], {
+    nodes: nodes,
+    width: width,
+    height: height,
+    onMouseEnter: handleMouseEnter,
+    onMouseMove: handleMouseMove,
+    onMouseLeave: handleMouseLeave,
+    onClick: handleClick,
+    debug: debug
+  });
+};
+
+var Mesh$1 = /*#__PURE__*/Object(react__WEBPACK_IMPORTED_MODULE_0__["memo"])(Mesh);
+
+var ScatterPlot = function ScatterPlot(props) {
+  var data = props.data,
+      xScaleSpec = props.xScale,
+      xFormat = props.xFormat,
+      yScaleSpec = props.yScale,
+      yFormat = props.yFormat,
+      width = props.width,
+      height = props.height,
+      partialMargin = props.margin,
+      layers = props.layers,
+      colors = props.colors,
+      blendMode = props.blendMode,
+      nodeSize = props.nodeSize,
+      renderNode = props.renderNode,
+      enableGridX = props.enableGridX,
+      enableGridY = props.enableGridY,
+      gridXValues = props.gridXValues,
+      gridYValues = props.gridYValues,
+      axisTop = props.axisTop,
+      axisRight = props.axisRight,
+      axisBottom = props.axisBottom,
+      axisLeft = props.axisLeft,
+      annotations = props.annotations,
+      isInteractive = props.isInteractive,
+      useMesh = props.useMesh,
+      debugMesh = props.debugMesh,
+      onMouseEnter = props.onMouseEnter,
+      onMouseMove = props.onMouseMove,
+      onMouseLeave = props.onMouseLeave,
+      onClick = props.onClick,
+      tooltip = props.tooltip,
+      markers = props.markers,
+      legends = props.legends,
+      role = props.role;
+
+  var _useDimensions = Object(_nivo_core__WEBPACK_IMPORTED_MODULE_1__["useDimensions"])(width, height, partialMargin),
+      margin = _useDimensions.margin,
+      innerWidth = _useDimensions.innerWidth,
+      innerHeight = _useDimensions.innerHeight,
+      outerWidth = _useDimensions.outerWidth,
+      outerHeight = _useDimensions.outerHeight;
+
+  var theme = Object(_nivo_core__WEBPACK_IMPORTED_MODULE_1__["useTheme"])();
+
+  var _useMotionConfig = Object(_nivo_core__WEBPACK_IMPORTED_MODULE_1__["useMotionConfig"])(),
+      animate = _useMotionConfig.animate;
+
+  var _useScatterPlot = useScatterPlot({
+    data: data,
+    xScaleSpec: xScaleSpec,
+    xFormat: xFormat,
+    yScaleSpec: yScaleSpec,
+    yFormat: yFormat,
+    width: innerWidth,
+    height: innerHeight,
+    nodeSize: nodeSize,
+    colors: colors
+  }),
+      xScale = _useScatterPlot.xScale,
+      yScale = _useScatterPlot.yScale,
+      nodes = _useScatterPlot.nodes,
+      legendData = _useScatterPlot.legendData;
+
+  var customLayerProps = Object(react__WEBPACK_IMPORTED_MODULE_0__["useMemo"])(function () {
+    return _objectSpread2(_objectSpread2({}, props), {}, {
+      xScale: xScale,
+      yScale: yScale,
+      nodes: nodes,
+      margin: margin,
+      innerWidth: innerWidth,
+      innerHeight: innerHeight,
+      outerWidth: outerWidth,
+      outerHeight: outerHeight
+    });
+  }, [xScale, yScale, nodes, margin, innerWidth, innerHeight, outerWidth, outerHeight]);
+  var Nodes = animate ? AnimatedNodes$1 : StaticNodes$1;
+  var layerById = {
+    grid: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_nivo_axes__WEBPACK_IMPORTED_MODULE_2__["Grid"], {
+      key: "grid",
+      width: innerWidth,
+      height: innerHeight,
+      xScale: enableGridX ? xScale : null,
+      yScale: enableGridY ? yScale : null,
+      xValues: gridXValues,
+      yValues: gridYValues
+    }),
+    axes: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_nivo_axes__WEBPACK_IMPORTED_MODULE_2__["Axes"], {
+      key: "axes",
+      xScale: xScale,
+      yScale: yScale,
+      width: innerWidth,
+      height: innerHeight,
+      top: axisTop,
+      right: axisRight,
+      bottom: axisBottom,
+      left: axisLeft
+    }),
+    nodes: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Nodes, {
+      key: 'nodes',
+      nodes: nodes,
+      renderNode: renderNode,
+      isInteractive: isInteractive,
+      onMouseEnter: onMouseEnter,
+      onMouseMove: onMouseMove,
+      onMouseLeave: onMouseLeave,
+      onClick: onClick,
+      tooltip: tooltip,
+      blendMode: blendMode
+    }),
+    markers: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_nivo_core__WEBPACK_IMPORTED_MODULE_1__["CartesianMarkers"], {
+      key: "markers",
+      markers: markers,
+      width: innerWidth,
+      height: innerHeight,
+      xScale: xScale,
+      yScale: yScale
+    }),
+    mesh: null,
+    annotations: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(ScatterPlotAnnotations, {
+      key: "annotations",
+      nodes: nodes,
+      annotations: annotations,
+      innerWidth: innerWidth,
+      innerHeight: innerHeight,
+      animate: animate
+    }),
+    legends: legends.map(function (legend, i) {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_nivo_legends__WEBPACK_IMPORTED_MODULE_3__["BoxLegendSvg"], Object.assign({
+        key: i
+      }, legend, {
+        containerWidth: innerWidth,
+        containerHeight: innerHeight,
+        data: legendData,
+        theme: theme
+      }));
+    })
+  };
+
+  if (isInteractive === true && useMesh === true) {
+    layerById.mesh = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Mesh$1, {
+      key: "mesh",
+      nodes: nodes,
+      width: innerWidth,
+      height: innerHeight,
+      onMouseEnter: onMouseEnter,
+      onMouseMove: onMouseMove,
+      onMouseLeave: onMouseLeave,
+      onClick: onClick,
+      tooltip: tooltip,
+      debug: debugMesh
+    });
+  }
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_nivo_core__WEBPACK_IMPORTED_MODULE_1__["SvgWrapper"], {
+    width: outerWidth,
+    height: outerHeight,
+    margin: margin,
+    theme: theme,
+    role: role
+  }, layers.map(function (layer, i) {
+    if (layerById[layer] !== undefined) {
+      return layerById[layer];
+    }
+
+    if (typeof layer === 'function') {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], {
+        key: i
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(layer, customLayerProps));
+    }
+
+    throw new Error("Unknown layer (".concat(layer, ")"));
+  }));
+};
+
+ScatterPlot.defaultProps = ScatterPlotDefaultProps;
+var ScatterPlot$1 = /*#__PURE__*/Object(react__WEBPACK_IMPORTED_MODULE_0__["memo"])(Object(_nivo_core__WEBPACK_IMPORTED_MODULE_1__["withContainer"])(ScatterPlot));
+
+var ResponsiveScatterPlot = function ResponsiveScatterPlot(props) {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_nivo_core__WEBPACK_IMPORTED_MODULE_1__["ResponsiveWrapper"], null, function (_ref) {
+    var width = _ref.width,
+        height = _ref.height;
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(ScatterPlot$1, Object.assign({
+      width: width,
+      height: height
+    }, props));
+  });
+};
+
+function _arrayWithHoles(arr) {
+  if (Array.isArray(arr)) return arr;
+}
+
+function _iterableToArrayLimit(arr, i) {
+  if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return;
+  var _arr = [];
+  var _n = true;
+  var _d = false;
+  var _e = undefined;
+
+  try {
+    for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
+      _arr.push(_s.value);
+
+      if (i && _arr.length === i) break;
+    }
+  } catch (err) {
+    _d = true;
+    _e = err;
+  } finally {
+    try {
+      if (!_n && _i["return"] != null) _i["return"]();
+    } finally {
+      if (_d) throw _e;
+    }
+  }
+
+  return _arr;
+}
+
+function _nonIterableRest() {
+  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+
+function _slicedToArray(arr, i) {
+  return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
+}
+
+var ScatterPlotCanvas = function ScatterPlotCanvas(props) {
+  var data = props.data,
+      xScaleSpec = props.xScale,
+      xFormat = props.xFormat,
+      yScaleSpec = props.yScale,
+      yFormat = props.yFormat,
+      width = props.width,
+      height = props.height,
+      partialMargin = props.margin,
+      pixelRatio = props.pixelRatio,
+      layers = props.layers,
+      colors = props.colors,
+      nodeSize = props.nodeSize,
+      renderNode = props.renderNode,
+      enableGridX = props.enableGridX,
+      gridXValues = props.gridXValues,
+      enableGridY = props.enableGridY,
+      gridYValues = props.gridYValues,
+      axisTop = props.axisTop,
+      axisRight = props.axisRight,
+      axisBottom = props.axisBottom,
+      axisLeft = props.axisLeft,
+      annotations = props.annotations,
+      isInteractive = props.isInteractive,
+      debugMesh = props.debugMesh,
+      onMouseEnter = props.onMouseEnter,
+      onMouseMove = props.onMouseMove,
+      onMouseLeave = props.onMouseLeave,
+      onClick = props.onClick,
+      tooltip = props.tooltip,
+      legends = props.legends;
+  var canvasEl = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(null);
+  var theme = Object(_nivo_core__WEBPACK_IMPORTED_MODULE_1__["useTheme"])();
+
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(null),
+      _useState2 = _slicedToArray(_useState, 2),
+      currentNode = _useState2[0],
+      setCurrentNode = _useState2[1];
+
+  var _useDimensions = Object(_nivo_core__WEBPACK_IMPORTED_MODULE_1__["useDimensions"])(width, height, partialMargin),
+      margin = _useDimensions.margin,
+      innerWidth = _useDimensions.innerWidth,
+      innerHeight = _useDimensions.innerHeight,
+      outerWidth = _useDimensions.outerWidth,
+      outerHeight = _useDimensions.outerHeight;
+
+  var _useScatterPlot = useScatterPlot({
+    data: data,
+    xScaleSpec: xScaleSpec,
+    xFormat: xFormat,
+    yScaleSpec: yScaleSpec,
+    yFormat: yFormat,
+    width: innerWidth,
+    height: innerHeight,
+    nodeSize: nodeSize,
+    colors: colors
+  }),
+      xScale = _useScatterPlot.xScale,
+      yScale = _useScatterPlot.yScale,
+      nodes = _useScatterPlot.nodes,
+      legendData = _useScatterPlot.legendData;
+
+  var boundAnnotations = useScatterPlotAnnotations(nodes, annotations);
+
+  var _useVoronoiMesh = Object(_nivo_voronoi__WEBPACK_IMPORTED_MODULE_15__["useVoronoiMesh"])({
+    points: nodes,
+    width: innerWidth,
+    height: innerHeight,
+    debug: debugMesh
+  }),
+      delaunay = _useVoronoiMesh.delaunay,
+      voronoi = _useVoronoiMesh.voronoi;
+
+  var customLayerProps = Object(react__WEBPACK_IMPORTED_MODULE_0__["useMemo"])(function () {
+    return _objectSpread2(_objectSpread2({}, props), {}, {
+      xScale: xScale,
+      yScale: yScale,
+      nodes: nodes,
+      margin: margin,
+      innerWidth: innerWidth,
+      innerHeight: innerHeight,
+      outerWidth: outerWidth,
+      outerHeight: outerHeight
+    });
+  }, [xScale, yScale, nodes, margin, innerWidth, innerHeight, outerWidth, outerHeight]);
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
+    canvasEl.current.width = outerWidth * pixelRatio;
+    canvasEl.current.height = outerHeight * pixelRatio;
+    var ctx = canvasEl.current.getContext('2d');
+    ctx.scale(pixelRatio, pixelRatio);
+    ctx.fillStyle = theme.background;
+    ctx.fillRect(0, 0, outerWidth, outerHeight);
+    ctx.translate(margin.left, margin.top);
+    layers.forEach(function (layer) {
+      if (layer === 'grid') {
+        ctx.lineWidth = theme.grid.line.strokeWidth;
+        ctx.strokeStyle = theme.grid.line.stroke;
+        enableGridX && Object(_nivo_axes__WEBPACK_IMPORTED_MODULE_2__["renderGridLinesToCanvas"])(ctx, {
+          width: innerWidth,
+          height: innerHeight,
+          scale: xScale,
+          axis: 'x',
+          values: gridXValues
+        });
+        enableGridY && Object(_nivo_axes__WEBPACK_IMPORTED_MODULE_2__["renderGridLinesToCanvas"])(ctx, {
+          width: innerWidth,
+          height: innerHeight,
+          scale: yScale,
+          axis: 'y',
+          values: gridYValues
+        });
+      } else if (layer === 'annotations') {
+        Object(_nivo_annotations__WEBPACK_IMPORTED_MODULE_6__["renderAnnotationsToCanvas"])(ctx, {
+          annotations: boundAnnotations,
+          theme: theme
+        });
+      } else if (layer === 'axes') {
+        Object(_nivo_axes__WEBPACK_IMPORTED_MODULE_2__["renderAxesToCanvas"])(ctx, {
+          xScale: xScale,
+          yScale: yScale,
+          width: innerWidth,
+          height: innerHeight,
+          top: axisTop,
+          right: axisRight,
+          bottom: axisBottom,
+          left: axisLeft,
+          theme: theme
+        });
+      } else if (layer === 'nodes') {
+        nodes.forEach(function (node) {
+          renderNode(ctx, node);
+        });
+      } else if (layer === 'mesh') {
+        if (debugMesh === true) {
+          Object(_nivo_voronoi__WEBPACK_IMPORTED_MODULE_15__["renderVoronoiToCanvas"])(ctx, voronoi);
+
+          if (currentNode) {
+            Object(_nivo_voronoi__WEBPACK_IMPORTED_MODULE_15__["renderVoronoiCellToCanvas"])(ctx, voronoi, currentNode.index);
+          }
+        }
+      } else if (layer === 'legends') {
+        legends.forEach(function (legend) {
+          Object(_nivo_legends__WEBPACK_IMPORTED_MODULE_3__["renderLegendToCanvas"])(ctx, _objectSpread2(_objectSpread2({}, legend), {}, {
+            data: legendData,
+            containerWidth: innerWidth,
+            containerHeight: innerHeight,
+            theme: theme
+          }));
+        });
+      } else if (typeof layer === 'function') {
+        layer(ctx, customLayerProps);
+      } else {
+        throw new Error("Invalid layer: ".concat(layer));
+      }
+    });
+  }, [canvasEl, innerWidth, innerHeight, outerWidth, outerHeight, margin.top, margin.left, pixelRatio, renderNode, layers, customLayerProps, theme, xScale, yScale, nodes, enableGridX, enableGridY, axisTop, axisRight, axisBottom, axisLeft, legends, legendData, debugMesh, voronoi, currentNode]);
+
+  var _useTooltip = Object(_nivo_tooltip__WEBPACK_IMPORTED_MODULE_13__["useTooltip"])(),
+      showTooltipFromEvent = _useTooltip.showTooltipFromEvent,
+      hideTooltip = _useTooltip.hideTooltip;
+
+  var getNodeFromMouseEvent = Object(react__WEBPACK_IMPORTED_MODULE_0__["useCallback"])(function (event) {
+    var _getRelativeCursor = Object(_nivo_core__WEBPACK_IMPORTED_MODULE_1__["getRelativeCursor"])(canvasEl.current, event),
+        _getRelativeCursor2 = _slicedToArray(_getRelativeCursor, 2),
+        x = _getRelativeCursor2[0],
+        y = _getRelativeCursor2[1];
+
+    if (!Object(_nivo_core__WEBPACK_IMPORTED_MODULE_1__["isCursorInRect"])(margin.left, margin.top, innerWidth, innerHeight, x, y)) return null;
+    var nodeIndex = delaunay.find(x - margin.left, y - margin.top);
+    return nodes[nodeIndex];
+  }, [canvasEl, margin, innerWidth, innerHeight, delaunay]);
+  var handleMouseHover = Object(react__WEBPACK_IMPORTED_MODULE_0__["useCallback"])(function (event) {
+    var node = getNodeFromMouseEvent(event);
+    setCurrentNode(node);
+
+    if (node) {
+      showTooltipFromEvent( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(tooltip, {
+        node: node
+      }), event);
+
+      if (currentNode && currentNode.id !== node.id) {
+        onMouseLeave && onMouseLeave(currentNode, event);
+        onMouseEnter && onMouseEnter(node, event);
+      }
+
+      if (!currentNode) {
+        onMouseEnter && onMouseEnter(node, event);
+      }
+
+      onMouseMove && onMouseMove(node, event);
+    } else {
+      hideTooltip();
+      currentNode && onMouseLeave && onMouseLeave(currentNode, event);
+    }
+  }, [getNodeFromMouseEvent, currentNode, setCurrentNode, showTooltipFromEvent, hideTooltip, tooltip, onMouseEnter, onMouseMove, onMouseLeave]);
+  var handleMouseLeave = Object(react__WEBPACK_IMPORTED_MODULE_0__["useCallback"])(function (event) {
+    hideTooltip();
+    setCurrentNode(null);
+    currentNode && onMouseLeave && onMouseLeave(currentNode, event);
+  }, [hideTooltip, currentNode, setCurrentNode, onMouseLeave]);
+  var handleClick = Object(react__WEBPACK_IMPORTED_MODULE_0__["useCallback"])(function (event) {
+    if (onClick) {
+      var node = getNodeFromMouseEvent(event);
+      node && onClick(node, event);
+    }
+  }, [getNodeFromMouseEvent, onClick]);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("canvas", {
+    ref: canvasEl,
+    width: outerWidth * pixelRatio,
+    height: outerHeight * pixelRatio,
+    style: {
+      width: outerWidth,
+      height: outerHeight,
+      cursor: isInteractive ? 'auto' : 'normal'
+    },
+    onMouseEnter: isInteractive ? handleMouseHover : undefined,
+    onMouseMove: isInteractive ? handleMouseHover : undefined,
+    onMouseLeave: isInteractive ? handleMouseLeave : undefined,
+    onClick: isInteractive ? handleClick : undefined
+  });
+};
+
+ScatterPlotCanvas.defaultProps = _objectSpread2(_objectSpread2({}, ScatterPlotCanvasDefaultProps), {}, {
+  renderNode: function renderNode(ctx, node) {
+    ctx.beginPath();
+    ctx.arc(node.x, node.y, node.size / 2, 0, 2 * Math.PI);
+    ctx.fillStyle = node.style.color;
+    ctx.fill();
+  }
+});
+var ScatterPlotCanvas$1 = /*#__PURE__*/Object(react__WEBPACK_IMPORTED_MODULE_0__["memo"])(Object(_nivo_core__WEBPACK_IMPORTED_MODULE_1__["withContainer"])(ScatterPlotCanvas));
+
+var ResponsiveScatterPlotCanvas = function ResponsiveScatterPlotCanvas(props) {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_nivo_core__WEBPACK_IMPORTED_MODULE_1__["ResponsiveWrapper"], null, function (_ref) {
+    var width = _ref.width,
+        height = _ref.height;
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(ScatterPlotCanvas$1, Object.assign({
+      width: width,
+      height: height
+    }, props));
+  });
+};
+
+
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js")))
 
 /***/ }),
 
@@ -38549,6 +40421,39 @@ module.exports = apply;
 
 /***/ }),
 
+/***/ "./node_modules/lodash/_arrayEach.js":
+/*!*******************************************!*\
+  !*** ./node_modules/lodash/_arrayEach.js ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/**
+ * A specialized version of `_.forEach` for arrays without support for
+ * iteratee shorthands.
+ *
+ * @private
+ * @param {Array} [array] The array to iterate over.
+ * @param {Function} iteratee The function invoked per iteration.
+ * @returns {Array} Returns `array`.
+ */
+function arrayEach(array, iteratee) {
+  var index = -1,
+      length = array == null ? 0 : array.length;
+
+  while (++index < length) {
+    if (iteratee(array[index], index, array) === false) {
+      break;
+    }
+  }
+
+  return array;
+}
+
+module.exports = arrayEach;
+
+/***/ }),
+
 /***/ "./node_modules/lodash/_arrayFilter.js":
 /*!*********************************************!*\
   !*** ./node_modules/lodash/_arrayFilter.js ***!
@@ -38902,6 +40807,62 @@ module.exports = assocIndexOf;
 
 /***/ }),
 
+/***/ "./node_modules/lodash/_baseAssign.js":
+/*!********************************************!*\
+  !*** ./node_modules/lodash/_baseAssign.js ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var copyObject = __webpack_require__(/*! ./_copyObject */ "./node_modules/lodash/_copyObject.js"),
+    keys = __webpack_require__(/*! ./keys */ "./node_modules/lodash/keys.js");
+/**
+ * The base implementation of `_.assign` without support for multiple sources
+ * or `customizer` functions.
+ *
+ * @private
+ * @param {Object} object The destination object.
+ * @param {Object} source The source object.
+ * @returns {Object} Returns `object`.
+ */
+
+
+function baseAssign(object, source) {
+  return object && copyObject(source, keys(source), object);
+}
+
+module.exports = baseAssign;
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_baseAssignIn.js":
+/*!**********************************************!*\
+  !*** ./node_modules/lodash/_baseAssignIn.js ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var copyObject = __webpack_require__(/*! ./_copyObject */ "./node_modules/lodash/_copyObject.js"),
+    keysIn = __webpack_require__(/*! ./keysIn */ "./node_modules/lodash/keysIn.js");
+/**
+ * The base implementation of `_.assignIn` without support for multiple sources
+ * or `customizer` functions.
+ *
+ * @private
+ * @param {Object} object The destination object.
+ * @param {Object} source The source object.
+ * @returns {Object} Returns `object`.
+ */
+
+
+function baseAssignIn(object, source) {
+  return object && copyObject(source, keysIn(source), object);
+}
+
+module.exports = baseAssignIn;
+
+/***/ }),
+
 /***/ "./node_modules/lodash/_baseAssignValue.js":
 /*!*************************************************!*\
   !*** ./node_modules/lodash/_baseAssignValue.js ***!
@@ -38935,6 +40896,178 @@ function baseAssignValue(object, key, value) {
 }
 
 module.exports = baseAssignValue;
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_baseClone.js":
+/*!*******************************************!*\
+  !*** ./node_modules/lodash/_baseClone.js ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Stack = __webpack_require__(/*! ./_Stack */ "./node_modules/lodash/_Stack.js"),
+    arrayEach = __webpack_require__(/*! ./_arrayEach */ "./node_modules/lodash/_arrayEach.js"),
+    assignValue = __webpack_require__(/*! ./_assignValue */ "./node_modules/lodash/_assignValue.js"),
+    baseAssign = __webpack_require__(/*! ./_baseAssign */ "./node_modules/lodash/_baseAssign.js"),
+    baseAssignIn = __webpack_require__(/*! ./_baseAssignIn */ "./node_modules/lodash/_baseAssignIn.js"),
+    cloneBuffer = __webpack_require__(/*! ./_cloneBuffer */ "./node_modules/lodash/_cloneBuffer.js"),
+    copyArray = __webpack_require__(/*! ./_copyArray */ "./node_modules/lodash/_copyArray.js"),
+    copySymbols = __webpack_require__(/*! ./_copySymbols */ "./node_modules/lodash/_copySymbols.js"),
+    copySymbolsIn = __webpack_require__(/*! ./_copySymbolsIn */ "./node_modules/lodash/_copySymbolsIn.js"),
+    getAllKeys = __webpack_require__(/*! ./_getAllKeys */ "./node_modules/lodash/_getAllKeys.js"),
+    getAllKeysIn = __webpack_require__(/*! ./_getAllKeysIn */ "./node_modules/lodash/_getAllKeysIn.js"),
+    getTag = __webpack_require__(/*! ./_getTag */ "./node_modules/lodash/_getTag.js"),
+    initCloneArray = __webpack_require__(/*! ./_initCloneArray */ "./node_modules/lodash/_initCloneArray.js"),
+    initCloneByTag = __webpack_require__(/*! ./_initCloneByTag */ "./node_modules/lodash/_initCloneByTag.js"),
+    initCloneObject = __webpack_require__(/*! ./_initCloneObject */ "./node_modules/lodash/_initCloneObject.js"),
+    isArray = __webpack_require__(/*! ./isArray */ "./node_modules/lodash/isArray.js"),
+    isBuffer = __webpack_require__(/*! ./isBuffer */ "./node_modules/lodash/isBuffer.js"),
+    isMap = __webpack_require__(/*! ./isMap */ "./node_modules/lodash/isMap.js"),
+    isObject = __webpack_require__(/*! ./isObject */ "./node_modules/lodash/isObject.js"),
+    isSet = __webpack_require__(/*! ./isSet */ "./node_modules/lodash/isSet.js"),
+    keys = __webpack_require__(/*! ./keys */ "./node_modules/lodash/keys.js"),
+    keysIn = __webpack_require__(/*! ./keysIn */ "./node_modules/lodash/keysIn.js");
+/** Used to compose bitmasks for cloning. */
+
+
+var CLONE_DEEP_FLAG = 1,
+    CLONE_FLAT_FLAG = 2,
+    CLONE_SYMBOLS_FLAG = 4;
+/** `Object#toString` result references. */
+
+var argsTag = '[object Arguments]',
+    arrayTag = '[object Array]',
+    boolTag = '[object Boolean]',
+    dateTag = '[object Date]',
+    errorTag = '[object Error]',
+    funcTag = '[object Function]',
+    genTag = '[object GeneratorFunction]',
+    mapTag = '[object Map]',
+    numberTag = '[object Number]',
+    objectTag = '[object Object]',
+    regexpTag = '[object RegExp]',
+    setTag = '[object Set]',
+    stringTag = '[object String]',
+    symbolTag = '[object Symbol]',
+    weakMapTag = '[object WeakMap]';
+var arrayBufferTag = '[object ArrayBuffer]',
+    dataViewTag = '[object DataView]',
+    float32Tag = '[object Float32Array]',
+    float64Tag = '[object Float64Array]',
+    int8Tag = '[object Int8Array]',
+    int16Tag = '[object Int16Array]',
+    int32Tag = '[object Int32Array]',
+    uint8Tag = '[object Uint8Array]',
+    uint8ClampedTag = '[object Uint8ClampedArray]',
+    uint16Tag = '[object Uint16Array]',
+    uint32Tag = '[object Uint32Array]';
+/** Used to identify `toStringTag` values supported by `_.clone`. */
+
+var cloneableTags = {};
+cloneableTags[argsTag] = cloneableTags[arrayTag] = cloneableTags[arrayBufferTag] = cloneableTags[dataViewTag] = cloneableTags[boolTag] = cloneableTags[dateTag] = cloneableTags[float32Tag] = cloneableTags[float64Tag] = cloneableTags[int8Tag] = cloneableTags[int16Tag] = cloneableTags[int32Tag] = cloneableTags[mapTag] = cloneableTags[numberTag] = cloneableTags[objectTag] = cloneableTags[regexpTag] = cloneableTags[setTag] = cloneableTags[stringTag] = cloneableTags[symbolTag] = cloneableTags[uint8Tag] = cloneableTags[uint8ClampedTag] = cloneableTags[uint16Tag] = cloneableTags[uint32Tag] = true;
+cloneableTags[errorTag] = cloneableTags[funcTag] = cloneableTags[weakMapTag] = false;
+/**
+ * The base implementation of `_.clone` and `_.cloneDeep` which tracks
+ * traversed objects.
+ *
+ * @private
+ * @param {*} value The value to clone.
+ * @param {boolean} bitmask The bitmask flags.
+ *  1 - Deep clone
+ *  2 - Flatten inherited properties
+ *  4 - Clone symbols
+ * @param {Function} [customizer] The function to customize cloning.
+ * @param {string} [key] The key of `value`.
+ * @param {Object} [object] The parent object of `value`.
+ * @param {Object} [stack] Tracks traversed objects and their clone counterparts.
+ * @returns {*} Returns the cloned value.
+ */
+
+function baseClone(value, bitmask, customizer, key, object, stack) {
+  var result,
+      isDeep = bitmask & CLONE_DEEP_FLAG,
+      isFlat = bitmask & CLONE_FLAT_FLAG,
+      isFull = bitmask & CLONE_SYMBOLS_FLAG;
+
+  if (customizer) {
+    result = object ? customizer(value, key, object, stack) : customizer(value);
+  }
+
+  if (result !== undefined) {
+    return result;
+  }
+
+  if (!isObject(value)) {
+    return value;
+  }
+
+  var isArr = isArray(value);
+
+  if (isArr) {
+    result = initCloneArray(value);
+
+    if (!isDeep) {
+      return copyArray(value, result);
+    }
+  } else {
+    var tag = getTag(value),
+        isFunc = tag == funcTag || tag == genTag;
+
+    if (isBuffer(value)) {
+      return cloneBuffer(value, isDeep);
+    }
+
+    if (tag == objectTag || tag == argsTag || isFunc && !object) {
+      result = isFlat || isFunc ? {} : initCloneObject(value);
+
+      if (!isDeep) {
+        return isFlat ? copySymbolsIn(value, baseAssignIn(result, value)) : copySymbols(value, baseAssign(result, value));
+      }
+    } else {
+      if (!cloneableTags[tag]) {
+        return object ? value : {};
+      }
+
+      result = initCloneByTag(value, tag, isDeep);
+    }
+  } // Check for circular references and return its corresponding clone.
+
+
+  stack || (stack = new Stack());
+  var stacked = stack.get(value);
+
+  if (stacked) {
+    return stacked;
+  }
+
+  stack.set(value, result);
+
+  if (isSet(value)) {
+    value.forEach(function (subValue) {
+      result.add(baseClone(subValue, bitmask, customizer, subValue, value, stack));
+    });
+  } else if (isMap(value)) {
+    value.forEach(function (subValue, key) {
+      result.set(key, baseClone(subValue, bitmask, customizer, key, value, stack));
+    });
+  }
+
+  var keysFunc = isFull ? isFlat ? getAllKeysIn : getAllKeys : isFlat ? keysIn : keys;
+  var props = isArr ? undefined : keysFunc(value);
+  arrayEach(props || value, function (subValue, key) {
+    if (props) {
+      key = subValue;
+      subValue = value[key];
+    } // Recursively populate clone (susceptible to call stack limits).
+
+
+    assignValue(result, key, baseClone(subValue, bitmask, customizer, key, value, stack));
+  });
+  return result;
+}
+
+module.exports = baseClone;
 
 /***/ }),
 
@@ -39084,6 +41217,38 @@ var baseForOwn = __webpack_require__(/*! ./_baseForOwn */ "./node_modules/lodash
 
 var baseEach = createBaseEach(baseForOwn);
 module.exports = baseEach;
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_baseFilter.js":
+/*!********************************************!*\
+  !*** ./node_modules/lodash/_baseFilter.js ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var baseEach = __webpack_require__(/*! ./_baseEach */ "./node_modules/lodash/_baseEach.js");
+/**
+ * The base implementation of `_.filter` without support for iteratee shorthands.
+ *
+ * @private
+ * @param {Array|Object} collection The collection to iterate over.
+ * @param {Function} predicate The function invoked per iteration.
+ * @returns {Array} Returns the new filtered array.
+ */
+
+
+function baseFilter(collection, predicate) {
+  var result = [];
+  baseEach(collection, function (value, index, collection) {
+    if (predicate(value, index, collection)) {
+      result.push(value);
+    }
+  });
+  return result;
+}
+
+module.exports = baseFilter;
 
 /***/ }),
 
@@ -39574,6 +41739,35 @@ module.exports = baseIsEqualDeep;
 
 /***/ }),
 
+/***/ "./node_modules/lodash/_baseIsMap.js":
+/*!*******************************************!*\
+  !*** ./node_modules/lodash/_baseIsMap.js ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var getTag = __webpack_require__(/*! ./_getTag */ "./node_modules/lodash/_getTag.js"),
+    isObjectLike = __webpack_require__(/*! ./isObjectLike */ "./node_modules/lodash/isObjectLike.js");
+/** `Object#toString` result references. */
+
+
+var mapTag = '[object Map]';
+/**
+ * The base implementation of `_.isMap` without Node.js optimizations.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a map, else `false`.
+ */
+
+function baseIsMap(value) {
+  return isObjectLike(value) && getTag(value) == mapTag;
+}
+
+module.exports = baseIsMap;
+
+/***/ }),
+
 /***/ "./node_modules/lodash/_baseIsMatch.js":
 /*!*********************************************!*\
   !*** ./node_modules/lodash/_baseIsMatch.js ***!
@@ -39723,6 +41917,35 @@ function baseIsNative(value) {
 }
 
 module.exports = baseIsNative;
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_baseIsSet.js":
+/*!*******************************************!*\
+  !*** ./node_modules/lodash/_baseIsSet.js ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var getTag = __webpack_require__(/*! ./_getTag */ "./node_modules/lodash/_getTag.js"),
+    isObjectLike = __webpack_require__(/*! ./isObjectLike */ "./node_modules/lodash/isObjectLike.js");
+/** `Object#toString` result references. */
+
+
+var setTag = '[object Set]';
+/**
+ * The base implementation of `_.isSet` without Node.js optimizations.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a set, else `false`.
+ */
+
+function baseIsSet(value) {
+  return isObjectLike(value) && getTag(value) == setTag;
+}
+
+module.exports = baseIsSet;
 
 /***/ }),
 
@@ -40490,6 +42713,51 @@ module.exports = baseSetToString;
 
 /***/ }),
 
+/***/ "./node_modules/lodash/_baseSlice.js":
+/*!*******************************************!*\
+  !*** ./node_modules/lodash/_baseSlice.js ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/**
+ * The base implementation of `_.slice` without an iteratee call guard.
+ *
+ * @private
+ * @param {Array} array The array to slice.
+ * @param {number} [start=0] The start position.
+ * @param {number} [end=array.length] The end position.
+ * @returns {Array} Returns the slice of `array`.
+ */
+function baseSlice(array, start, end) {
+  var index = -1,
+      length = array.length;
+
+  if (start < 0) {
+    start = -start > length ? 0 : length + start;
+  }
+
+  end = end > length ? length : end;
+
+  if (end < 0) {
+    end += length;
+  }
+
+  length = start > end ? 0 : end - start >>> 0;
+  start >>>= 0;
+  var result = Array(length);
+
+  while (++index < length) {
+    result[index] = array[index + start];
+  }
+
+  return result;
+}
+
+module.exports = baseSlice;
+
+/***/ }),
+
 /***/ "./node_modules/lodash/_baseSortBy.js":
 /*!********************************************!*\
   !*** ./node_modules/lodash/_baseSortBy.js ***!
@@ -40715,6 +42983,37 @@ module.exports = baseUniq;
 
 /***/ }),
 
+/***/ "./node_modules/lodash/_baseUnset.js":
+/*!*******************************************!*\
+  !*** ./node_modules/lodash/_baseUnset.js ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var castPath = __webpack_require__(/*! ./_castPath */ "./node_modules/lodash/_castPath.js"),
+    last = __webpack_require__(/*! ./last */ "./node_modules/lodash/last.js"),
+    parent = __webpack_require__(/*! ./_parent */ "./node_modules/lodash/_parent.js"),
+    toKey = __webpack_require__(/*! ./_toKey */ "./node_modules/lodash/_toKey.js");
+/**
+ * The base implementation of `_.unset`.
+ *
+ * @private
+ * @param {Object} object The object to modify.
+ * @param {Array|string} path The property path to unset.
+ * @returns {boolean} Returns `true` if the property is deleted, else `false`.
+ */
+
+
+function baseUnset(object, path) {
+  path = castPath(path, object);
+  object = parent(object, path);
+  return object == null || delete object[toKey(last(path))];
+}
+
+module.exports = baseUnset;
+
+/***/ }),
+
 /***/ "./node_modules/lodash/_cacheHas.js":
 /*!******************************************!*\
   !*** ./node_modules/lodash/_cacheHas.js ***!
@@ -40844,6 +43143,89 @@ function cloneBuffer(buffer, isDeep) {
 
 module.exports = cloneBuffer;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../webpack/buildin/module.js */ "./node_modules/webpack/buildin/module.js")(module)))
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_cloneDataView.js":
+/*!***********************************************!*\
+  !*** ./node_modules/lodash/_cloneDataView.js ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var cloneArrayBuffer = __webpack_require__(/*! ./_cloneArrayBuffer */ "./node_modules/lodash/_cloneArrayBuffer.js");
+/**
+ * Creates a clone of `dataView`.
+ *
+ * @private
+ * @param {Object} dataView The data view to clone.
+ * @param {boolean} [isDeep] Specify a deep clone.
+ * @returns {Object} Returns the cloned data view.
+ */
+
+
+function cloneDataView(dataView, isDeep) {
+  var buffer = isDeep ? cloneArrayBuffer(dataView.buffer) : dataView.buffer;
+  return new dataView.constructor(buffer, dataView.byteOffset, dataView.byteLength);
+}
+
+module.exports = cloneDataView;
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_cloneRegExp.js":
+/*!*********************************************!*\
+  !*** ./node_modules/lodash/_cloneRegExp.js ***!
+  \*********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/** Used to match `RegExp` flags from their coerced string values. */
+var reFlags = /\w*$/;
+/**
+ * Creates a clone of `regexp`.
+ *
+ * @private
+ * @param {Object} regexp The regexp to clone.
+ * @returns {Object} Returns the cloned regexp.
+ */
+
+function cloneRegExp(regexp) {
+  var result = new regexp.constructor(regexp.source, reFlags.exec(regexp));
+  result.lastIndex = regexp.lastIndex;
+  return result;
+}
+
+module.exports = cloneRegExp;
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_cloneSymbol.js":
+/*!*********************************************!*\
+  !*** ./node_modules/lodash/_cloneSymbol.js ***!
+  \*********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var _Symbol = __webpack_require__(/*! ./_Symbol */ "./node_modules/lodash/_Symbol.js");
+/** Used to convert symbols to primitives and strings. */
+
+
+var symbolProto = _Symbol ? _Symbol.prototype : undefined,
+    symbolValueOf = symbolProto ? symbolProto.valueOf : undefined;
+/**
+ * Creates a clone of the `symbol` object.
+ *
+ * @private
+ * @param {Object} symbol The symbol object to clone.
+ * @returns {Object} Returns the cloned symbol object.
+ */
+
+function cloneSymbol(symbol) {
+  return symbolValueOf ? Object(symbolValueOf.call(symbol)) : {};
+}
+
+module.exports = cloneSymbol;
 
 /***/ }),
 
@@ -41057,6 +43439,60 @@ module.exports = copyObject;
 
 /***/ }),
 
+/***/ "./node_modules/lodash/_copySymbols.js":
+/*!*********************************************!*\
+  !*** ./node_modules/lodash/_copySymbols.js ***!
+  \*********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var copyObject = __webpack_require__(/*! ./_copyObject */ "./node_modules/lodash/_copyObject.js"),
+    getSymbols = __webpack_require__(/*! ./_getSymbols */ "./node_modules/lodash/_getSymbols.js");
+/**
+ * Copies own symbols of `source` to `object`.
+ *
+ * @private
+ * @param {Object} source The object to copy symbols from.
+ * @param {Object} [object={}] The object to copy symbols to.
+ * @returns {Object} Returns `object`.
+ */
+
+
+function copySymbols(source, object) {
+  return copyObject(source, getSymbols(source), object);
+}
+
+module.exports = copySymbols;
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_copySymbolsIn.js":
+/*!***********************************************!*\
+  !*** ./node_modules/lodash/_copySymbolsIn.js ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var copyObject = __webpack_require__(/*! ./_copyObject */ "./node_modules/lodash/_copyObject.js"),
+    getSymbolsIn = __webpack_require__(/*! ./_getSymbolsIn */ "./node_modules/lodash/_getSymbolsIn.js");
+/**
+ * Copies own and inherited symbols of `source` to `object`.
+ *
+ * @private
+ * @param {Object} source The object to copy symbols from.
+ * @param {Object} [object={}] The object to copy symbols to.
+ * @returns {Object} Returns `object`.
+ */
+
+
+function copySymbolsIn(source, object) {
+  return copyObject(source, getSymbolsIn(source), object);
+}
+
+module.exports = copySymbolsIn;
+
+/***/ }),
+
 /***/ "./node_modules/lodash/_coreJsData.js":
 /*!********************************************!*\
   !*** ./node_modules/lodash/_coreJsData.js ***!
@@ -41231,6 +43667,33 @@ var createSet = !(Set && 1 / setToArray(new Set([, -0]))[1] == INFINITY) ? noop 
   return new Set(values);
 };
 module.exports = createSet;
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_customOmitClone.js":
+/*!*************************************************!*\
+  !*** ./node_modules/lodash/_customOmitClone.js ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var isPlainObject = __webpack_require__(/*! ./isPlainObject */ "./node_modules/lodash/isPlainObject.js");
+/**
+ * Used by `_.omit` to customize its `_.cloneDeep` use to only clone plain
+ * objects.
+ *
+ * @private
+ * @param {*} value The value to inspect.
+ * @param {string} key The key of the property to inspect.
+ * @returns {*} Returns the uncloned value or `undefined` to defer cloning to `_.cloneDeep`.
+ */
+
+
+function customOmitClone(value) {
+  return isPlainObject(value) ? undefined : value;
+}
+
+module.exports = customOmitClone;
 
 /***/ }),
 
@@ -41647,6 +44110,34 @@ module.exports = getAllKeys;
 
 /***/ }),
 
+/***/ "./node_modules/lodash/_getAllKeysIn.js":
+/*!**********************************************!*\
+  !*** ./node_modules/lodash/_getAllKeysIn.js ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var baseGetAllKeys = __webpack_require__(/*! ./_baseGetAllKeys */ "./node_modules/lodash/_baseGetAllKeys.js"),
+    getSymbolsIn = __webpack_require__(/*! ./_getSymbolsIn */ "./node_modules/lodash/_getSymbolsIn.js"),
+    keysIn = __webpack_require__(/*! ./keysIn */ "./node_modules/lodash/keysIn.js");
+/**
+ * Creates an array of own and inherited enumerable property names and
+ * symbols of `object`.
+ *
+ * @private
+ * @param {Object} object The object to query.
+ * @returns {Array} Returns the array of property names and symbols.
+ */
+
+
+function getAllKeysIn(object) {
+  return baseGetAllKeys(object, keysIn, getSymbolsIn);
+}
+
+module.exports = getAllKeysIn;
+
+/***/ }),
+
 /***/ "./node_modules/lodash/_getMapData.js":
 /*!********************************************!*\
   !*** ./node_modules/lodash/_getMapData.js ***!
@@ -41850,6 +44341,43 @@ var getSymbols = !nativeGetSymbols ? stubArray : function (object) {
   });
 };
 module.exports = getSymbols;
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_getSymbolsIn.js":
+/*!**********************************************!*\
+  !*** ./node_modules/lodash/_getSymbolsIn.js ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var arrayPush = __webpack_require__(/*! ./_arrayPush */ "./node_modules/lodash/_arrayPush.js"),
+    getPrototype = __webpack_require__(/*! ./_getPrototype */ "./node_modules/lodash/_getPrototype.js"),
+    getSymbols = __webpack_require__(/*! ./_getSymbols */ "./node_modules/lodash/_getSymbols.js"),
+    stubArray = __webpack_require__(/*! ./stubArray */ "./node_modules/lodash/stubArray.js");
+/* Built-in method references for those with the same name as other `lodash` methods. */
+
+
+var nativeGetSymbols = Object.getOwnPropertySymbols;
+/**
+ * Creates an array of the own and inherited enumerable symbols of `object`.
+ *
+ * @private
+ * @param {Object} object The object to query.
+ * @returns {Array} Returns the array of symbols.
+ */
+
+var getSymbolsIn = !nativeGetSymbols ? stubArray : function (object) {
+  var result = [];
+
+  while (object) {
+    arrayPush(result, getSymbols(object));
+    object = getPrototype(object);
+  }
+
+  return result;
+};
+module.exports = getSymbolsIn;
 
 /***/ }),
 
@@ -42162,6 +44690,136 @@ function hashSet(key, value) {
 }
 
 module.exports = hashSet;
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_initCloneArray.js":
+/*!************************************************!*\
+  !*** ./node_modules/lodash/_initCloneArray.js ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/** Used for built-in method references. */
+var objectProto = Object.prototype;
+/** Used to check objects for own properties. */
+
+var hasOwnProperty = objectProto.hasOwnProperty;
+/**
+ * Initializes an array clone.
+ *
+ * @private
+ * @param {Array} array The array to clone.
+ * @returns {Array} Returns the initialized clone.
+ */
+
+function initCloneArray(array) {
+  var length = array.length,
+      result = new array.constructor(length); // Add properties assigned by `RegExp#exec`.
+
+  if (length && typeof array[0] == 'string' && hasOwnProperty.call(array, 'index')) {
+    result.index = array.index;
+    result.input = array.input;
+  }
+
+  return result;
+}
+
+module.exports = initCloneArray;
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_initCloneByTag.js":
+/*!************************************************!*\
+  !*** ./node_modules/lodash/_initCloneByTag.js ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var cloneArrayBuffer = __webpack_require__(/*! ./_cloneArrayBuffer */ "./node_modules/lodash/_cloneArrayBuffer.js"),
+    cloneDataView = __webpack_require__(/*! ./_cloneDataView */ "./node_modules/lodash/_cloneDataView.js"),
+    cloneRegExp = __webpack_require__(/*! ./_cloneRegExp */ "./node_modules/lodash/_cloneRegExp.js"),
+    cloneSymbol = __webpack_require__(/*! ./_cloneSymbol */ "./node_modules/lodash/_cloneSymbol.js"),
+    cloneTypedArray = __webpack_require__(/*! ./_cloneTypedArray */ "./node_modules/lodash/_cloneTypedArray.js");
+/** `Object#toString` result references. */
+
+
+var boolTag = '[object Boolean]',
+    dateTag = '[object Date]',
+    mapTag = '[object Map]',
+    numberTag = '[object Number]',
+    regexpTag = '[object RegExp]',
+    setTag = '[object Set]',
+    stringTag = '[object String]',
+    symbolTag = '[object Symbol]';
+var arrayBufferTag = '[object ArrayBuffer]',
+    dataViewTag = '[object DataView]',
+    float32Tag = '[object Float32Array]',
+    float64Tag = '[object Float64Array]',
+    int8Tag = '[object Int8Array]',
+    int16Tag = '[object Int16Array]',
+    int32Tag = '[object Int32Array]',
+    uint8Tag = '[object Uint8Array]',
+    uint8ClampedTag = '[object Uint8ClampedArray]',
+    uint16Tag = '[object Uint16Array]',
+    uint32Tag = '[object Uint32Array]';
+/**
+ * Initializes an object clone based on its `toStringTag`.
+ *
+ * **Note:** This function only supports cloning values with tags of
+ * `Boolean`, `Date`, `Error`, `Map`, `Number`, `RegExp`, `Set`, or `String`.
+ *
+ * @private
+ * @param {Object} object The object to clone.
+ * @param {string} tag The `toStringTag` of the object to clone.
+ * @param {boolean} [isDeep] Specify a deep clone.
+ * @returns {Object} Returns the initialized clone.
+ */
+
+function initCloneByTag(object, tag, isDeep) {
+  var Ctor = object.constructor;
+
+  switch (tag) {
+    case arrayBufferTag:
+      return cloneArrayBuffer(object);
+
+    case boolTag:
+    case dateTag:
+      return new Ctor(+object);
+
+    case dataViewTag:
+      return cloneDataView(object, isDeep);
+
+    case float32Tag:
+    case float64Tag:
+    case int8Tag:
+    case int16Tag:
+    case int32Tag:
+    case uint8Tag:
+    case uint8ClampedTag:
+    case uint16Tag:
+    case uint32Tag:
+      return cloneTypedArray(object, isDeep);
+
+    case mapTag:
+      return new Ctor();
+
+    case numberTag:
+    case stringTag:
+      return new Ctor(object);
+
+    case regexpTag:
+      return cloneRegExp(object);
+
+    case setTag:
+      return new Ctor();
+
+    case symbolTag:
+      return cloneSymbol(object);
+  }
+}
+
+module.exports = initCloneByTag;
 
 /***/ }),
 
@@ -43075,6 +45733,33 @@ module.exports = overRest;
 
 /***/ }),
 
+/***/ "./node_modules/lodash/_parent.js":
+/*!****************************************!*\
+  !*** ./node_modules/lodash/_parent.js ***!
+  \****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var baseGet = __webpack_require__(/*! ./_baseGet */ "./node_modules/lodash/_baseGet.js"),
+    baseSlice = __webpack_require__(/*! ./_baseSlice */ "./node_modules/lodash/_baseSlice.js");
+/**
+ * Gets the parent value at `path` of `object`.
+ *
+ * @private
+ * @param {Object} object The object to query.
+ * @param {Array} path The path to get the parent value of.
+ * @returns {*} Returns the parent value.
+ */
+
+
+function parent(object, path) {
+  return path.length < 2 ? object : baseGet(object, baseSlice(path, 0, -1));
+}
+
+module.exports = parent;
+
+/***/ }),
+
 /***/ "./node_modules/lodash/_root.js":
 /*!**************************************!*\
   !*** ./node_modules/lodash/_root.js ***!
@@ -43658,6 +46343,69 @@ module.exports = eq;
 
 /***/ }),
 
+/***/ "./node_modules/lodash/filter.js":
+/*!***************************************!*\
+  !*** ./node_modules/lodash/filter.js ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var arrayFilter = __webpack_require__(/*! ./_arrayFilter */ "./node_modules/lodash/_arrayFilter.js"),
+    baseFilter = __webpack_require__(/*! ./_baseFilter */ "./node_modules/lodash/_baseFilter.js"),
+    baseIteratee = __webpack_require__(/*! ./_baseIteratee */ "./node_modules/lodash/_baseIteratee.js"),
+    isArray = __webpack_require__(/*! ./isArray */ "./node_modules/lodash/isArray.js");
+/**
+ * Iterates over elements of `collection`, returning an array of all elements
+ * `predicate` returns truthy for. The predicate is invoked with three
+ * arguments: (value, index|key, collection).
+ *
+ * **Note:** Unlike `_.remove`, this method returns a new array.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Collection
+ * @param {Array|Object} collection The collection to iterate over.
+ * @param {Function} [predicate=_.identity] The function invoked per iteration.
+ * @returns {Array} Returns the new filtered array.
+ * @see _.reject
+ * @example
+ *
+ * var users = [
+ *   { 'user': 'barney', 'age': 36, 'active': true },
+ *   { 'user': 'fred',   'age': 40, 'active': false }
+ * ];
+ *
+ * _.filter(users, function(o) { return !o.active; });
+ * // => objects for ['fred']
+ *
+ * // The `_.matches` iteratee shorthand.
+ * _.filter(users, { 'age': 36, 'active': true });
+ * // => objects for ['barney']
+ *
+ * // The `_.matchesProperty` iteratee shorthand.
+ * _.filter(users, ['active', false]);
+ * // => objects for ['fred']
+ *
+ * // The `_.property` iteratee shorthand.
+ * _.filter(users, 'active');
+ * // => objects for ['barney']
+ *
+ * // Combining several predicates using `_.overEvery` or `_.overSome`.
+ * _.filter(users, _.overSome([{ 'age': 36 }, ['age', 40]]));
+ * // => objects for ['fred', 'barney']
+ */
+
+
+function filter(collection, predicate) {
+  var func = isArray(collection) ? arrayFilter : baseFilter;
+  return func(collection, baseIteratee(predicate, 3));
+}
+
+module.exports = filter;
+
+/***/ }),
+
 /***/ "./node_modules/lodash/flatten.js":
 /*!****************************************!*\
   !*** ./node_modules/lodash/flatten.js ***!
@@ -44208,6 +46956,43 @@ module.exports = isLength;
 
 /***/ }),
 
+/***/ "./node_modules/lodash/isMap.js":
+/*!**************************************!*\
+  !*** ./node_modules/lodash/isMap.js ***!
+  \**************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var baseIsMap = __webpack_require__(/*! ./_baseIsMap */ "./node_modules/lodash/_baseIsMap.js"),
+    baseUnary = __webpack_require__(/*! ./_baseUnary */ "./node_modules/lodash/_baseUnary.js"),
+    nodeUtil = __webpack_require__(/*! ./_nodeUtil */ "./node_modules/lodash/_nodeUtil.js");
+/* Node.js helper references. */
+
+
+var nodeIsMap = nodeUtil && nodeUtil.isMap;
+/**
+ * Checks if `value` is classified as a `Map` object.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.3.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a map, else `false`.
+ * @example
+ *
+ * _.isMap(new Map);
+ * // => true
+ *
+ * _.isMap(new WeakMap);
+ * // => false
+ */
+
+var isMap = nodeIsMap ? baseUnary(nodeIsMap) : baseIsMap;
+module.exports = isMap;
+
+/***/ }),
+
 /***/ "./node_modules/lodash/isNumber.js":
 /*!*****************************************!*\
   !*** ./node_modules/lodash/isNumber.js ***!
@@ -44413,6 +47198,43 @@ function isPlainObject(value) {
 }
 
 module.exports = isPlainObject;
+
+/***/ }),
+
+/***/ "./node_modules/lodash/isSet.js":
+/*!**************************************!*\
+  !*** ./node_modules/lodash/isSet.js ***!
+  \**************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var baseIsSet = __webpack_require__(/*! ./_baseIsSet */ "./node_modules/lodash/_baseIsSet.js"),
+    baseUnary = __webpack_require__(/*! ./_baseUnary */ "./node_modules/lodash/_baseUnary.js"),
+    nodeUtil = __webpack_require__(/*! ./_nodeUtil */ "./node_modules/lodash/_nodeUtil.js");
+/* Node.js helper references. */
+
+
+var nodeIsSet = nodeUtil && nodeUtil.isSet;
+/**
+ * Checks if `value` is classified as a `Set` object.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.3.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a set, else `false`.
+ * @example
+ *
+ * _.isSet(new Set);
+ * // => true
+ *
+ * _.isSet(new WeakSet);
+ * // => false
+ */
+
+var isSet = nodeIsSet ? baseUnary(nodeIsSet) : baseIsSet;
+module.exports = isSet;
 
 /***/ }),
 
@@ -44813,6 +47635,79 @@ function noop() {// No operation performed.
 }
 
 module.exports = noop;
+
+/***/ }),
+
+/***/ "./node_modules/lodash/omit.js":
+/*!*************************************!*\
+  !*** ./node_modules/lodash/omit.js ***!
+  \*************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var arrayMap = __webpack_require__(/*! ./_arrayMap */ "./node_modules/lodash/_arrayMap.js"),
+    baseClone = __webpack_require__(/*! ./_baseClone */ "./node_modules/lodash/_baseClone.js"),
+    baseUnset = __webpack_require__(/*! ./_baseUnset */ "./node_modules/lodash/_baseUnset.js"),
+    castPath = __webpack_require__(/*! ./_castPath */ "./node_modules/lodash/_castPath.js"),
+    copyObject = __webpack_require__(/*! ./_copyObject */ "./node_modules/lodash/_copyObject.js"),
+    customOmitClone = __webpack_require__(/*! ./_customOmitClone */ "./node_modules/lodash/_customOmitClone.js"),
+    flatRest = __webpack_require__(/*! ./_flatRest */ "./node_modules/lodash/_flatRest.js"),
+    getAllKeysIn = __webpack_require__(/*! ./_getAllKeysIn */ "./node_modules/lodash/_getAllKeysIn.js");
+/** Used to compose bitmasks for cloning. */
+
+
+var CLONE_DEEP_FLAG = 1,
+    CLONE_FLAT_FLAG = 2,
+    CLONE_SYMBOLS_FLAG = 4;
+/**
+ * The opposite of `_.pick`; this method creates an object composed of the
+ * own and inherited enumerable property paths of `object` that are not omitted.
+ *
+ * **Note:** This method is considerably slower than `_.pick`.
+ *
+ * @static
+ * @since 0.1.0
+ * @memberOf _
+ * @category Object
+ * @param {Object} object The source object.
+ * @param {...(string|string[])} [paths] The property paths to omit.
+ * @returns {Object} Returns the new object.
+ * @example
+ *
+ * var object = { 'a': 1, 'b': '2', 'c': 3 };
+ *
+ * _.omit(object, ['a', 'c']);
+ * // => { 'b': '2' }
+ */
+
+var omit = flatRest(function (object, paths) {
+  var result = {};
+
+  if (object == null) {
+    return result;
+  }
+
+  var isDeep = false;
+  paths = arrayMap(paths, function (path) {
+    path = castPath(path, object);
+    isDeep || (isDeep = path.length > 1);
+    return path;
+  });
+  copyObject(object, getAllKeysIn(object), result);
+
+  if (isDeep) {
+    result = baseClone(result, CLONE_DEEP_FLAG | CLONE_FLAT_FLAG | CLONE_SYMBOLS_FLAG, customOmitClone);
+  }
+
+  var length = paths.length;
+
+  while (length--) {
+    baseUnset(result, paths[length]);
+  }
+
+  return result;
+});
+module.exports = omit;
 
 /***/ }),
 
@@ -50598,6 +53493,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _nivo_calendar__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @nivo/calendar */ "./node_modules/@nivo/calendar/dist/nivo-calendar.es.js");
 /* harmony import */ var _nivo_bump__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @nivo/bump */ "./node_modules/@nivo/bump/dist/nivo-bump.es.js");
 /* harmony import */ var _nivo_line__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @nivo/line */ "./node_modules/@nivo/line/dist/nivo-line.es.js");
+/* harmony import */ var _nivo_scatterplot__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @nivo/scatterplot */ "./node_modules/@nivo/scatterplot/dist/nivo-scatterplot.es.js");
+
 
 
 
@@ -50613,6 +53510,8 @@ Object(reactR__WEBPACK_IMPORTED_MODULE_0__["reactWidget"])(
     ResponsiveBump: _nivo_bump__WEBPACK_IMPORTED_MODULE_2__["ResponsiveBump"],
     ResponsiveLine: _nivo_line__WEBPACK_IMPORTED_MODULE_3__["ResponsiveLine"], 
     ResponsiveLineCanvas: _nivo_line__WEBPACK_IMPORTED_MODULE_3__["ResponsiveLineCanvas"],
+    ResponsiveScatterPlot: _nivo_scatterplot__WEBPACK_IMPORTED_MODULE_4__["ResponsiveScatterPlot"],
+    ResponsiveScatterPlotCanvas: _nivo_scatterplot__WEBPACK_IMPORTED_MODULE_4__["ResponsiveScatterPlotCanvas"],
   },
   {},
 );
