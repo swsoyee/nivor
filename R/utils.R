@@ -109,3 +109,16 @@
   })
   result
 }
+
+#' Convert data.frame to list of data argument
+#'
+#' @param data data.frame
+#'
+#' @noRd
+#' @return a list for data
+#' @keywords internal
+.data_list_generator <- function(data) {
+  lapply(asplit(data, 1), function(element) {
+    as.list(element)
+  })
+}

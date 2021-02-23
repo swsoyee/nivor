@@ -1,3 +1,27 @@
+describe(".data_list_generator()", {
+  x <- 1:3
+  y <- 4:6
+  z <- 7:9
+
+  data <- data.frame(x, y, z)
+
+  expected <- list(
+    list(
+      x = 1, y = 4, z = 7
+    ),
+    list(
+      x = 2, y = 5, z = 8
+    ),
+    list(
+      x = 3, y = 6, z = 9
+    )
+  )
+
+  it("convert is correct", {
+    expect_equal(.data_list_generator(data), expected)
+  })
+})
+
 describe(".convert_data()", {
   data <- data.frame(
     year = 2000:2005,
