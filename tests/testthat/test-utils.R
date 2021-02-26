@@ -275,3 +275,85 @@ describe(".convert_data()", {
     expect_equal(.convert_data(data, series = "JavaScript"), expeceted)
   })
 })
+
+describe(".data_prop_generator()", {
+  x_value <- 1:5
+  y_value <- 6:10
+  label <- 11:15
+  group <- c("A", "A", "A", "B", "B")
+  size <- c(1, 2, 2, 3, 3)
+
+  data <- data.frame(
+    x_value,
+    y_value,
+    label,
+    group,
+    size
+  )
+
+  it("No grouping, only entry data", {
+    expected <- list(
+      list(
+        id = "1",
+        data = list(
+          list(x_value = 1, y_value = 6),
+          list(x_value = 2, y_value = 7),
+          list(x_value = 3, y_value = 8),
+          list(x_value = 4, y_value = 9),
+          list(x_value = 5, y_value = 10)
+        )
+      )
+    )
+    expect_equal(
+      .data_prop_generator(data, value = c("x_value", "y_value")),
+      expected
+    )
+  })
+
+  it("No grouping, entry and entry info data", {
+    expected <- list(
+      list(
+        id = "1",
+        data = list(
+          list(x_value = 1, y_value = 6, label = 11),
+          list(x_value = 2, y_value = 7, label = 12),
+          list(x_value = 3, y_value = 8, label = 13),
+          list(x_value = 4, y_value = 9, label = 14),
+          list(x_value = 5, y_value = 10, label = 15)
+        )
+      )
+    )
+    expect_equal(
+      .data_prop_generator(data, value = c("x_value", "y_value", "label")),
+      expected
+    )
+  })
+
+  it("With grouping, only entry data", {
+    expected <- list(
+      list(
+        group = "A",
+        data = list(
+          list(x_value = 1, y_value = 6),
+          list(x_value = 2, y_value = 7),
+          list(x_value = 3, y_value = 8)
+        )
+      ),
+      list(
+        group = "B",
+        data = list(
+          list(x_value = 4, y_value = 9),
+          list(x_value = 5, y_value = 10)
+        )
+      )
+    )
+    expect_equal(
+      .data_prop_generator(
+        data,
+        value = c("x_value", "y_value"),
+        group = "group"
+      ),
+      expected
+    )
+  })
+})

@@ -1,8 +1,11 @@
 #' ScatterPlot Visualization
 #'
 #' @param data data set in data.frame.
-#' @param x,y,z column names of x, y and z (if any, for size) value.
+#' @param x,y column names of x, y and z (if any, for size) value.
+#' @param entry_info column names of additional information for entries (point).
+#' Used to set the label or the size of the point, etc.
 #' @param group column name of group.
+#' @param group_info column names of additional information for groups (serie).
 #' @param render "svg" (responsive) or "canvas". "canvas" is well suited for
 #' large data sets as it does not impact DOM tree depth, however you'll lose the
 #' isomorphic rendering ability.
@@ -73,15 +76,15 @@
 #'   )
 #' )
 #'
-#' # use z attribute for the size
+#' # Set additional information as size for each point
 #' n_scatter(
 #'   data = iris,
 #'   y = "Sepal.Width",
 #'   x = "Sepal.Length",
-#'   z = "Petal.Length",
+#'   entry_info = "Petal.Length",
 #'   group = "Species",
 #'   nodeSize = list(
-#'     key = "z",
+#'     key = "Petal.Length",
 #'     values = list(0, 4),
 #'     sizes = list(9, 32)
 #'   )
@@ -90,8 +93,9 @@ n_scatter <- function(
                       data,
                       x,
                       y,
-                      z = NULL,
+                      entry_info = NULL,
                       group = NULL,
+                      group_info = NULL,
                       render = c("svg", "canvas"),
                       ...,
                       width = NULL,
@@ -108,6 +112,21 @@ n_scatter <- function(
     stop("argument `y` should be passed in.")
   }
 
+  # rename the column to x, y, z
+  names(data)[names(data) == x] <- "x"
+  names(data)[names(data) == y] <- "y"
+
+  if (!is.null(group)) {
+    names(data)[names(data) == group] <- "id"
+    group <- "id"
+  }
+
+  data <- .data_prop_generator(
+    data,
+    value = c("x", "y", entry_info),
+    group = c(group, group_info)
+  )
+
   # describe a React component to send to the browser for rendering.
   component <- reactR::reactMarkup(
     htmltools::tag(
@@ -117,7 +136,7 @@ n_scatter <- function(
         "ResponsiveScatterPlot"
       ),
       list(
-        data = .convert_data_scatter(data, x = x, y = y, z = z, group = group),
+        data = data,
         # assume extra arguments are props
         ...
       )

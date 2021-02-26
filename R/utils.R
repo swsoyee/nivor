@@ -47,78 +47,74 @@
   result
 }
 
-#' Convert data for scatter plot
+#' Convert value (data.frame) to a list of data value
 #'
-#' @param data dataset
-#' @param x name of x column
-#' @param y name of y column
-#' @param group name of group (if possible)
+#' @param data value (data.frame)
 #'
 #' @noRd
-#' @return a datas list for ScatterPlot
-#' @keywords internal
-.convert_data_scatter <- function(data, x, y, z, group) {
-  # TODO more attribute should be accepted not only x,y,z, need refactor.
-  if (is.null(z)) {
-    is_sizing <- FALSE
-  } else {
-    is_sizing <- TRUE
-  }
-
-  if (is.null(group)) {
-    series <- NA
-    is_grouping <- FALSE
-  } else {
-    series <- unique(data[group])[[1]]
-    is_grouping <- TRUE
-  }
-
-  result <- lapply(series, function(serie) {
-    if (is_grouping) {
-      x <- data[data[[group]] == serie, x]
-      y <- data[data[[group]] == serie, y]
-      z <- ifelse(
-        is_sizing,
-        data[data[[group]] == serie, z],
-        rep(NA, nrow(data[data[[group]] == serie, ]))
-      )
-    } else {
-      x <- data[, x]
-      y <- data[, y]
-      z <- ifelse(
-        is_sizing,
-        data[, z],
-        rep(NA, nrow(data))
-      )
-    }
-
-    list(
-      id = serie,
-      data = unname(
-        mapply(
-          function(x, y, z) {
-            list(x = x, y = y, z = z)
-          },
-          x,
-          y,
-          z,
-          SIMPLIFY = FALSE
-        )
-      )
-    )
-  })
-  result
-}
-
-#' Convert data.frame to list of data argument
-#'
-#' @param data data.frame
-#'
-#' @noRd
-#' @return a list for data
+#' @return a list of data value
 #' @keywords internal
 .data_list_generator <- function(data) {
   lapply(asplit(data, 1), function(element) {
     as.list(element)
   })
+}
+
+#' Convert data to a list of data property for React side
+#'
+#' @param data data set (data.frame)
+#' @param value column name for create data list of value
+#' @param group column name for attribute
+#'
+#' @noRd
+#' @return a list of property for React side
+#' @keywords internal
+.data_prop_generator <- function(data, value, group = NULL) {
+  result_list <- list()
+
+  if (is.null(group)) {
+    result_list[[1]] <- list(
+      id = "1",
+      data = .data_list_generator(data[, value, drop = FALSE])
+    )
+  } else {
+    temp_list <- list()
+    for (row_index in seq(nrow(data))) {
+      temp_list[[row_index]] <- list(
+        index = as.list(data[row_index, group, drop = FALSE]),
+        data = as.list(data[row_index, value, drop = FALSE]),
+        temp = lapply(
+          as.list(data[row_index, group, drop = FALSE]),
+          function(x) {
+            as.character(x)
+          }
+        )
+      )
+    }
+    # get unique group
+    result_list <- .data_list_generator(data[, group, drop = FALSE])
+    result_list <- unique(result_list)
+    group_list <- result_list
+
+    for (group_index in seq(length(result_list))) {
+      for (data_index in seq(nrow(data))) {
+        isPaired <- identical(
+          group_list[[group_index]],
+          temp_list[[data_index]]$temp
+        )
+        if (isPaired) {
+          data_point <- result_list[[group_index]]$data
+          # First time
+          if (is.null(data_point)) {
+            result_list[[group_index]]$data[[1]] <- temp_list[[data_index]]$data
+          } else {
+            this_index <- length(result_list[[group_index]]$data)
+            result_list[[group_index]]$data[[this_index + 1]] <-
+              temp_list[[data_index]]$data
+          }
+        }
+      }
+    }
+  }
+  result_list
 }

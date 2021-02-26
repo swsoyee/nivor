@@ -8,8 +8,9 @@ n_scatter(
   data,
   x,
   y,
-  z = NULL,
+  entry_info = NULL,
   group = NULL,
+  group_info = NULL,
   render = c("svg", "canvas"),
   ...,
   width = NULL,
@@ -20,9 +21,14 @@ n_scatter(
 \arguments{
 \item{data}{data set in data.frame.}
 
-\item{x, y, z}{column names of x, y and z (if any, for size) value.}
+\item{x, y}{column names of x, y and z (if any, for size) value.}
+
+\item{entry_info}{column names of additional information for entries (point).
+Used to set the label or the size of the point, etc.}
 
 \item{group}{column name of group.}
+
+\item{group_info}{column names of additional information for groups (serie).}
 
 \item{render}{"svg" (responsive) or "canvas". "canvas" is well suited for
 large data sets as it does not impact DOM tree depth, however you'll lose the
@@ -98,15 +104,15 @@ n_scatter(
   )
 )
 
-# use z attribute for the size
+# Set additional information as size for each point
 n_scatter(
   data = iris,
   y = "Sepal.Width",
   x = "Sepal.Length",
-  z = "Petal.Length",
+  entry_info = "Petal.Length",
   group = "Species",
   nodeSize = list(
-    key = "z",
+    key = "Petal.Length",
     values = list(0, 4),
     sizes = list(9, 32)
   )
