@@ -111,6 +111,16 @@ n_scatter <- function(
   if (missing(y)) {
     stop("argument `y` should be passed in.")
   }
+  if (sum(names(data) == "id") > 0) {
+    message(
+      paste0(
+        "`data` already has id column, which may cause potential problems as ",
+        "the `id` is a fixed field for grouping. If you find problems in the ",
+        "results, we recommend that renaming the `id` column to try to ",
+        "resolve the problem."
+      )
+    )
+  }
 
   # rename the column to x, y, z
   names(data)[names(data) == x] <- "x"
