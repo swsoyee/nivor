@@ -24,6 +24,7 @@ Imports:
     htmltools,
     htmlwidgets,
     reactR,
+    reactable,
     utils
 VignetteBuilder: knitr
 URL: https://github.com/swsoyee/nivor

@@ -3,6 +3,11 @@ title: "Scatter Plot"
 output: html_document
 ---
 
+<!--
+%\VignetteEngine{knitr::rmarkdown}
+%\VignetteIndexEntry{Scatter Plot}
+-->
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
