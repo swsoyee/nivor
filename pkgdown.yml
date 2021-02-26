@@ -3,5 +3,6 @@ pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
   Line: Line.html
-last_built: 2021-02-26T13:27Z
+  ScatterPlot: ScatterPlot.html
+last_built: 2021-02-26T16:12Z
 
