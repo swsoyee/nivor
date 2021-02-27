@@ -88,10 +88,10 @@ do.call(
   n_scatter,
   n_options(
     default = common_settings,
-      data = data[data$group == "girls low", ],
-      x = "x",
-      y = "y",
-      group = "group" # use group column for series name
+    data = data[data$group == "girls low", ],
+    x = "x",
+    y = "y",
+    group = "group" # use group column for series name
   )
 )
 ```
@@ -103,10 +103,10 @@ do.call(
   n_scatter,
   n_options(
     default = common_settings,
-      data = data,
-      x = "x",
-      y = "y",
-      group = "group"
+    data = data,
+    x = "x",
+    y = "y",
+    group = "group"
   )
 )
 ```
@@ -118,13 +118,13 @@ do.call(
   n_scatter,
   n_options(
     default = common_settings,
-      data = data,
-      x = "x",
-      y = "y",
-      group = "group",
-      colors = list(
-        scheme = "category10"
-      )
+    data = data,
+    x = "x",
+    y = "y",
+    group = "group",
+    colors = list(
+      scheme = "category10"
+    )
   )
 )
 ```
@@ -141,20 +141,20 @@ reactable(data)
 
 settings <- n_options(
   default = common_settings,
-    data = data,
-    x = "x",
-    y = "y",
-    group = "group",
-    xScale = list(
-      type = "time",
-      format = "%Y-%m-%d",
-      precision = "day"
-    ),
-    xFormat = "time:%Y-%m-%d",
-    axisBottom = list(
-      format = "%b %d",
-      tickValues = "every 2 days"
-    )
+  data = data,
+  x = "x",
+  y = "y",
+  group = "group",
+  xScale = list(
+    type = "time",
+    format = "%Y-%m-%d",
+    precision = "day"
+  ),
+  xFormat = "time:%Y-%m-%d",
+  axisBottom = list(
+    format = "%b %d",
+    tickValues = "every 2 days"
+  )
 )
 
 do.call(n_scatter, settings)
