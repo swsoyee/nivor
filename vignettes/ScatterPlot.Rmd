@@ -86,14 +86,12 @@ In R, we use `do.call` to constructs and executes a function call from a name or
 ```{r default}
 do.call(
   n_scatter,
-  c(
-    list(
+  n_options(
+    default = common_settings,
       data = data[data$group == "girls low", ],
       x = "x",
       y = "y",
       group = "group" # use group column for series name
-    ),
-    common_settings
   )
 )
 ```
@@ -103,14 +101,12 @@ do.call(
 ```{r multiple series}
 do.call(
   n_scatter,
-  c(
-    list(
+  n_options(
+    default = common_settings,
       data = data,
       x = "x",
       y = "y",
       group = "group"
-    ),
-    common_settings
   )
 )
 ```
@@ -120,8 +116,8 @@ do.call(
 ```{r alternative colors}
 do.call(
   n_scatter,
-  c(
-    list(
+  n_options(
+    default = common_settings,
       data = data,
       x = "x",
       y = "y",
@@ -129,8 +125,6 @@ do.call(
       colors = list(
         scheme = "category10"
       )
-    ),
-    common_settings
   )
 )
 ```
@@ -145,9 +139,8 @@ data <- data.frame(
 )
 reactable(data)
 
-# if default setting in `common_settings`, overwrite them, only keeps the former
-settings <- c(
-  list(
+settings <- n_options(
+  default = common_settings,
     data = data,
     x = "x",
     y = "y",
@@ -162,10 +155,7 @@ settings <- c(
       format = "%b %d",
       tickValues = "every 2 days"
     )
-  ),
-  common_settings
 )
-settings <- settings[!duplicated(names(settings))]
 
 do.call(n_scatter, settings)
 ```
@@ -173,5 +163,35 @@ do.call(n_scatter, settings)
 ## Using Logarithmic Scales
 
 ```{r using logarithmic scales}
+data <- data.frame(
+  name = "apples",
+  x = c(10, 100, 1000, 10000, 100000, 1000000),
+  y = c(2, 4, 8, 16, 32, 64)
+)
 
+settings <- n_options(
+  default = common_settings,
+  data = data,
+  x = "x",
+  y = "y",
+  group = "name",
+  xScale = list(
+    type = "log",
+    base = 10
+  ),
+  xFormat = NA,
+  yScale = list(
+    type = "log",
+    base = 2
+  ),
+  yFormat = NA,
+  axisBottom = list(
+    tickValues = c(10, 100, 1000, 1000, 10000, 100000, 1000000, 10000000)
+  ),
+  axisLeft = list(
+    tickValues = c(2, 4, 8, 16, 32, 64)
+  )
+)
+
+do.call(n_scatter, settings)
 ```
