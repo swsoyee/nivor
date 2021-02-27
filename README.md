@@ -18,11 +18,20 @@ The goal of nivor is to …
 
 ## Installation
 
-You can install the released version of nivor from
-[CRAN](https://CRAN.R-project.org) with:
+~~You can install the released version of nivor from
+[CRAN](https://CRAN.R-project.org)~~ with:
 
 ``` r
-install.packages("nivor")
+# Give me a more time to make the first release!
+# install.packages("nivor")
+```
+
+And the development version from
+[GitHub](https://github.com/swsoyee/nivor) with:
+
+``` r
+# install.packages("devtools")
+devtools::install_github("swsoyee/nivor")
 ```
 
 ## Example
@@ -32,6 +41,57 @@ This is a basic example which shows you how to solve a common problem:
 ``` r
 library(nivor)
 ```
+
+### AreaBump
+
+``` r
+data <- data.frame(
+  group = 2000:2005,
+  "Serie 1" = c(3, 6, 2, 4, 1, 5),
+  "Serie 2" = c(1, 4, 5, 2, 3, 6),
+  "Serie 3" = c(2, 3, 1, 5, 6, 4),
+  "Serie 4" = c(4, 1, 3, 6, 5, 2),
+  "Serie 5" = c(6, 5, 4, 1, 2, 3),
+  "Serie 6" = c(5, 2, 6, 3, 4, 1)
+)
+
+n_area_bump(data)
+```
+
+![AreaBump](man/figures/AreaBump.png)
+
+### Bump
+
+``` r
+data <- data.frame(
+  group = 2000:2005,
+  "Serie 1" = c(3, 6, 2, 4, 1, 5),
+  "Serie 2" = c(1, 4, 5, 2, 3, 6),
+  "Serie 3" = c(2, 3, 1, 5, 6, 4),
+  "Serie 4" = c(4, 1, 3, 6, 5, 2),
+  "Serie 5" = c(6, 5, 4, 1, 2, 3),
+  "Serie 6" = c(5, 2, 6, 3, 4, 1)
+)
+
+n_bump(data)
+```
+
+![Calendar](man/figures/Bump.png)
+
+### Chord
+
+``` r
+set.seed(1)
+data <- matrix(round(rexp(25) * 100, 0), 5, 5)
+
+# the simplest use
+n_chord(
+  matrix = data,
+  keys = c("A", "B", "C", "D", "E")
+)
+```
+
+![Chord](man/figures/Chord.png)
 
 ### Scatter
 
@@ -62,32 +122,6 @@ n_line(data)
 ```
 
 ![Line](man/figures/Line.png)
-
-### AreaBump
-
-``` r
-n_area_bump(data)
-```
-
-![AreaBump](man/figures/AreaBump.png)
-
-### Bump
-
-``` r
-data <- data.frame(
-  group = 2000:2005,
-  "Serie 1" = c(3, 6, 2, 4, 1, 5),
-  "Serie 2" = c(1, 4, 5, 2, 3, 6),
-  "Serie 3" = c(2, 3, 1, 5, 6, 4),
-  "Serie 4" = c(4, 1, 3, 6, 5, 2),
-  "Serie 5" = c(6, 5, 4, 1, 2, 3),
-  "Serie 6" = c(5, 2, 6, 3, 4, 1)
-)
-
-n_bump(data)
-```
-
-![Calendar](man/figures/Bump.png)
 
 ### Calendar
 
