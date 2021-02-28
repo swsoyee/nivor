@@ -1,0 +1,172 @@
+---
+title: "Chord"
+output: html_document
+---
+
+<!--
+%\VignetteEngine{knitr::rmarkdown}
+%\VignetteIndexEntry{Chord}
+-->
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r setting}
+library(nivor)
+
+set.seed(1)
+matrix <- matrix(round(rexp(49) * 100, 0), 7, 7)
+keys <- c("John", "Raoul", "Jane", "Marcel", "Ibrahim", "Junko", "Lyu")
+
+common_settings <- list(
+  width = 800,
+  height = 400,
+  margin = list(
+    top = 60,
+    right = 80,
+    bottom = 60,
+    left = 80
+  ),
+  xPadding = 0.2
+)
+```
+
+## Default
+
+In R, we use `do.call` to constructs and executes a function call from a name or a function and a list of arguments to be passed to it.
+
+```{r default}
+do.call(
+  n_chord,
+  n_options(
+    matrix = matrix,
+    keys = keys,
+    default = common_settings
+  )
+)
+```
+
+## Radial Labels
+
+```{r radial labels}
+do.call(
+  n_chord,
+  n_options(
+    matrix = matrix,
+    keys = keys,
+    labelRotation = -90,
+    default = common_settings
+  )
+)
+```
+
+## Custom Labels Text
+
+```{r custom labels text}
+do.call(
+  n_chord,
+  n_options(
+    matrix = matrix,
+    keys = keys,
+    label = htmlwidgets::JS("d => `${d.id} [${d.value}]`"),
+    default = common_settings
+  )
+)
+```
+
+## Angle Padding
+
+```{r angle padding}
+do.call(
+  n_chord,
+  n_options(
+    matrix = matrix,
+    keys = keys,
+    labelRotation = -90,
+    padAngle = 0.06,
+    default = common_settings
+  )
+)
+```
+
+## Ribbons Offset
+
+```{r ribbons offset}
+do.call(
+  n_chord,
+  n_options(
+    matrix = matrix,
+    keys = keys,
+    labelRotation = -90,
+    padAngle = 0.02,
+    innerRadiusOffset = 0.02,
+    default = common_settings
+  )
+)
+```
+
+## Alternative Colors
+
+```{r alternative colors}
+do.call(
+  n_chord,
+  n_options(
+    matrix = matrix,
+    keys = keys,
+    labelRotation = -90,
+    padAngle = 0.02,
+    innerRadiusOffset = 0.02,
+    colors = list(
+      scheme = "category10"
+    ),
+    default = common_settings
+  )
+)
+```
+
+## Putting Labels Inside Arcs
+
+```{r putting labels inside arcs}
+do.call(
+  n_chord,
+  n_options(
+    matrix = matrix,
+    keys = keys,
+    padAngle = 0.02,
+    innerRadiusRation = 0.8,
+    innerRadiusOffset = 0.02,
+    labelOffset = -30,
+    labelTextColor = list(
+      from = "color",
+      modifiers = list(
+        c("darker", 1.6)
+      )
+    ),
+    default = common_settings
+  )
+)
+```
+
+## With Formatted Values
+
+```{r with formatted values}
+do.call(
+  n_chord,
+  n_options(
+    matrix = matrix,
+    keys = keys,
+    valueFormat = htmlwidgets::JS("
+      value =>
+        `${Number(value).toLocaleString('ru-RU', {
+        minimumFractionDigits: 2,
+    })} ₽`
+    "),
+    default = common_settings
+  )
+)
+```
+
+## Custom Tooltips
+
+Under development.
