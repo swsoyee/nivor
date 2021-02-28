@@ -387,10 +387,10 @@
     },
     "ragg": {
       "Package": "ragg",
-      "Version": "1.1.0",
+      "Version": "1.1.1",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "01f1614915f8061b023305c315b28cca"
+      "Hash": "4e0557cb2fddc4b9ef3f6679c60a3f4a"
     },
     "rappdirs": {
       "Package": "rappdirs",
@@ -527,10 +527,10 @@
     },
     "tibble": {
       "Package": "tibble",
-      "Version": "3.0.4",
+      "Version": "3.1.0",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "71dffd8544691c520dd8e41ed2d7e070"
+      "Hash": "4d894a114dbd4ecafeda5074e7c538e6"
     },
     "tinytex": {
       "Package": "tinytex",
