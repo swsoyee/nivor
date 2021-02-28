@@ -140,6 +140,26 @@ n_calendar(df)
 
 ![Calendar](man/figures/Calendar.png)
 
+### Waffle
+
+``` r
+data <- data.frame(
+  id = c("men", "women", "children"),
+  label = c("Men", "Women", "Children"),
+  value = c(12, 15, 30),
+  color = c("#468df3", "#ba72ff", "#a1cfff")
+)
+
+n_waffle(
+  data = data,
+  total = 100,
+  rows = 18,
+  columns = 14
+)
+```
+
+![Waffle](man/figures/Waffle.png)
+
 ## Code of Conduct
 
 Please note that the nivor project is released with a [Contributor Code

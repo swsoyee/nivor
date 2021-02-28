@@ -4,6 +4,7 @@ import { ResponsiveAreaBump, ResponsiveBump } from '@nivo/bump';
 import { ResponsiveLine, ResponsiveLineCanvas } from '@nivo/line';
 import { ResponsiveScatterPlot, ResponsiveScatterPlotCanvas } from "@nivo/scatterplot";
 import { ResponsiveChord, ResponsiveChordCanvas } from "@nivo/chord";
+import { ResponsiveWaffle, ResponsiveWaffleHtml, ResponsiveWaffleCanvas } from "@nivo/waffle";
 
 reactWidget(
   'calendar',
@@ -19,6 +20,9 @@ reactWidget(
     ResponsiveScatterPlotCanvas,
     ResponsiveChord,
     ResponsiveChordCanvas,
+    ResponsiveWaffle, 
+    ResponsiveWaffleHtml,
+    ResponsiveWaffleCanvas,
   },
   {},
 );

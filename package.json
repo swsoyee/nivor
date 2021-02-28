@@ -8,6 +8,7 @@
     "@nivo/line": "^0.67.0",
     "@nivo/scatterplot": "^0.67.0",
     "@nivo/chord": "^0.67.0",
+    "@nivo/waffle": "^0.67.0",
     "prop-types": "^15.7.2"
   },
   "devDependencies": {

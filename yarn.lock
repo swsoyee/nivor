@@ -1053,6 +1053,19 @@
     d3-scale "^3.0.0"
     recompose "^0.30.0"
 
+"@nivo/waffle@^0.67.0":
+  version "0.67.0"
+  resolved "https://registry.yarnpkg.com/@nivo/waffle/-/waffle-0.67.0.tgz#bc3afc44c9c0f0f8b4339ebe6fef6ff72c841265"
+  integrity sha512-tXkNBhQhoAvCtLe9DsuGPn5jva6PjiA90oNkIlJueTMYqB6OwPdYnMX3f3/Tp8heFWXrkT2ZjJZ6J6Ja2zYJXQ==
+  dependencies:
+    "@nivo/colors" "0.67.0"
+    "@nivo/legends" "0.67.0"
+    "@nivo/tooltip" "0.67.0"
+    lodash.partial "^4.2.1"
+    lodash.range "^3.2.0"
+    react-motion "^0.5.2"
+    recompose "^0.30.0"
+
 "@nodelib/fs.scandir@2.1.4":
   version "2.1.4"
   resolved "https://registry.npmjs.org/@nodelib/fs.scandir/-/fs.scandir-2.1.4.tgz"
@@ -3733,6 +3746,11 @@ lodash.memoize@^4.1.2:
   version "4.1.2"
   resolved "https://registry.yarnpkg.com/lodash.memoize/-/lodash.memoize-4.1.2.tgz"
   integrity sha1-vMbEmkKihA7Zl/Mj6tpezRguC/4=
+
+lodash.partial@^4.2.1:
+  version "4.2.1"
+  resolved "https://registry.yarnpkg.com/lodash.partial/-/lodash.partial-4.2.1.tgz#49f3d8cfdaa3bff8b3a91d127e923245418961d4"
+  integrity sha1-SfPYz9qjv/izqR0SfpIyRUGJYdQ=
 
 lodash.range@^3.2.0:
   version "3.2.0"
