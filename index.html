@@ -200,6 +200,25 @@
 <span class="fu"><a href="reference/n_calendar.html">n_calendar</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></code></pre></div>
 <p><img src="reference/figures/Calendar.png" alt="Calendar"></p>
 </div>
+<div id="waffle" class="section level3">
+<h3 class="hasAnchor">
+<a href="#waffle" class="anchor"></a>Waffle</h3>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>
+  id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"men"</span>, <span class="st">"women"</span>, <span class="st">"children"</span><span class="op">)</span>,
+  label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Men"</span>, <span class="st">"Women"</span>, <span class="st">"Children"</span><span class="op">)</span>,
+  value <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">12</span>, <span class="fl">15</span>, <span class="fl">30</span><span class="op">)</span>,
+  color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"#468df3"</span>, <span class="st">"#ba72ff"</span>, <span class="st">"#a1cfff"</span><span class="op">)</span>
+<span class="op">)</span>
+
+<span class="fu"><a href="reference/n_waffle.html">n_waffle</a></span><span class="op">(</span>
+  data <span class="op">=</span> <span class="va">data</span>,
+  total <span class="op">=</span> <span class="fl">100</span>,
+  rows <span class="op">=</span> <span class="fl">18</span>,
+  columns <span class="op">=</span> <span class="fl">14</span>
+<span class="op">)</span></code></pre></div>
+<p><img src="reference/figures/Waffle.png" alt="Waffle"></p>
+</div>
 </div>
 <div id="code-of-conduct" class="section level2">
 <h2 class="hasAnchor">

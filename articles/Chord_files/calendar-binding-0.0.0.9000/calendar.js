@@ -5892,8 +5892,6 @@ var Chord = function Chord(_ref) {
       outerWidth = _useDimensions.outerWidth,
       outerHeight = _useDimensions.outerHeight;
 
-  console.log(keys);
-  console.log(matrix);
   var _useChord = useChord({
     keys: keys,
     matrix: matrix,
@@ -15181,6 +15179,1303 @@ var renderVoronoiCellToCanvas = function renderVoronoiCellToCanvas(ctx, voronoi,
 };
 
 
+
+/***/ }),
+
+/***/ "./node_modules/@nivo/waffle/dist/nivo-waffle.es.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/@nivo/waffle/dist/nivo-waffle.es.js ***!
+  \**********************************************************/
+/*! exports provided: ResponsiveWaffle, ResponsiveWaffleCanvas, ResponsiveWaffleHtml, Waffle, WaffleCanvas, WaffleCanvasDefaultProps, WaffleCanvasPropTypes, WaffleDefaultProps, WaffleHtml, WaffleHtmlDefaultProps, WaffleHtmlPropTypes, WafflePropTypes */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* WEBPACK VAR INJECTION */(function(global) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ResponsiveWaffle", function() { return ResponsiveWaffle; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ResponsiveWaffleCanvas", function() { return ResponsiveWaffleCanvas; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ResponsiveWaffleHtml", function() { return ResponsiveWaffleHtml; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Waffle", function() { return Waffle$1; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "WaffleCanvas", function() { return WaffleCanvas$1; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "WaffleCanvasDefaultProps", function() { return WaffleCanvasDefaultProps; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "WaffleCanvasPropTypes", function() { return WaffleCanvasPropTypes; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "WaffleDefaultProps", function() { return WaffleDefaultProps; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "WaffleHtml", function() { return WaffleHtml$1; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "WaffleHtmlDefaultProps", function() { return WaffleHtmlDefaultProps; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "WaffleHtmlPropTypes", function() { return WaffleHtmlPropTypes; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "WafflePropTypes", function() { return WafflePropTypes; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var lodash_partial__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lodash.partial */ "./node_modules/lodash.partial/index.js");
+/* harmony import */ var lodash_partial__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(lodash_partial__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react_motion__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-motion */ "./node_modules/react-motion/lib/react-motion.js");
+/* harmony import */ var react_motion__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react_motion__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var recompose_setDisplayName__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! recompose/setDisplayName */ "./node_modules/recompose/setDisplayName.js");
+/* harmony import */ var recompose_setDisplayName__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(recompose_setDisplayName__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _nivo_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @nivo/core */ "./node_modules/@nivo/core/dist/nivo-core.es.js");
+/* harmony import */ var _nivo_legends__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @nivo/legends */ "./node_modules/@nivo/legends/dist/nivo-legends.es.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _nivo_colors__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @nivo/colors */ "./node_modules/@nivo/colors/dist/nivo-colors.es.js");
+/* harmony import */ var recompose_pure__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! recompose/pure */ "./node_modules/recompose/pure.js");
+/* harmony import */ var recompose_pure__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(recompose_pure__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var recompose_compose__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! recompose/compose */ "./node_modules/recompose/compose.js");
+/* harmony import */ var recompose_compose__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(recompose_compose__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var recompose_defaultProps__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! recompose/defaultProps */ "./node_modules/recompose/defaultProps.js");
+/* harmony import */ var recompose_defaultProps__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(recompose_defaultProps__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var recompose_withPropsOnChange__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! recompose/withPropsOnChange */ "./node_modules/recompose/withPropsOnChange.js");
+/* harmony import */ var recompose_withPropsOnChange__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(recompose_withPropsOnChange__WEBPACK_IMPORTED_MODULE_11__);
+/* harmony import */ var recompose_withState__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! recompose/withState */ "./node_modules/recompose/withState.js");
+/* harmony import */ var recompose_withState__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(recompose_withState__WEBPACK_IMPORTED_MODULE_12__);
+/* harmony import */ var lodash_range__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! lodash.range */ "./node_modules/lodash.range/index.js");
+/* harmony import */ var lodash_range__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(lodash_range__WEBPACK_IMPORTED_MODULE_13__);
+/* harmony import */ var _nivo_tooltip__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @nivo/tooltip */ "./node_modules/@nivo/tooltip/dist/nivo-tooltip.es.js");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+function ownKeys(object, enumerableOnly) {
+  var keys = Object.keys(object);
+
+  if (Object.getOwnPropertySymbols) {
+    var symbols = Object.getOwnPropertySymbols(object);
+    if (enumerableOnly) symbols = symbols.filter(function (sym) {
+      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+    });
+    keys.push.apply(keys, symbols);
+  }
+
+  return keys;
+}
+
+function _objectSpread2(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i] != null ? arguments[i] : {};
+
+    if (i % 2) {
+      ownKeys(Object(source), true).forEach(function (key) {
+        _defineProperty(target, key, source[key]);
+      });
+    } else if (Object.getOwnPropertyDescriptors) {
+      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+    } else {
+      ownKeys(Object(source)).forEach(function (key) {
+        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+      });
+    }
+  }
+
+  return target;
+}
+
+function _classCallCheck(instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+}
+
+function _defineProperties(target, props) {
+  for (var i = 0; i < props.length; i++) {
+    var descriptor = props[i];
+    descriptor.enumerable = descriptor.enumerable || false;
+    descriptor.configurable = true;
+    if ("value" in descriptor) descriptor.writable = true;
+    Object.defineProperty(target, descriptor.key, descriptor);
+  }
+}
+
+function _createClass(Constructor, protoProps, staticProps) {
+  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
+  if (staticProps) _defineProperties(Constructor, staticProps);
+  return Constructor;
+}
+
+function _setPrototypeOf(o, p) {
+  _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) {
+    o.__proto__ = p;
+    return o;
+  };
+
+  return _setPrototypeOf(o, p);
+}
+
+function _inherits(subClass, superClass) {
+  if (typeof superClass !== "function" && superClass !== null) {
+    throw new TypeError("Super expression must either be null or a function");
+  }
+
+  subClass.prototype = Object.create(superClass && superClass.prototype, {
+    constructor: {
+      value: subClass,
+      writable: true,
+      configurable: true
+    }
+  });
+  if (superClass) _setPrototypeOf(subClass, superClass);
+}
+
+function _getPrototypeOf(o) {
+  _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) {
+    return o.__proto__ || Object.getPrototypeOf(o);
+  };
+  return _getPrototypeOf(o);
+}
+
+function _isNativeReflectConstruct() {
+  if (typeof Reflect === "undefined" || !Reflect.construct) return false;
+  if (Reflect.construct.sham) return false;
+  if (typeof Proxy === "function") return true;
+
+  try {
+    Date.prototype.toString.call(Reflect.construct(Date, [], function () {}));
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+
+function _typeof(obj) {
+  "@babel/helpers - typeof";
+
+  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+    _typeof = function _typeof(obj) {
+      return typeof obj;
+    };
+  } else {
+    _typeof = function _typeof(obj) {
+      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    };
+  }
+
+  return _typeof(obj);
+}
+
+function _assertThisInitialized(self) {
+  if (self === void 0) {
+    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+  }
+
+  return self;
+}
+
+function _possibleConstructorReturn(self, call) {
+  if (call && (_typeof(call) === "object" || typeof call === "function")) {
+    return call;
+  }
+
+  return _assertThisInitialized(self);
+}
+
+function _createSuper(Derived) {
+  return function () {
+    var Super = _getPrototypeOf(Derived),
+        result;
+
+    if (_isNativeReflectConstruct()) {
+      var NewTarget = _getPrototypeOf(this).constructor;
+
+      result = Reflect.construct(Super, arguments, NewTarget);
+    } else {
+      result = Super.apply(this, arguments);
+    }
+
+    return _possibleConstructorReturn(this, result);
+  };
+}
+
+var WaffleCell = function WaffleCell(_ref) {
+  var position = _ref.position,
+      size = _ref.size,
+      x = _ref.x,
+      y = _ref.y,
+      color = _ref.color,
+      fill = _ref.fill,
+      opacity = _ref.opacity,
+      borderWidth = _ref.borderWidth,
+      borderColor = _ref.borderColor,
+      data = _ref.data,
+      onHover = _ref.onHover,
+      onLeave = _ref.onLeave,
+      _onClick = _ref.onClick;
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("rect", {
+    width: size,
+    height: size,
+    x: x,
+    y: y,
+    fill: fill || color,
+    strokeWidth: borderWidth,
+    stroke: borderColor,
+    opacity: opacity,
+    onMouseEnter: onHover,
+    onMouseMove: onHover,
+    onMouseLeave: onLeave,
+    onClick: function onClick(event) {
+      _onClick({
+        position: position,
+        color: color,
+        x: x,
+        y: y,
+        data: data
+      }, event);
+    }
+  });
+};
+
+WaffleCell.defaultProps = {
+  data: {}
+};
+WaffleCell.displayName = 'WaffleCell';
+var WaffleCell$1 = recompose_pure__WEBPACK_IMPORTED_MODULE_8___default()(WaffleCell);
+
+var WaffleCellHtml = function WaffleCellHtml(_ref) {
+  var position = _ref.position,
+      size = _ref.size,
+      x = _ref.x,
+      y = _ref.y,
+      color = _ref.color,
+      opacity = _ref.opacity,
+      borderWidth = _ref.borderWidth,
+      borderColor = _ref.borderColor,
+      data = _ref.data,
+      onHover = _ref.onHover,
+      onLeave = _ref.onLeave,
+      _onClick = _ref.onClick;
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    style: {
+      position: 'absolute',
+      top: y,
+      left: x,
+      width: size,
+      height: size,
+      background: color,
+      opacity: opacity,
+      boxSizing: 'content-box',
+      borderStyle: 'solid',
+      borderWidth: "".concat(borderWidth, "px"),
+      borderColor: borderColor
+    },
+    onMouseEnter: onHover,
+    onMouseMove: onHover,
+    onMouseLeave: onLeave,
+    onClick: function onClick(event) {
+      _onClick({
+        position: position,
+        color: color,
+        x: x,
+        y: y,
+        data: data
+      }, event);
+    }
+  });
+};
+
+WaffleCellHtml.defaultProps = {
+  data: {}
+};
+WaffleCellHtml.displayName = 'WaffleCellHtml';
+var WaffleCellHtml$1 = recompose_pure__WEBPACK_IMPORTED_MODULE_8___default()(WaffleCellHtml);
+var commonPropTypes = {
+  total: prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.number.isRequired,
+  data: prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.arrayOf(prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.shape({
+    id: prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.string, prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.number]).isRequired,
+    label: prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.string, prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.number]).isRequired,
+    value: prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.number.isRequired
+  })).isRequired,
+  hiddenIds: prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.arrayOf(prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.string, prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.number])).isRequired,
+  rows: prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.number.isRequired,
+  columns: prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.number.isRequired,
+  fillDirection: prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.oneOf(['top', 'right', 'bottom', 'left']).isRequired,
+  padding: prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.number.isRequired,
+  colors: _nivo_colors__WEBPACK_IMPORTED_MODULE_7__["ordinalColorsPropType"].isRequired,
+  emptyColor: prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.string.isRequired,
+  emptyOpacity: prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.number.isRequired,
+  borderWidth: prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.number.isRequired,
+  borderColor: _nivo_colors__WEBPACK_IMPORTED_MODULE_7__["inheritedColorPropType"].isRequired,
+  getBorderColor: prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.func.isRequired,
+  isInteractive: prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.bool,
+  tooltipFormat: prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.func, prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.string]),
+  tooltip: prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.func,
+  cellSize: prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.number.isRequired,
+  cells: prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.array.isRequired,
+  origin: prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.shape({
+    x: prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.number.isRequired,
+    y: prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.number.isRequired
+  }).isRequired
+};
+
+var WafflePropTypes = _objectSpread2(_objectSpread2(_objectSpread2({}, commonPropTypes), {}, {
+  cellComponent: prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.func.isRequired,
+  role: prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.string.isRequired
+}, _nivo_core__WEBPACK_IMPORTED_MODULE_4__["defsPropTypes"]), {}, {
+  legends: prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.arrayOf(prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.shape(_nivo_legends__WEBPACK_IMPORTED_MODULE_5__["LegendPropShape"])).isRequired
+});
+
+var WaffleHtmlPropTypes = _objectSpread2(_objectSpread2({}, commonPropTypes), {}, {
+  cellComponent: prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.func.isRequired
+});
+
+var WaffleCanvasPropTypes = _objectSpread2(_objectSpread2({}, commonPropTypes), {}, {
+  pixelRatio: prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.number.isRequired,
+  legends: prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.arrayOf(prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.shape(_nivo_legends__WEBPACK_IMPORTED_MODULE_5__["LegendPropShape"])).isRequired
+});
+
+var commonDefaultProps = {
+  hiddenIds: [],
+  fillDirection: 'bottom',
+  padding: 1,
+  colors: {
+    scheme: 'nivo'
+  },
+  emptyColor: '#cccccc',
+  emptyOpacity: 1,
+  borderWidth: 0,
+  borderColor: {
+    from: 'color',
+    modifiers: [['darker', 1]]
+  },
+  defs: [],
+  fill: [],
+  isInteractive: true,
+  onClick: _nivo_core__WEBPACK_IMPORTED_MODULE_4__["noop"]
+};
+
+var WaffleDefaultProps = _objectSpread2(_objectSpread2({}, commonDefaultProps), {}, {
+  cellComponent: WaffleCell$1,
+  role: 'img',
+  defs: [],
+  fill: [],
+  legends: []
+});
+
+var WaffleHtmlDefaultProps = _objectSpread2(_objectSpread2({}, commonDefaultProps), {}, {
+  cellComponent: WaffleCellHtml$1
+});
+
+var WaffleCanvasDefaultProps = _objectSpread2(_objectSpread2({}, commonDefaultProps), {}, {
+  legends: [],
+  pixelRatio: global.window && global.window.devicePixelRatio ? global.window.devicePixelRatio : 1
+});
+
+var props = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  WafflePropTypes: WafflePropTypes,
+  WaffleHtmlPropTypes: WaffleHtmlPropTypes,
+  WaffleCanvasPropTypes: WaffleCanvasPropTypes,
+  WaffleDefaultProps: WaffleDefaultProps,
+  WaffleHtmlDefaultProps: WaffleHtmlDefaultProps,
+  WaffleCanvasDefaultProps: WaffleCanvasDefaultProps
+});
+
+var computeCellSize = function computeCellSize(width, height, rows, columns, padding) {
+  var sizeX = (width - (columns - 1) * padding) / columns;
+  var sizeY = (height - (rows - 1) * padding) / rows;
+  return Math.min(sizeX, sizeY);
+};
+
+var computeGrid = function computeGrid(width, height, rows, columns, fillDirection, padding) {
+  var cellSize = computeCellSize(width, height, rows, columns, padding);
+  var cells = [];
+
+  switch (fillDirection) {
+    case 'top':
+      lodash_range__WEBPACK_IMPORTED_MODULE_13___default()(rows).forEach(function (row) {
+        lodash_range__WEBPACK_IMPORTED_MODULE_13___default()(columns).forEach(function (column) {
+          cells.push({
+            position: row * columns + column,
+            row: row,
+            column: column,
+            x: column * (cellSize + padding),
+            y: row * (cellSize + padding)
+          });
+        });
+      });
+      break;
+
+    case 'bottom':
+      lodash_range__WEBPACK_IMPORTED_MODULE_13___default()(rows - 1, -1).forEach(function (row) {
+        lodash_range__WEBPACK_IMPORTED_MODULE_13___default()(columns).forEach(function (column) {
+          cells.push({
+            position: row * columns + column,
+            row: row,
+            column: column,
+            x: column * (cellSize + padding),
+            y: row * (cellSize + padding)
+          });
+        });
+      });
+      break;
+
+    case 'left':
+      lodash_range__WEBPACK_IMPORTED_MODULE_13___default()(columns).forEach(function (column) {
+        lodash_range__WEBPACK_IMPORTED_MODULE_13___default()(rows).forEach(function (row) {
+          cells.push({
+            position: row * columns + column,
+            row: row,
+            column: column,
+            x: column * (cellSize + padding),
+            y: row * (cellSize + padding)
+          });
+        });
+      });
+      break;
+
+    case 'right':
+      lodash_range__WEBPACK_IMPORTED_MODULE_13___default()(columns - 1, -1).forEach(function (column) {
+        lodash_range__WEBPACK_IMPORTED_MODULE_13___default()(rows - 1, -1).forEach(function (row) {
+          cells.push({
+            position: row * columns + column,
+            row: row,
+            column: column,
+            x: column * (cellSize + padding),
+            y: row * (cellSize + padding)
+          });
+        });
+      });
+      break;
+
+    default:
+      throw new Error("Invalid fill direction provided: ".concat(fillDirection));
+  }
+
+  var origin = {
+    x: (width - (cellSize * columns + padding * (columns - 1))) / 2,
+    y: (height - (cellSize * rows + padding * (rows - 1))) / 2
+  };
+  return {
+    cells: cells,
+    cellSize: cellSize,
+    origin: origin
+  };
+};
+
+var applyDataToGrid = function applyDataToGrid(_cells, data) {
+  var cells = _cells.map(function (cell) {
+    return _objectSpread2({}, cell);
+  });
+
+  data.forEach(function (datum) {
+    lodash_range__WEBPACK_IMPORTED_MODULE_13___default()(datum.startAt, datum.endAt).forEach(function (position) {
+      var cell = cells[position];
+
+      if (cell !== undefined) {
+        cell.data = datum;
+        cell.groupIndex = datum.groupIndex;
+        cell.color = datum.color;
+      }
+    });
+  });
+  return cells;
+};
+
+var commonEnhancers = [Object(_nivo_core__WEBPACK_IMPORTED_MODULE_4__["withDimensions"])(), Object(_nivo_core__WEBPACK_IMPORTED_MODULE_4__["withTheme"])(), Object(_nivo_core__WEBPACK_IMPORTED_MODULE_4__["withMotion"])(), recompose_withPropsOnChange__WEBPACK_IMPORTED_MODULE_11___default()(['colors'], function (_ref) {
+  var colors = _ref.colors;
+  return {
+    getColor: Object(_nivo_colors__WEBPACK_IMPORTED_MODULE_7__["getOrdinalColorScale"])(colors, 'id')
+  };
+}), recompose_withPropsOnChange__WEBPACK_IMPORTED_MODULE_11___default()(['borderColor', 'theme'], function (_ref2) {
+  var borderColor = _ref2.borderColor,
+      theme = _ref2.theme;
+  return {
+    getBorderColor: Object(_nivo_colors__WEBPACK_IMPORTED_MODULE_7__["getInheritedColorGenerator"])(borderColor, theme)
+  };
+}), recompose_withState__WEBPACK_IMPORTED_MODULE_12___default()('currentCell', 'setCurrentCell', null), recompose_withPropsOnChange__WEBPACK_IMPORTED_MODULE_11___default()(['rows', 'columns', 'total'], function (_ref3) {
+  var rows = _ref3.rows,
+      columns = _ref3.columns,
+      total = _ref3.total;
+  return {
+    unit: total / (rows * columns)
+  };
+}), recompose_withPropsOnChange__WEBPACK_IMPORTED_MODULE_11___default()(['width', 'height', 'rows', 'columns', 'fillDirection', 'padding'], function (_ref4) {
+  var width = _ref4.width,
+      height = _ref4.height,
+      rows = _ref4.rows,
+      columns = _ref4.columns,
+      fillDirection = _ref4.fillDirection,
+      padding = _ref4.padding;
+  return computeGrid(width, height, rows, columns, fillDirection, padding);
+}), recompose_withPropsOnChange__WEBPACK_IMPORTED_MODULE_11___default()(['data', 'unit', 'getColor', 'hiddenIds'], function (_ref5) {
+  var data = _ref5.data,
+      unit = _ref5.unit,
+      getColor = _ref5.getColor,
+      hiddenIds = _ref5.hiddenIds;
+  var currentPosition = 0;
+  return {
+    computedData: data.map(function (datum, groupIndex) {
+      if (!hiddenIds.includes(datum.id)) {
+        var enhancedDatum = _objectSpread2(_objectSpread2({}, datum), {}, {
+          groupIndex: groupIndex,
+          startAt: currentPosition,
+          endAt: currentPosition + Math.round(datum.value / unit),
+          color: getColor(datum)
+        });
+
+        currentPosition = enhancedDatum.endAt;
+        return enhancedDatum;
+      }
+
+      return _objectSpread2(_objectSpread2({}, datum), {}, {
+        groupIndex: groupIndex,
+        startAt: currentPosition,
+        endAt: currentPosition,
+        color: getColor(datum)
+      });
+    })
+  };
+}), recompose_withPropsOnChange__WEBPACK_IMPORTED_MODULE_11___default()(['computedData'], function (_ref6) {
+  var computedData = _ref6.computedData;
+  return {
+    legendData: computedData.map(function (datum) {
+      return {
+        id: datum.id,
+        label: datum.id,
+        color: datum.color,
+        fill: datum.fill
+      };
+    })
+  };
+})];
+
+var enhance = function enhance(Component) {
+  var implDefaultProps = props["".concat(Component.displayName, "DefaultProps")];
+
+  switch (Component.displayName) {
+    case 'Waffle':
+      return recompose_compose__WEBPACK_IMPORTED_MODULE_9___default.a.apply(void 0, [recompose_defaultProps__WEBPACK_IMPORTED_MODULE_10___default()(implDefaultProps)].concat(commonEnhancers, [Object(_nivo_core__WEBPACK_IMPORTED_MODULE_4__["withMotion"])(), recompose_withPropsOnChange__WEBPACK_IMPORTED_MODULE_11___default()(['computedData', 'defs', 'fill'], function (_ref7) {
+        var computedData = _ref7.computedData,
+            defs = _ref7.defs,
+            fill = _ref7.fill;
+        return {
+          defs: Object(_nivo_core__WEBPACK_IMPORTED_MODULE_4__["bindDefs"])(defs, computedData, fill, {
+            targetKey: 'fill'
+          })
+        };
+      }), recompose_pure__WEBPACK_IMPORTED_MODULE_8___default.a]))(Component);
+
+    case 'WaffleHtml':
+      return recompose_compose__WEBPACK_IMPORTED_MODULE_9___default.a.apply(void 0, [recompose_defaultProps__WEBPACK_IMPORTED_MODULE_10___default()(implDefaultProps)].concat(commonEnhancers, [Object(_nivo_core__WEBPACK_IMPORTED_MODULE_4__["withMotion"])(), recompose_pure__WEBPACK_IMPORTED_MODULE_8___default.a]))(Component);
+
+    case 'WaffleCanvas':
+      return recompose_compose__WEBPACK_IMPORTED_MODULE_9___default.a.apply(void 0, [recompose_defaultProps__WEBPACK_IMPORTED_MODULE_10___default()(implDefaultProps)].concat(commonEnhancers, [recompose_pure__WEBPACK_IMPORTED_MODULE_8___default.a]))(Component);
+  }
+
+  return Component;
+};
+
+var WaffleCellTooltip = function WaffleCellTooltip(_ref) {
+  var position = _ref.position,
+      row = _ref.row,
+      column = _ref.column,
+      color = _ref.color,
+      data = _ref.data,
+      theme = _ref.theme,
+      tooltipFormat = _ref.tooltipFormat,
+      tooltip = _ref.tooltip;
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_nivo_tooltip__WEBPACK_IMPORTED_MODULE_14__["BasicTooltip"], {
+    id: data.label,
+    value: data.value,
+    enableChip: true,
+    color: color,
+    theme: theme,
+    format: tooltipFormat,
+    renderContent: typeof tooltip === 'function' ? tooltip.bind(null, _objectSpread2({
+      position: position,
+      row: row,
+      column: column,
+      color: color
+    }, data)) : null
+  });
+};
+
+WaffleCellTooltip.displayName = 'WaffleCellTooltip';
+
+var Waffle = function (_Component) {
+  _inherits(Waffle, _Component);
+
+  var _super = _createSuper(Waffle);
+
+  function Waffle() {
+    var _this;
+
+    _classCallCheck(this, Waffle);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _super.call.apply(_super, [this].concat(args));
+
+    _this.handleCellHover = function (showTooltip, cell, event) {
+      var _this$props = _this.props,
+          setCurrentCell = _this$props.setCurrentCell,
+          theme = _this$props.theme,
+          tooltipFormat = _this$props.tooltipFormat,
+          tooltip = _this$props.tooltip;
+      setCurrentCell(cell);
+      if (!cell.data) return;
+      showTooltip( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(WaffleCellTooltip, {
+        position: cell.position,
+        row: cell.row,
+        column: cell.column,
+        color: cell.color,
+        data: cell.data,
+        theme: theme,
+        tooltipFormat: tooltipFormat,
+        tooltip: tooltip
+      }), event);
+    };
+
+    _this.handleCellLeave = function (hideTooltip) {
+      _this.props.setCurrentCell(null);
+
+      hideTooltip();
+    };
+
+    return _this;
+  }
+
+  _createClass(Waffle, [{
+    key: "render",
+    value: function render() {
+      var _this2 = this;
+
+      var _this$props2 = this.props,
+          hiddenIds = _this$props2.hiddenIds,
+          margin = _this$props2.margin,
+          width = _this$props2.width,
+          height = _this$props2.height,
+          outerWidth = _this$props2.outerWidth,
+          outerHeight = _this$props2.outerHeight,
+          cellComponent = _this$props2.cellComponent,
+          emptyColor = _this$props2.emptyColor,
+          emptyOpacity = _this$props2.emptyOpacity,
+          borderWidth = _this$props2.borderWidth,
+          getBorderColor = _this$props2.getBorderColor,
+          theme = _this$props2.theme,
+          defs = _this$props2.defs,
+          animate = _this$props2.animate,
+          motionStiffness = _this$props2.motionStiffness,
+          motionDamping = _this$props2.motionDamping,
+          isInteractive = _this$props2.isInteractive,
+          onClick = _this$props2.onClick,
+          cells = _this$props2.cells,
+          cellSize = _this$props2.cellSize,
+          origin = _this$props2.origin,
+          computedData = _this$props2.computedData,
+          legendData = _this$props2.legendData,
+          legends = _this$props2.legends,
+          role = _this$props2.role;
+      cells.forEach(function (cell) {
+        cell.color = emptyColor;
+      });
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_nivo_core__WEBPACK_IMPORTED_MODULE_4__["LegacyContainer"], {
+        isInteractive: isInteractive,
+        theme: theme,
+        animate: animate,
+        motionDamping: motionDamping,
+        motionStiffness: motionStiffness
+      }, function (_ref) {
+        var showTooltip = _ref.showTooltip,
+            hideTooltip = _ref.hideTooltip;
+        var onHover = lodash_partial__WEBPACK_IMPORTED_MODULE_1___default()(_this2.handleCellHover, showTooltip);
+        var onLeave = lodash_partial__WEBPACK_IMPORTED_MODULE_1___default()(_this2.handleCellLeave, hideTooltip);
+        var cellsRender;
+
+        if (animate === true) {
+          var springConfig = {
+            stiffness: motionStiffness,
+            damping: motionDamping
+          };
+          cellsRender = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_motion__WEBPACK_IMPORTED_MODULE_2__["TransitionMotion"], {
+            styles: computedData.map(function (datum) {
+              return {
+                key: datum.id,
+                data: datum,
+                style: {
+                  startAt: Object(react_motion__WEBPACK_IMPORTED_MODULE_2__["spring"])(datum.startAt, springConfig),
+                  endAt: Object(react_motion__WEBPACK_IMPORTED_MODULE_2__["spring"])(datum.endAt, springConfig)
+                }
+              };
+            })
+          }, function (interpolatedStyles) {
+            var computedCells = applyDataToGrid(cells, interpolatedStyles.map(function (s) {
+              return _objectSpread2(_objectSpread2({}, s.data), {}, {
+                startAt: Math.round(s.style.startAt),
+                endAt: Math.round(s.style.endAt)
+              });
+            }));
+            return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, computedCells.map(function (cell) {
+              return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(cellComponent, {
+                key: cell.position,
+                position: cell.position,
+                size: cellSize,
+                x: cell.x,
+                y: cell.y,
+                color: cell.color,
+                fill: cell.data && cell.data.fill,
+                opacity: cell.data ? 1 : emptyOpacity,
+                borderWidth: borderWidth,
+                borderColor: getBorderColor(cell),
+                data: cell.data,
+                onHover: lodash_partial__WEBPACK_IMPORTED_MODULE_1___default()(onHover, cell),
+                onLeave: onLeave,
+                onClick: onClick
+              });
+            }));
+          });
+        } else {
+          var computedCells = applyDataToGrid(cells, computedData);
+          cellsRender = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, computedCells.map(function (cell) {
+            return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(cellComponent, {
+              key: cell.position,
+              position: cell.position,
+              size: cellSize,
+              x: cell.x,
+              y: cell.y,
+              color: cell.color,
+              fill: cell.data && cell.data.fill,
+              opacity: cell.data ? 1 : emptyOpacity,
+              borderWidth: borderWidth,
+              borderColor: getBorderColor(cell),
+              data: cell.data,
+              onHover: lodash_partial__WEBPACK_IMPORTED_MODULE_1___default()(onHover, cell),
+              onLeave: onLeave,
+              onClick: onClick
+            });
+          }));
+        }
+
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_nivo_core__WEBPACK_IMPORTED_MODULE_4__["SvgWrapper"], {
+          width: outerWidth,
+          height: outerHeight,
+          margin: margin,
+          defs: defs,
+          theme: theme,
+          role: role
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("g", {
+          transform: "translate(".concat(origin.x, ", ").concat(origin.y, ")")
+        }, cellsRender), legends.map(function (legend, i) {
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_nivo_legends__WEBPACK_IMPORTED_MODULE_5__["BoxLegendSvg"], Object.assign({
+            key: i
+          }, legend, {
+            containerWidth: width,
+            containerHeight: height,
+            data: legendData,
+            theme: theme
+          }));
+        }));
+      });
+    }
+  }]);
+
+  return Waffle;
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
+
+Waffle.displayName = 'Waffle';
+var Waffle$1 = recompose_setDisplayName__WEBPACK_IMPORTED_MODULE_3___default()(Waffle.displayName)(enhance(Waffle));
+
+var ResponsiveWaffle = function ResponsiveWaffle(props) {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_nivo_core__WEBPACK_IMPORTED_MODULE_4__["ResponsiveWrapper"], null, function (_ref) {
+    var width = _ref.width,
+        height = _ref.height;
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Waffle$1, Object.assign({
+      width: width,
+      height: height
+    }, props));
+  });
+};
+
+var WaffleHtml = function (_Component) {
+  _inherits(WaffleHtml, _Component);
+
+  var _super = _createSuper(WaffleHtml);
+
+  function WaffleHtml() {
+    var _this;
+
+    _classCallCheck(this, WaffleHtml);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _super.call.apply(_super, [this].concat(args));
+
+    _this.handleCellHover = function (showTooltip, cell, event) {
+      var _this$props = _this.props,
+          setCurrentCell = _this$props.setCurrentCell,
+          theme = _this$props.theme,
+          tooltipFormat = _this$props.tooltipFormat,
+          tooltip = _this$props.tooltip;
+      setCurrentCell(cell);
+      if (!cell.data) return;
+      showTooltip( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(WaffleCellTooltip, {
+        position: cell.position,
+        row: cell.row,
+        column: cell.column,
+        color: cell.color,
+        data: cell.data,
+        theme: theme,
+        tooltipFormat: tooltipFormat,
+        tooltip: tooltip
+      }), event);
+    };
+
+    _this.handleCellLeave = function (hideTooltip) {
+      _this.props.setCurrentCell(null);
+
+      hideTooltip();
+    };
+
+    return _this;
+  }
+
+  _createClass(WaffleHtml, [{
+    key: "render",
+    value: function render() {
+      var _this2 = this;
+
+      var _this$props2 = this.props,
+          margin = _this$props2.margin,
+          outerWidth = _this$props2.outerWidth,
+          outerHeight = _this$props2.outerHeight,
+          cellComponent = _this$props2.cellComponent,
+          emptyColor = _this$props2.emptyColor,
+          emptyOpacity = _this$props2.emptyOpacity,
+          borderWidth = _this$props2.borderWidth,
+          getBorderColor = _this$props2.getBorderColor,
+          theme = _this$props2.theme,
+          animate = _this$props2.animate,
+          motionStiffness = _this$props2.motionStiffness,
+          motionDamping = _this$props2.motionDamping,
+          isInteractive = _this$props2.isInteractive,
+          onClick = _this$props2.onClick,
+          cells = _this$props2.cells,
+          cellSize = _this$props2.cellSize,
+          origin = _this$props2.origin,
+          computedData = _this$props2.computedData;
+      cells.forEach(function (cell) {
+        cell.color = emptyColor;
+      });
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_nivo_core__WEBPACK_IMPORTED_MODULE_4__["LegacyContainer"], {
+        isInteractive: isInteractive,
+        theme: theme,
+        animate: animate,
+        motionDamping: motionDamping,
+        motionStiffness: motionStiffness
+      }, function (_ref) {
+        var showTooltip = _ref.showTooltip,
+            hideTooltip = _ref.hideTooltip;
+        var onHover = lodash_partial__WEBPACK_IMPORTED_MODULE_1___default()(_this2.handleCellHover, showTooltip);
+        var onLeave = lodash_partial__WEBPACK_IMPORTED_MODULE_1___default()(_this2.handleCellLeave, hideTooltip);
+        var cellsRender;
+
+        if (animate === true) {
+          var springConfig = {
+            stiffness: motionStiffness,
+            damping: motionDamping
+          };
+          cellsRender = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_motion__WEBPACK_IMPORTED_MODULE_2__["TransitionMotion"], {
+            styles: computedData.map(function (datum) {
+              return {
+                key: datum.id,
+                data: datum,
+                style: {
+                  startAt: Object(react_motion__WEBPACK_IMPORTED_MODULE_2__["spring"])(datum.startAt, springConfig),
+                  endAt: Object(react_motion__WEBPACK_IMPORTED_MODULE_2__["spring"])(datum.endAt, springConfig)
+                }
+              };
+            })
+          }, function (interpolatedStyles) {
+            var computedCells = applyDataToGrid(cells, interpolatedStyles.map(function (s) {
+              return _objectSpread2(_objectSpread2({}, s.data), {}, {
+                startAt: Math.round(s.style.startAt),
+                endAt: Math.round(s.style.endAt)
+              });
+            }));
+            return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, computedCells.map(function (cell) {
+              return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(cellComponent, {
+                key: cell.position,
+                position: cell.position,
+                size: cellSize,
+                x: cell.x,
+                y: cell.y,
+                color: cell.color,
+                fill: cell.data && cell.data.fill,
+                opacity: cell.data ? 1 : emptyOpacity,
+                borderWidth: borderWidth,
+                borderColor: getBorderColor(cell),
+                data: cell.data,
+                onHover: lodash_partial__WEBPACK_IMPORTED_MODULE_1___default()(onHover, cell),
+                onLeave: onLeave,
+                onClick: onClick
+              });
+            }));
+          });
+        } else {
+          var computedCells = applyDataToGrid(cells, computedData);
+          cellsRender = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, computedCells.map(function (cell) {
+            return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(cellComponent, {
+              key: cell.position,
+              position: cell.position,
+              size: cellSize,
+              x: cell.x,
+              y: cell.y,
+              color: cell.color,
+              fill: cell.data && cell.data.fill,
+              opacity: cell.data ? 1 : emptyOpacity,
+              borderWidth: borderWidth,
+              borderColor: getBorderColor(cell),
+              data: cell.data,
+              onHover: lodash_partial__WEBPACK_IMPORTED_MODULE_1___default()(onHover, cell),
+              onLeave: onLeave,
+              onClick: onClick
+            });
+          }));
+        }
+
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          style: {
+            position: 'relative',
+            width: outerWidth,
+            height: outerHeight
+          }
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          style: {
+            position: 'absolute',
+            top: margin.top + origin.y,
+            left: margin.left + origin.x
+          }
+        }, cellsRender));
+      });
+    }
+  }]);
+
+  return WaffleHtml;
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
+
+WaffleHtml.displayName = 'WaffleHtml';
+var WaffleHtml$1 = recompose_setDisplayName__WEBPACK_IMPORTED_MODULE_3___default()(WaffleHtml.displayName)(enhance(WaffleHtml));
+
+var ResponsiveWaffleHtml = function ResponsiveWaffleHtml(props) {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_nivo_core__WEBPACK_IMPORTED_MODULE_4__["ResponsiveWrapper"], null, function (_ref) {
+    var width = _ref.width,
+        height = _ref.height;
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(WaffleHtml$1, Object.assign({
+      width: width,
+      height: height
+    }, props));
+  });
+};
+
+function _arrayWithHoles(arr) {
+  if (Array.isArray(arr)) return arr;
+}
+
+function _iterableToArrayLimit(arr, i) {
+  if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return;
+  var _arr = [];
+  var _n = true;
+  var _d = false;
+  var _e = undefined;
+
+  try {
+    for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
+      _arr.push(_s.value);
+
+      if (i && _arr.length === i) break;
+    }
+  } catch (err) {
+    _d = true;
+    _e = err;
+  } finally {
+    try {
+      if (!_n && _i["return"] != null) _i["return"]();
+    } finally {
+      if (_d) throw _e;
+    }
+  }
+
+  return _arr;
+}
+
+function _arrayLikeToArray(arr, len) {
+  if (len == null || len > arr.length) len = arr.length;
+
+  for (var i = 0, arr2 = new Array(len); i < len; i++) {
+    arr2[i] = arr[i];
+  }
+
+  return arr2;
+}
+
+function _unsupportedIterableToArray(o, minLen) {
+  if (!o) return;
+  if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+  var n = Object.prototype.toString.call(o).slice(8, -1);
+  if (n === "Object" && o.constructor) n = o.constructor.name;
+  if (n === "Map" || n === "Set") return Array.from(n);
+  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+}
+
+function _nonIterableRest() {
+  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+
+function _slicedToArray(arr, i) {
+  return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
+}
+
+var findCellUnderCursor = function findCellUnderCursor(cells, cellSize, origin, margin, x, y) {
+  return cells.find(function (cell) {
+    return Object(_nivo_core__WEBPACK_IMPORTED_MODULE_4__["isCursorInRect"])(cell.x + origin.x + margin.left, cell.y + origin.y + margin.top, cellSize, cellSize, x, y);
+  });
+};
+
+var WaffleCanvas = function (_Component) {
+  _inherits(WaffleCanvas, _Component);
+
+  var _super = _createSuper(WaffleCanvas);
+
+  function WaffleCanvas() {
+    var _this;
+
+    _classCallCheck(this, WaffleCanvas);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _super.call.apply(_super, [this].concat(args));
+
+    _this.handleMouseHover = function (showTooltip, hideTooltip) {
+      return function (event) {
+        var _this$props = _this.props,
+            isInteractive = _this$props.isInteractive,
+            margin = _this$props.margin,
+            theme = _this$props.theme,
+            cells = _this$props.cells,
+            cellSize = _this$props.cellSize,
+            origin = _this$props.origin,
+            tooltipFormat = _this$props.tooltipFormat,
+            tooltip = _this$props.tooltip;
+        if (!isInteractive || !cells) return;
+
+        var _getRelativeCursor = Object(_nivo_core__WEBPACK_IMPORTED_MODULE_4__["getRelativeCursor"])(_this.surface, event),
+            _getRelativeCursor2 = _slicedToArray(_getRelativeCursor, 2),
+            x = _getRelativeCursor2[0],
+            y = _getRelativeCursor2[1];
+
+        var cell = findCellUnderCursor(cells, cellSize, origin, margin, x, y);
+
+        if (cell !== undefined && cell.data) {
+          showTooltip( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(WaffleCellTooltip, {
+            position: cell.position,
+            row: cell.row,
+            column: cell.column,
+            color: cell.color,
+            data: cell.data,
+            theme: theme,
+            tooltipFormat: tooltipFormat,
+            tooltip: tooltip
+          }), event);
+        } else {
+          hideTooltip();
+        }
+      };
+    };
+
+    _this.handleMouseLeave = function (hideTooltip) {
+      return function () {
+        if (_this.props.isInteractive !== true) return;
+        hideTooltip();
+      };
+    };
+
+    _this.handleClick = function (event) {
+      var _this$props2 = _this.props,
+          isInteractive = _this$props2.isInteractive,
+          margin = _this$props2.margin,
+          onClick = _this$props2.onClick,
+          cells = _this$props2.cells,
+          cellSize = _this$props2.cellSize,
+          origin = _this$props2.origin;
+      if (!isInteractive || !cells) return;
+
+      var _getRelativeCursor3 = Object(_nivo_core__WEBPACK_IMPORTED_MODULE_4__["getRelativeCursor"])(_this.surface, event),
+          _getRelativeCursor4 = _slicedToArray(_getRelativeCursor3, 2),
+          x = _getRelativeCursor4[0],
+          y = _getRelativeCursor4[1];
+
+      var cell = findCellUnderCursor(cells, cellSize, origin, margin, x, y);
+      if (cell !== undefined) onClick(cell, event);
+    };
+
+    return _this;
+  }
+
+  _createClass(WaffleCanvas, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.ctx = this.surface.getContext('2d');
+      this.draw(this.props);
+    }
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate() {
+      this.ctx = this.surface.getContext('2d');
+      this.draw(this.props);
+    }
+  }, {
+    key: "draw",
+    value: function draw(props) {
+      var _this2 = this;
+
+      var pixelRatio = props.pixelRatio,
+          margin = props.margin,
+          width = props.width,
+          height = props.height,
+          outerWidth = props.outerWidth,
+          outerHeight = props.outerHeight,
+          getColor = props.getColor,
+          emptyColor = props.emptyColor,
+          emptyOpacity = props.emptyOpacity,
+          borderWidth = props.borderWidth,
+          getBorderColor = props.getBorderColor,
+          cells = props.cells,
+          cellSize = props.cellSize,
+          origin = props.origin,
+          computedData = props.computedData,
+          legendData = props.legendData,
+          legends = props.legends,
+          theme = props.theme;
+      this.surface.width = outerWidth * pixelRatio;
+      this.surface.height = outerHeight * pixelRatio;
+      this.ctx.scale(pixelRatio, pixelRatio);
+      this.ctx.fillStyle = theme.background;
+      this.ctx.fillRect(0, 0, outerWidth, outerHeight);
+      this.ctx.translate(margin.left, margin.top);
+      cells.forEach(function (cell) {
+        cell.color = emptyColor;
+      });
+      computedData.forEach(function (datum) {
+        lodash_range__WEBPACK_IMPORTED_MODULE_13___default()(datum.startAt, datum.endAt).forEach(function (position) {
+          var cell = cells[position];
+
+          if (cell !== undefined) {
+            cell.data = datum;
+            cell.groupIndex = datum.groupIndex;
+            cell.color = getColor(datum);
+          }
+        });
+      });
+      cells.forEach(function (cell) {
+        _this2.ctx.save();
+
+        _this2.ctx.globalAlpha = cell.data ? 1 : emptyOpacity;
+        _this2.ctx.fillStyle = cell.color;
+
+        _this2.ctx.fillRect(cell.x + origin.x, cell.y + origin.y, cellSize, cellSize);
+
+        if (borderWidth > 0) {
+          _this2.ctx.strokeStyle = getBorderColor(cell);
+          _this2.ctx.lineWidth = borderWidth;
+
+          _this2.ctx.strokeRect(cell.x + origin.x, cell.y + origin.y, cellSize, cellSize);
+        }
+
+        _this2.ctx.restore();
+      });
+      legends.forEach(function (legend) {
+        Object(_nivo_legends__WEBPACK_IMPORTED_MODULE_5__["renderLegendToCanvas"])(_this2.ctx, _objectSpread2(_objectSpread2({}, legend), {}, {
+          data: legendData,
+          containerWidth: width,
+          containerHeight: height,
+          theme: theme
+        }));
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this3 = this;
+
+      var _this$props3 = this.props,
+          outerWidth = _this$props3.outerWidth,
+          outerHeight = _this$props3.outerHeight,
+          pixelRatio = _this$props3.pixelRatio,
+          isInteractive = _this$props3.isInteractive,
+          theme = _this$props3.theme;
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_nivo_core__WEBPACK_IMPORTED_MODULE_4__["LegacyContainer"], {
+        isInteractive: isInteractive,
+        theme: theme,
+        animate: false
+      }, function (_ref) {
+        var showTooltip = _ref.showTooltip,
+            hideTooltip = _ref.hideTooltip;
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("canvas", {
+          ref: function ref(surface) {
+            _this3.surface = surface;
+          },
+          width: outerWidth * pixelRatio,
+          height: outerHeight * pixelRatio,
+          style: {
+            width: outerWidth,
+            height: outerHeight
+          },
+          onMouseEnter: _this3.handleMouseHover(showTooltip, hideTooltip),
+          onMouseMove: _this3.handleMouseHover(showTooltip, hideTooltip),
+          onMouseLeave: _this3.handleMouseLeave(hideTooltip),
+          onClick: _this3.handleClick
+        });
+      });
+    }
+  }]);
+
+  return WaffleCanvas;
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
+
+WaffleCanvas.displayName = 'WaffleCanvas';
+var WaffleCanvas$1 = recompose_setDisplayName__WEBPACK_IMPORTED_MODULE_3___default()(WaffleCanvas.displayName)(enhance(WaffleCanvas));
+
+var ResponsiveWaffleCanvas = function ResponsiveWaffleCanvas(props) {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_nivo_core__WEBPACK_IMPORTED_MODULE_4__["ResponsiveWrapper"], null, function (_ref) {
+    var width = _ref.width,
+        height = _ref.height;
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(WaffleCanvas$1, Object.assign({
+      width: width,
+      height: height
+    }, props));
+  });
+};
+
+
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js")))
 
 /***/ }),
 
@@ -42474,6 +43769,1352 @@ module.exports = memoize;
 
 /***/ }),
 
+/***/ "./node_modules/lodash.partial/index.js":
+/*!**********************************************!*\
+  !*** ./node_modules/lodash.partial/index.js ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(global) {function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+/**
+ * lodash (Custom Build) <https://lodash.com/>
+ * Build: `lodash modularize exports="npm" -o ./`
+ * Copyright jQuery Foundation and other contributors <https://jquery.org/>
+ * Released under MIT license <https://lodash.com/license>
+ * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
+ * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+ */
+
+/** Used as the `TypeError` message for "Functions" methods. */
+var FUNC_ERROR_TEXT = 'Expected a function';
+/** Used as the internal argument placeholder. */
+
+var PLACEHOLDER = '__lodash_placeholder__';
+/** Used to compose bitmasks for function metadata. */
+
+var BIND_FLAG = 1,
+    BIND_KEY_FLAG = 2,
+    CURRY_BOUND_FLAG = 4,
+    CURRY_FLAG = 8,
+    CURRY_RIGHT_FLAG = 16,
+    PARTIAL_FLAG = 32,
+    PARTIAL_RIGHT_FLAG = 64,
+    ARY_FLAG = 128,
+    REARG_FLAG = 256,
+    FLIP_FLAG = 512;
+/** Used as references for various `Number` constants. */
+
+var INFINITY = 1 / 0,
+    MAX_SAFE_INTEGER = 9007199254740991,
+    MAX_INTEGER = 1.7976931348623157e+308,
+    NAN = 0 / 0;
+/** Used to associate wrap methods with their bit flags. */
+
+var wrapFlags = [['ary', ARY_FLAG], ['bind', BIND_FLAG], ['bindKey', BIND_KEY_FLAG], ['curry', CURRY_FLAG], ['curryRight', CURRY_RIGHT_FLAG], ['flip', FLIP_FLAG], ['partial', PARTIAL_FLAG], ['partialRight', PARTIAL_RIGHT_FLAG], ['rearg', REARG_FLAG]];
+/** `Object#toString` result references. */
+
+var funcTag = '[object Function]',
+    genTag = '[object GeneratorFunction]',
+    symbolTag = '[object Symbol]';
+/**
+ * Used to match `RegExp`
+ * [syntax characters](http://ecma-international.org/ecma-262/7.0/#sec-patterns).
+ */
+
+var reRegExpChar = /[\\^$.*+?()[\]{}|]/g;
+/** Used to match leading and trailing whitespace. */
+
+var reTrim = /^\s+|\s+$/g;
+/** Used to match wrap detail comments. */
+
+var reWrapComment = /\{(?:\n\/\* \[wrapped with .+\] \*\/)?\n?/,
+    reWrapDetails = /\{\n\/\* \[wrapped with (.+)\] \*/,
+    reSplitDetails = /,? & /;
+/** Used to detect bad signed hexadecimal string values. */
+
+var reIsBadHex = /^[-+]0x[0-9a-f]+$/i;
+/** Used to detect binary string values. */
+
+var reIsBinary = /^0b[01]+$/i;
+/** Used to detect host constructors (Safari). */
+
+var reIsHostCtor = /^\[object .+?Constructor\]$/;
+/** Used to detect octal string values. */
+
+var reIsOctal = /^0o[0-7]+$/i;
+/** Used to detect unsigned integer values. */
+
+var reIsUint = /^(?:0|[1-9]\d*)$/;
+/** Built-in method references without a dependency on `root`. */
+
+var freeParseInt = parseInt;
+/** Detect free variable `global` from Node.js. */
+
+var freeGlobal = (typeof global === "undefined" ? "undefined" : _typeof(global)) == 'object' && global && global.Object === Object && global;
+/** Detect free variable `self`. */
+
+var freeSelf = (typeof self === "undefined" ? "undefined" : _typeof(self)) == 'object' && self && self.Object === Object && self;
+/** Used as a reference to the global object. */
+
+var root = freeGlobal || freeSelf || Function('return this')();
+/**
+ * A faster alternative to `Function#apply`, this function invokes `func`
+ * with the `this` binding of `thisArg` and the arguments of `args`.
+ *
+ * @private
+ * @param {Function} func The function to invoke.
+ * @param {*} thisArg The `this` binding of `func`.
+ * @param {Array} args The arguments to invoke `func` with.
+ * @returns {*} Returns the result of `func`.
+ */
+
+function apply(func, thisArg, args) {
+  switch (args.length) {
+    case 0:
+      return func.call(thisArg);
+
+    case 1:
+      return func.call(thisArg, args[0]);
+
+    case 2:
+      return func.call(thisArg, args[0], args[1]);
+
+    case 3:
+      return func.call(thisArg, args[0], args[1], args[2]);
+  }
+
+  return func.apply(thisArg, args);
+}
+/**
+ * A specialized version of `_.forEach` for arrays without support for
+ * iteratee shorthands.
+ *
+ * @private
+ * @param {Array} [array] The array to iterate over.
+ * @param {Function} iteratee The function invoked per iteration.
+ * @returns {Array} Returns `array`.
+ */
+
+
+function arrayEach(array, iteratee) {
+  var index = -1,
+      length = array ? array.length : 0;
+
+  while (++index < length) {
+    if (iteratee(array[index], index, array) === false) {
+      break;
+    }
+  }
+
+  return array;
+}
+/**
+ * A specialized version of `_.includes` for arrays without support for
+ * specifying an index to search from.
+ *
+ * @private
+ * @param {Array} [array] The array to inspect.
+ * @param {*} target The value to search for.
+ * @returns {boolean} Returns `true` if `target` is found, else `false`.
+ */
+
+
+function arrayIncludes(array, value) {
+  var length = array ? array.length : 0;
+  return !!length && baseIndexOf(array, value, 0) > -1;
+}
+/**
+ * The base implementation of `_.findIndex` and `_.findLastIndex` without
+ * support for iteratee shorthands.
+ *
+ * @private
+ * @param {Array} array The array to inspect.
+ * @param {Function} predicate The function invoked per iteration.
+ * @param {number} fromIndex The index to search from.
+ * @param {boolean} [fromRight] Specify iterating from right to left.
+ * @returns {number} Returns the index of the matched value, else `-1`.
+ */
+
+
+function baseFindIndex(array, predicate, fromIndex, fromRight) {
+  var length = array.length,
+      index = fromIndex + (fromRight ? 1 : -1);
+
+  while (fromRight ? index-- : ++index < length) {
+    if (predicate(array[index], index, array)) {
+      return index;
+    }
+  }
+
+  return -1;
+}
+/**
+ * The base implementation of `_.indexOf` without `fromIndex` bounds checks.
+ *
+ * @private
+ * @param {Array} array The array to inspect.
+ * @param {*} value The value to search for.
+ * @param {number} fromIndex The index to search from.
+ * @returns {number} Returns the index of the matched value, else `-1`.
+ */
+
+
+function baseIndexOf(array, value, fromIndex) {
+  if (value !== value) {
+    return baseFindIndex(array, baseIsNaN, fromIndex);
+  }
+
+  var index = fromIndex - 1,
+      length = array.length;
+
+  while (++index < length) {
+    if (array[index] === value) {
+      return index;
+    }
+  }
+
+  return -1;
+}
+/**
+ * The base implementation of `_.isNaN` without support for number objects.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is `NaN`, else `false`.
+ */
+
+
+function baseIsNaN(value) {
+  return value !== value;
+}
+/**
+ * Gets the number of `placeholder` occurrences in `array`.
+ *
+ * @private
+ * @param {Array} array The array to inspect.
+ * @param {*} placeholder The placeholder to search for.
+ * @returns {number} Returns the placeholder count.
+ */
+
+
+function countHolders(array, placeholder) {
+  var length = array.length,
+      result = 0;
+
+  while (length--) {
+    if (array[length] === placeholder) {
+      result++;
+    }
+  }
+
+  return result;
+}
+/**
+ * Gets the value at `key` of `object`.
+ *
+ * @private
+ * @param {Object} [object] The object to query.
+ * @param {string} key The key of the property to get.
+ * @returns {*} Returns the property value.
+ */
+
+
+function getValue(object, key) {
+  return object == null ? undefined : object[key];
+}
+/**
+ * Checks if `value` is a host object in IE < 9.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a host object, else `false`.
+ */
+
+
+function isHostObject(value) {
+  // Many host objects are `Object` objects that can coerce to strings
+  // despite having improperly defined `toString` methods.
+  var result = false;
+
+  if (value != null && typeof value.toString != 'function') {
+    try {
+      result = !!(value + '');
+    } catch (e) {}
+  }
+
+  return result;
+}
+/**
+ * Replaces all `placeholder` elements in `array` with an internal placeholder
+ * and returns an array of their indexes.
+ *
+ * @private
+ * @param {Array} array The array to modify.
+ * @param {*} placeholder The placeholder to replace.
+ * @returns {Array} Returns the new array of placeholder indexes.
+ */
+
+
+function replaceHolders(array, placeholder) {
+  var index = -1,
+      length = array.length,
+      resIndex = 0,
+      result = [];
+
+  while (++index < length) {
+    var value = array[index];
+
+    if (value === placeholder || value === PLACEHOLDER) {
+      array[index] = PLACEHOLDER;
+      result[resIndex++] = index;
+    }
+  }
+
+  return result;
+}
+/** Used for built-in method references. */
+
+
+var funcProto = Function.prototype,
+    objectProto = Object.prototype;
+/** Used to detect overreaching core-js shims. */
+
+var coreJsData = root['__core-js_shared__'];
+/** Used to detect methods masquerading as native. */
+
+var maskSrcKey = function () {
+  var uid = /[^.]+$/.exec(coreJsData && coreJsData.keys && coreJsData.keys.IE_PROTO || '');
+  return uid ? 'Symbol(src)_1.' + uid : '';
+}();
+/** Used to resolve the decompiled source of functions. */
+
+
+var funcToString = funcProto.toString;
+/** Used to check objects for own properties. */
+
+var hasOwnProperty = objectProto.hasOwnProperty;
+/**
+ * Used to resolve the
+ * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
+ * of values.
+ */
+
+var objectToString = objectProto.toString;
+/** Used to detect if a method is native. */
+
+var reIsNative = RegExp('^' + funcToString.call(hasOwnProperty).replace(reRegExpChar, '\\$&').replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, '$1.*?') + '$');
+/** Built-in value references. */
+
+var objectCreate = Object.create;
+/* Built-in method references for those with the same name as other `lodash` methods. */
+
+var nativeMax = Math.max,
+    nativeMin = Math.min;
+/* Used to set `toString` methods. */
+
+var defineProperty = function () {
+  var func = getNative(Object, 'defineProperty'),
+      name = getNative.name;
+  return name && name.length > 2 ? func : undefined;
+}();
+/**
+ * The base implementation of `_.create` without support for assigning
+ * properties to the created object.
+ *
+ * @private
+ * @param {Object} prototype The object to inherit from.
+ * @returns {Object} Returns the new object.
+ */
+
+
+function baseCreate(proto) {
+  return isObject(proto) ? objectCreate(proto) : {};
+}
+/**
+ * The base implementation of `_.isNative` without bad shim checks.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a native function,
+ *  else `false`.
+ */
+
+
+function baseIsNative(value) {
+  if (!isObject(value) || isMasked(value)) {
+    return false;
+  }
+
+  var pattern = isFunction(value) || isHostObject(value) ? reIsNative : reIsHostCtor;
+  return pattern.test(toSource(value));
+}
+/**
+ * The base implementation of `_.rest` which doesn't validate or coerce arguments.
+ *
+ * @private
+ * @param {Function} func The function to apply a rest parameter to.
+ * @param {number} [start=func.length-1] The start position of the rest parameter.
+ * @returns {Function} Returns the new function.
+ */
+
+
+function baseRest(func, start) {
+  start = nativeMax(start === undefined ? func.length - 1 : start, 0);
+  return function () {
+    var args = arguments,
+        index = -1,
+        length = nativeMax(args.length - start, 0),
+        array = Array(length);
+
+    while (++index < length) {
+      array[index] = args[start + index];
+    }
+
+    index = -1;
+    var otherArgs = Array(start + 1);
+
+    while (++index < start) {
+      otherArgs[index] = args[index];
+    }
+
+    otherArgs[start] = array;
+    return apply(func, this, otherArgs);
+  };
+}
+/**
+ * Creates an array that is the composition of partially applied arguments,
+ * placeholders, and provided arguments into a single array of arguments.
+ *
+ * @private
+ * @param {Array} args The provided arguments.
+ * @param {Array} partials The arguments to prepend to those provided.
+ * @param {Array} holders The `partials` placeholder indexes.
+ * @params {boolean} [isCurried] Specify composing for a curried function.
+ * @returns {Array} Returns the new array of composed arguments.
+ */
+
+
+function composeArgs(args, partials, holders, isCurried) {
+  var argsIndex = -1,
+      argsLength = args.length,
+      holdersLength = holders.length,
+      leftIndex = -1,
+      leftLength = partials.length,
+      rangeLength = nativeMax(argsLength - holdersLength, 0),
+      result = Array(leftLength + rangeLength),
+      isUncurried = !isCurried;
+
+  while (++leftIndex < leftLength) {
+    result[leftIndex] = partials[leftIndex];
+  }
+
+  while (++argsIndex < holdersLength) {
+    if (isUncurried || argsIndex < argsLength) {
+      result[holders[argsIndex]] = args[argsIndex];
+    }
+  }
+
+  while (rangeLength--) {
+    result[leftIndex++] = args[argsIndex++];
+  }
+
+  return result;
+}
+/**
+ * This function is like `composeArgs` except that the arguments composition
+ * is tailored for `_.partialRight`.
+ *
+ * @private
+ * @param {Array} args The provided arguments.
+ * @param {Array} partials The arguments to append to those provided.
+ * @param {Array} holders The `partials` placeholder indexes.
+ * @params {boolean} [isCurried] Specify composing for a curried function.
+ * @returns {Array} Returns the new array of composed arguments.
+ */
+
+
+function composeArgsRight(args, partials, holders, isCurried) {
+  var argsIndex = -1,
+      argsLength = args.length,
+      holdersIndex = -1,
+      holdersLength = holders.length,
+      rightIndex = -1,
+      rightLength = partials.length,
+      rangeLength = nativeMax(argsLength - holdersLength, 0),
+      result = Array(rangeLength + rightLength),
+      isUncurried = !isCurried;
+
+  while (++argsIndex < rangeLength) {
+    result[argsIndex] = args[argsIndex];
+  }
+
+  var offset = argsIndex;
+
+  while (++rightIndex < rightLength) {
+    result[offset + rightIndex] = partials[rightIndex];
+  }
+
+  while (++holdersIndex < holdersLength) {
+    if (isUncurried || argsIndex < argsLength) {
+      result[offset + holders[holdersIndex]] = args[argsIndex++];
+    }
+  }
+
+  return result;
+}
+/**
+ * Copies the values of `source` to `array`.
+ *
+ * @private
+ * @param {Array} source The array to copy values from.
+ * @param {Array} [array=[]] The array to copy values to.
+ * @returns {Array} Returns `array`.
+ */
+
+
+function copyArray(source, array) {
+  var index = -1,
+      length = source.length;
+  array || (array = Array(length));
+
+  while (++index < length) {
+    array[index] = source[index];
+  }
+
+  return array;
+}
+/**
+ * Creates a function that wraps `func` to invoke it with the optional `this`
+ * binding of `thisArg`.
+ *
+ * @private
+ * @param {Function} func The function to wrap.
+ * @param {number} bitmask The bitmask flags. See `createWrap` for more details.
+ * @param {*} [thisArg] The `this` binding of `func`.
+ * @returns {Function} Returns the new wrapped function.
+ */
+
+
+function createBind(func, bitmask, thisArg) {
+  var isBind = bitmask & BIND_FLAG,
+      Ctor = createCtor(func);
+
+  function wrapper() {
+    var fn = this && this !== root && this instanceof wrapper ? Ctor : func;
+    return fn.apply(isBind ? thisArg : this, arguments);
+  }
+
+  return wrapper;
+}
+/**
+ * Creates a function that produces an instance of `Ctor` regardless of
+ * whether it was invoked as part of a `new` expression or by `call` or `apply`.
+ *
+ * @private
+ * @param {Function} Ctor The constructor to wrap.
+ * @returns {Function} Returns the new wrapped function.
+ */
+
+
+function createCtor(Ctor) {
+  return function () {
+    // Use a `switch` statement to work with class constructors. See
+    // http://ecma-international.org/ecma-262/7.0/#sec-ecmascript-function-objects-call-thisargument-argumentslist
+    // for more details.
+    var args = arguments;
+
+    switch (args.length) {
+      case 0:
+        return new Ctor();
+
+      case 1:
+        return new Ctor(args[0]);
+
+      case 2:
+        return new Ctor(args[0], args[1]);
+
+      case 3:
+        return new Ctor(args[0], args[1], args[2]);
+
+      case 4:
+        return new Ctor(args[0], args[1], args[2], args[3]);
+
+      case 5:
+        return new Ctor(args[0], args[1], args[2], args[3], args[4]);
+
+      case 6:
+        return new Ctor(args[0], args[1], args[2], args[3], args[4], args[5]);
+
+      case 7:
+        return new Ctor(args[0], args[1], args[2], args[3], args[4], args[5], args[6]);
+    }
+
+    var thisBinding = baseCreate(Ctor.prototype),
+        result = Ctor.apply(thisBinding, args); // Mimic the constructor's `return` behavior.
+    // See https://es5.github.io/#x13.2.2 for more details.
+
+    return isObject(result) ? result : thisBinding;
+  };
+}
+/**
+ * Creates a function that wraps `func` to enable currying.
+ *
+ * @private
+ * @param {Function} func The function to wrap.
+ * @param {number} bitmask The bitmask flags. See `createWrap` for more details.
+ * @param {number} arity The arity of `func`.
+ * @returns {Function} Returns the new wrapped function.
+ */
+
+
+function createCurry(func, bitmask, arity) {
+  var Ctor = createCtor(func);
+
+  function wrapper() {
+    var length = arguments.length,
+        args = Array(length),
+        index = length,
+        placeholder = getHolder(wrapper);
+
+    while (index--) {
+      args[index] = arguments[index];
+    }
+
+    var holders = length < 3 && args[0] !== placeholder && args[length - 1] !== placeholder ? [] : replaceHolders(args, placeholder);
+    length -= holders.length;
+
+    if (length < arity) {
+      return createRecurry(func, bitmask, createHybrid, wrapper.placeholder, undefined, args, holders, undefined, undefined, arity - length);
+    }
+
+    var fn = this && this !== root && this instanceof wrapper ? Ctor : func;
+    return apply(fn, this, args);
+  }
+
+  return wrapper;
+}
+/**
+ * Creates a function that wraps `func` to invoke it with optional `this`
+ * binding of `thisArg`, partial application, and currying.
+ *
+ * @private
+ * @param {Function|string} func The function or method name to wrap.
+ * @param {number} bitmask The bitmask flags. See `createWrap` for more details.
+ * @param {*} [thisArg] The `this` binding of `func`.
+ * @param {Array} [partials] The arguments to prepend to those provided to
+ *  the new function.
+ * @param {Array} [holders] The `partials` placeholder indexes.
+ * @param {Array} [partialsRight] The arguments to append to those provided
+ *  to the new function.
+ * @param {Array} [holdersRight] The `partialsRight` placeholder indexes.
+ * @param {Array} [argPos] The argument positions of the new function.
+ * @param {number} [ary] The arity cap of `func`.
+ * @param {number} [arity] The arity of `func`.
+ * @returns {Function} Returns the new wrapped function.
+ */
+
+
+function createHybrid(func, bitmask, thisArg, partials, holders, partialsRight, holdersRight, argPos, ary, arity) {
+  var isAry = bitmask & ARY_FLAG,
+      isBind = bitmask & BIND_FLAG,
+      isBindKey = bitmask & BIND_KEY_FLAG,
+      isCurried = bitmask & (CURRY_FLAG | CURRY_RIGHT_FLAG),
+      isFlip = bitmask & FLIP_FLAG,
+      Ctor = isBindKey ? undefined : createCtor(func);
+
+  function wrapper() {
+    var length = arguments.length,
+        args = Array(length),
+        index = length;
+
+    while (index--) {
+      args[index] = arguments[index];
+    }
+
+    if (isCurried) {
+      var placeholder = getHolder(wrapper),
+          holdersCount = countHolders(args, placeholder);
+    }
+
+    if (partials) {
+      args = composeArgs(args, partials, holders, isCurried);
+    }
+
+    if (partialsRight) {
+      args = composeArgsRight(args, partialsRight, holdersRight, isCurried);
+    }
+
+    length -= holdersCount;
+
+    if (isCurried && length < arity) {
+      var newHolders = replaceHolders(args, placeholder);
+      return createRecurry(func, bitmask, createHybrid, wrapper.placeholder, thisArg, args, newHolders, argPos, ary, arity - length);
+    }
+
+    var thisBinding = isBind ? thisArg : this,
+        fn = isBindKey ? thisBinding[func] : func;
+    length = args.length;
+
+    if (argPos) {
+      args = reorder(args, argPos);
+    } else if (isFlip && length > 1) {
+      args.reverse();
+    }
+
+    if (isAry && ary < length) {
+      args.length = ary;
+    }
+
+    if (this && this !== root && this instanceof wrapper) {
+      fn = Ctor || createCtor(fn);
+    }
+
+    return fn.apply(thisBinding, args);
+  }
+
+  return wrapper;
+}
+/**
+ * Creates a function that wraps `func` to invoke it with the `this` binding
+ * of `thisArg` and `partials` prepended to the arguments it receives.
+ *
+ * @private
+ * @param {Function} func The function to wrap.
+ * @param {number} bitmask The bitmask flags. See `createWrap` for more details.
+ * @param {*} thisArg The `this` binding of `func`.
+ * @param {Array} partials The arguments to prepend to those provided to
+ *  the new function.
+ * @returns {Function} Returns the new wrapped function.
+ */
+
+
+function createPartial(func, bitmask, thisArg, partials) {
+  var isBind = bitmask & BIND_FLAG,
+      Ctor = createCtor(func);
+
+  function wrapper() {
+    var argsIndex = -1,
+        argsLength = arguments.length,
+        leftIndex = -1,
+        leftLength = partials.length,
+        args = Array(leftLength + argsLength),
+        fn = this && this !== root && this instanceof wrapper ? Ctor : func;
+
+    while (++leftIndex < leftLength) {
+      args[leftIndex] = partials[leftIndex];
+    }
+
+    while (argsLength--) {
+      args[leftIndex++] = arguments[++argsIndex];
+    }
+
+    return apply(fn, isBind ? thisArg : this, args);
+  }
+
+  return wrapper;
+}
+/**
+ * Creates a function that wraps `func` to continue currying.
+ *
+ * @private
+ * @param {Function} func The function to wrap.
+ * @param {number} bitmask The bitmask flags. See `createWrap` for more details.
+ * @param {Function} wrapFunc The function to create the `func` wrapper.
+ * @param {*} placeholder The placeholder value.
+ * @param {*} [thisArg] The `this` binding of `func`.
+ * @param {Array} [partials] The arguments to prepend to those provided to
+ *  the new function.
+ * @param {Array} [holders] The `partials` placeholder indexes.
+ * @param {Array} [argPos] The argument positions of the new function.
+ * @param {number} [ary] The arity cap of `func`.
+ * @param {number} [arity] The arity of `func`.
+ * @returns {Function} Returns the new wrapped function.
+ */
+
+
+function createRecurry(func, bitmask, wrapFunc, placeholder, thisArg, partials, holders, argPos, ary, arity) {
+  var isCurry = bitmask & CURRY_FLAG,
+      newHolders = isCurry ? holders : undefined,
+      newHoldersRight = isCurry ? undefined : holders,
+      newPartials = isCurry ? partials : undefined,
+      newPartialsRight = isCurry ? undefined : partials;
+  bitmask |= isCurry ? PARTIAL_FLAG : PARTIAL_RIGHT_FLAG;
+  bitmask &= ~(isCurry ? PARTIAL_RIGHT_FLAG : PARTIAL_FLAG);
+
+  if (!(bitmask & CURRY_BOUND_FLAG)) {
+    bitmask &= ~(BIND_FLAG | BIND_KEY_FLAG);
+  }
+
+  var result = wrapFunc(func, bitmask, thisArg, newPartials, newHolders, newPartialsRight, newHoldersRight, argPos, ary, arity);
+  result.placeholder = placeholder;
+  return setWrapToString(result, func, bitmask);
+}
+/**
+ * Creates a function that either curries or invokes `func` with optional
+ * `this` binding and partially applied arguments.
+ *
+ * @private
+ * @param {Function|string} func The function or method name to wrap.
+ * @param {number} bitmask The bitmask flags.
+ *  The bitmask may be composed of the following flags:
+ *     1 - `_.bind`
+ *     2 - `_.bindKey`
+ *     4 - `_.curry` or `_.curryRight` of a bound function
+ *     8 - `_.curry`
+ *    16 - `_.curryRight`
+ *    32 - `_.partial`
+ *    64 - `_.partialRight`
+ *   128 - `_.rearg`
+ *   256 - `_.ary`
+ *   512 - `_.flip`
+ * @param {*} [thisArg] The `this` binding of `func`.
+ * @param {Array} [partials] The arguments to be partially applied.
+ * @param {Array} [holders] The `partials` placeholder indexes.
+ * @param {Array} [argPos] The argument positions of the new function.
+ * @param {number} [ary] The arity cap of `func`.
+ * @param {number} [arity] The arity of `func`.
+ * @returns {Function} Returns the new wrapped function.
+ */
+
+
+function createWrap(func, bitmask, thisArg, partials, holders, argPos, ary, arity) {
+  var isBindKey = bitmask & BIND_KEY_FLAG;
+
+  if (!isBindKey && typeof func != 'function') {
+    throw new TypeError(FUNC_ERROR_TEXT);
+  }
+
+  var length = partials ? partials.length : 0;
+
+  if (!length) {
+    bitmask &= ~(PARTIAL_FLAG | PARTIAL_RIGHT_FLAG);
+    partials = holders = undefined;
+  }
+
+  ary = ary === undefined ? ary : nativeMax(toInteger(ary), 0);
+  arity = arity === undefined ? arity : toInteger(arity);
+  length -= holders ? holders.length : 0;
+
+  if (bitmask & PARTIAL_RIGHT_FLAG) {
+    var partialsRight = partials,
+        holdersRight = holders;
+    partials = holders = undefined;
+  }
+
+  var newData = [func, bitmask, thisArg, partials, holders, partialsRight, holdersRight, argPos, ary, arity];
+  func = newData[0];
+  bitmask = newData[1];
+  thisArg = newData[2];
+  partials = newData[3];
+  holders = newData[4];
+  arity = newData[9] = newData[9] == null ? isBindKey ? 0 : func.length : nativeMax(newData[9] - length, 0);
+
+  if (!arity && bitmask & (CURRY_FLAG | CURRY_RIGHT_FLAG)) {
+    bitmask &= ~(CURRY_FLAG | CURRY_RIGHT_FLAG);
+  }
+
+  if (!bitmask || bitmask == BIND_FLAG) {
+    var result = createBind(func, bitmask, thisArg);
+  } else if (bitmask == CURRY_FLAG || bitmask == CURRY_RIGHT_FLAG) {
+    result = createCurry(func, bitmask, arity);
+  } else if ((bitmask == PARTIAL_FLAG || bitmask == (BIND_FLAG | PARTIAL_FLAG)) && !holders.length) {
+    result = createPartial(func, bitmask, thisArg, partials);
+  } else {
+    result = createHybrid.apply(undefined, newData);
+  }
+
+  return setWrapToString(result, func, bitmask);
+}
+/**
+ * Gets the argument placeholder value for `func`.
+ *
+ * @private
+ * @param {Function} func The function to inspect.
+ * @returns {*} Returns the placeholder value.
+ */
+
+
+function getHolder(func) {
+  var object = func;
+  return object.placeholder;
+}
+/**
+ * Gets the native function at `key` of `object`.
+ *
+ * @private
+ * @param {Object} object The object to query.
+ * @param {string} key The key of the method to get.
+ * @returns {*} Returns the function if it's native, else `undefined`.
+ */
+
+
+function getNative(object, key) {
+  var value = getValue(object, key);
+  return baseIsNative(value) ? value : undefined;
+}
+/**
+ * Extracts wrapper details from the `source` body comment.
+ *
+ * @private
+ * @param {string} source The source to inspect.
+ * @returns {Array} Returns the wrapper details.
+ */
+
+
+function getWrapDetails(source) {
+  var match = source.match(reWrapDetails);
+  return match ? match[1].split(reSplitDetails) : [];
+}
+/**
+ * Inserts wrapper `details` in a comment at the top of the `source` body.
+ *
+ * @private
+ * @param {string} source The source to modify.
+ * @returns {Array} details The details to insert.
+ * @returns {string} Returns the modified source.
+ */
+
+
+function insertWrapDetails(source, details) {
+  var length = details.length,
+      lastIndex = length - 1;
+  details[lastIndex] = (length > 1 ? '& ' : '') + details[lastIndex];
+  details = details.join(length > 2 ? ', ' : ' ');
+  return source.replace(reWrapComment, '{\n/* [wrapped with ' + details + '] */\n');
+}
+/**
+ * Checks if `value` is a valid array-like index.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @param {number} [length=MAX_SAFE_INTEGER] The upper bounds of a valid index.
+ * @returns {boolean} Returns `true` if `value` is a valid index, else `false`.
+ */
+
+
+function isIndex(value, length) {
+  length = length == null ? MAX_SAFE_INTEGER : length;
+  return !!length && (typeof value == 'number' || reIsUint.test(value)) && value > -1 && value % 1 == 0 && value < length;
+}
+/**
+ * Checks if `func` has its source masked.
+ *
+ * @private
+ * @param {Function} func The function to check.
+ * @returns {boolean} Returns `true` if `func` is masked, else `false`.
+ */
+
+
+function isMasked(func) {
+  return !!maskSrcKey && maskSrcKey in func;
+}
+/**
+ * Reorder `array` according to the specified indexes where the element at
+ * the first index is assigned as the first element, the element at
+ * the second index is assigned as the second element, and so on.
+ *
+ * @private
+ * @param {Array} array The array to reorder.
+ * @param {Array} indexes The arranged array indexes.
+ * @returns {Array} Returns `array`.
+ */
+
+
+function reorder(array, indexes) {
+  var arrLength = array.length,
+      length = nativeMin(indexes.length, arrLength),
+      oldArray = copyArray(array);
+
+  while (length--) {
+    var index = indexes[length];
+    array[length] = isIndex(index, arrLength) ? oldArray[index] : undefined;
+  }
+
+  return array;
+}
+/**
+ * Sets the `toString` method of `wrapper` to mimic the source of `reference`
+ * with wrapper details in a comment at the top of the source body.
+ *
+ * @private
+ * @param {Function} wrapper The function to modify.
+ * @param {Function} reference The reference function.
+ * @param {number} bitmask The bitmask flags. See `createWrap` for more details.
+ * @returns {Function} Returns `wrapper`.
+ */
+
+
+var setWrapToString = !defineProperty ? identity : function (wrapper, reference, bitmask) {
+  var source = reference + '';
+  return defineProperty(wrapper, 'toString', {
+    'configurable': true,
+    'enumerable': false,
+    'value': constant(insertWrapDetails(source, updateWrapDetails(getWrapDetails(source), bitmask)))
+  });
+};
+/**
+ * Converts `func` to its source code.
+ *
+ * @private
+ * @param {Function} func The function to process.
+ * @returns {string} Returns the source code.
+ */
+
+function toSource(func) {
+  if (func != null) {
+    try {
+      return funcToString.call(func);
+    } catch (e) {}
+
+    try {
+      return func + '';
+    } catch (e) {}
+  }
+
+  return '';
+}
+/**
+ * Updates wrapper `details` based on `bitmask` flags.
+ *
+ * @private
+ * @returns {Array} details The details to modify.
+ * @param {number} bitmask The bitmask flags. See `createWrap` for more details.
+ * @returns {Array} Returns `details`.
+ */
+
+
+function updateWrapDetails(details, bitmask) {
+  arrayEach(wrapFlags, function (pair) {
+    var value = '_.' + pair[0];
+
+    if (bitmask & pair[1] && !arrayIncludes(details, value)) {
+      details.push(value);
+    }
+  });
+  return details.sort();
+}
+/**
+ * Creates a function that invokes `func` with `partials` prepended to the
+ * arguments it receives. This method is like `_.bind` except it does **not**
+ * alter the `this` binding.
+ *
+ * The `_.partial.placeholder` value, which defaults to `_` in monolithic
+ * builds, may be used as a placeholder for partially applied arguments.
+ *
+ * **Note:** This method doesn't set the "length" property of partially
+ * applied functions.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.2.0
+ * @category Function
+ * @param {Function} func The function to partially apply arguments to.
+ * @param {...*} [partials] The arguments to be partially applied.
+ * @returns {Function} Returns the new partially applied function.
+ * @example
+ *
+ * function greet(greeting, name) {
+ *   return greeting + ' ' + name;
+ * }
+ *
+ * var sayHelloTo = _.partial(greet, 'hello');
+ * sayHelloTo('fred');
+ * // => 'hello fred'
+ *
+ * // Partially applied with placeholders.
+ * var greetFred = _.partial(greet, _, 'fred');
+ * greetFred('hi');
+ * // => 'hi fred'
+ */
+
+
+var partial = baseRest(function (func, partials) {
+  var holders = replaceHolders(partials, getHolder(partial));
+  return createWrap(func, PARTIAL_FLAG, undefined, partials, holders);
+});
+/**
+ * Checks if `value` is classified as a `Function` object.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a function, else `false`.
+ * @example
+ *
+ * _.isFunction(_);
+ * // => true
+ *
+ * _.isFunction(/abc/);
+ * // => false
+ */
+
+function isFunction(value) {
+  // The use of `Object#toString` avoids issues with the `typeof` operator
+  // in Safari 8-9 which returns 'object' for typed array and other constructors.
+  var tag = isObject(value) ? objectToString.call(value) : '';
+  return tag == funcTag || tag == genTag;
+}
+/**
+ * Checks if `value` is the
+ * [language type](http://www.ecma-international.org/ecma-262/7.0/#sec-ecmascript-language-types)
+ * of `Object`. (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is an object, else `false`.
+ * @example
+ *
+ * _.isObject({});
+ * // => true
+ *
+ * _.isObject([1, 2, 3]);
+ * // => true
+ *
+ * _.isObject(_.noop);
+ * // => true
+ *
+ * _.isObject(null);
+ * // => false
+ */
+
+
+function isObject(value) {
+  var type = _typeof(value);
+
+  return !!value && (type == 'object' || type == 'function');
+}
+/**
+ * Checks if `value` is object-like. A value is object-like if it's not `null`
+ * and has a `typeof` result of "object".
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
+ * @example
+ *
+ * _.isObjectLike({});
+ * // => true
+ *
+ * _.isObjectLike([1, 2, 3]);
+ * // => true
+ *
+ * _.isObjectLike(_.noop);
+ * // => false
+ *
+ * _.isObjectLike(null);
+ * // => false
+ */
+
+
+function isObjectLike(value) {
+  return !!value && _typeof(value) == 'object';
+}
+/**
+ * Checks if `value` is classified as a `Symbol` primitive or object.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a symbol, else `false`.
+ * @example
+ *
+ * _.isSymbol(Symbol.iterator);
+ * // => true
+ *
+ * _.isSymbol('abc');
+ * // => false
+ */
+
+
+function isSymbol(value) {
+  return _typeof(value) == 'symbol' || isObjectLike(value) && objectToString.call(value) == symbolTag;
+}
+/**
+ * Converts `value` to a finite number.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.12.0
+ * @category Lang
+ * @param {*} value The value to convert.
+ * @returns {number} Returns the converted number.
+ * @example
+ *
+ * _.toFinite(3.2);
+ * // => 3.2
+ *
+ * _.toFinite(Number.MIN_VALUE);
+ * // => 5e-324
+ *
+ * _.toFinite(Infinity);
+ * // => 1.7976931348623157e+308
+ *
+ * _.toFinite('3.2');
+ * // => 3.2
+ */
+
+
+function toFinite(value) {
+  if (!value) {
+    return value === 0 ? value : 0;
+  }
+
+  value = toNumber(value);
+
+  if (value === INFINITY || value === -INFINITY) {
+    var sign = value < 0 ? -1 : 1;
+    return sign * MAX_INTEGER;
+  }
+
+  return value === value ? value : 0;
+}
+/**
+ * Converts `value` to an integer.
+ *
+ * **Note:** This method is loosely based on
+ * [`ToInteger`](http://www.ecma-international.org/ecma-262/7.0/#sec-tointeger).
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to convert.
+ * @returns {number} Returns the converted integer.
+ * @example
+ *
+ * _.toInteger(3.2);
+ * // => 3
+ *
+ * _.toInteger(Number.MIN_VALUE);
+ * // => 0
+ *
+ * _.toInteger(Infinity);
+ * // => 1.7976931348623157e+308
+ *
+ * _.toInteger('3.2');
+ * // => 3
+ */
+
+
+function toInteger(value) {
+  var result = toFinite(value),
+      remainder = result % 1;
+  return result === result ? remainder ? result - remainder : result : 0;
+}
+/**
+ * Converts `value` to a number.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to process.
+ * @returns {number} Returns the number.
+ * @example
+ *
+ * _.toNumber(3.2);
+ * // => 3.2
+ *
+ * _.toNumber(Number.MIN_VALUE);
+ * // => 5e-324
+ *
+ * _.toNumber(Infinity);
+ * // => Infinity
+ *
+ * _.toNumber('3.2');
+ * // => 3.2
+ */
+
+
+function toNumber(value) {
+  if (typeof value == 'number') {
+    return value;
+  }
+
+  if (isSymbol(value)) {
+    return NAN;
+  }
+
+  if (isObject(value)) {
+    var other = typeof value.valueOf == 'function' ? value.valueOf() : value;
+    value = isObject(other) ? other + '' : other;
+  }
+
+  if (typeof value != 'string') {
+    return value === 0 ? value : +value;
+  }
+
+  value = value.replace(reTrim, '');
+  var isBinary = reIsBinary.test(value);
+  return isBinary || reIsOctal.test(value) ? freeParseInt(value.slice(2), isBinary ? 2 : 8) : reIsBadHex.test(value) ? NAN : +value;
+}
+/**
+ * Creates a function that returns `value`.
+ *
+ * @static
+ * @memberOf _
+ * @since 2.4.0
+ * @category Util
+ * @param {*} value The value to return from the new function.
+ * @returns {Function} Returns the new constant function.
+ * @example
+ *
+ * var objects = _.times(2, _.constant({ 'a': 1 }));
+ *
+ * console.log(objects);
+ * // => [{ 'a': 1 }, { 'a': 1 }]
+ *
+ * console.log(objects[0] === objects[1]);
+ * // => true
+ */
+
+
+function constant(value) {
+  return function () {
+    return value;
+  };
+}
+/**
+ * This method returns the first argument it receives.
+ *
+ * @static
+ * @since 0.1.0
+ * @memberOf _
+ * @category Util
+ * @param {*} value Any value.
+ * @returns {*} Returns `value`.
+ * @example
+ *
+ * var object = { 'a': 1 };
+ *
+ * console.log(_.identity(object) === object);
+ * // => true
+ */
+
+
+function identity(value) {
+  return value;
+} // Assign default placeholders.
+
+
+partial.placeholder = {};
+module.exports = partial;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js")))
+
+/***/ }),
+
 /***/ "./node_modules/lodash.range/index.js":
 /*!********************************************!*\
   !*** ./node_modules/lodash.range/index.js ***!
@@ -55081,6 +57722,86 @@ exports["default"] = _default;
 
 /***/ }),
 
+/***/ "./node_modules/recompose/withState.js":
+/*!*********************************************!*\
+  !*** ./node_modules/recompose/withState.js ***!
+  \*********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "./node_modules/@babel/runtime/helpers/interopRequireDefault.js");
+
+exports.__esModule = true;
+exports["default"] = void 0;
+
+var _extends3 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/extends */ "./node_modules/@babel/runtime/helpers/extends.js"));
+
+var _inheritsLoose2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/inheritsLoose */ "./node_modules/@babel/runtime/helpers/inheritsLoose.js"));
+
+var _react = __webpack_require__(/*! react */ "react");
+
+var _setDisplayName = _interopRequireDefault(__webpack_require__(/*! ./setDisplayName */ "./node_modules/recompose/setDisplayName.js"));
+
+var _wrapDisplayName = _interopRequireDefault(__webpack_require__(/*! ./wrapDisplayName */ "./node_modules/recompose/wrapDisplayName.js"));
+
+var withState = function withState(stateName, stateUpdaterName, initialState) {
+  return function (BaseComponent) {
+    var factory = (0, _react.createFactory)(BaseComponent);
+
+    var WithState = /*#__PURE__*/function (_Component) {
+      (0, _inheritsLoose2["default"])(WithState, _Component);
+
+      function WithState() {
+        var _this;
+
+        for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+          args[_key] = arguments[_key];
+        }
+
+        _this = _Component.call.apply(_Component, [this].concat(args)) || this;
+        _this.state = {
+          stateValue: typeof initialState === 'function' ? initialState(_this.props) : initialState
+        };
+
+        _this.updateStateValue = function (updateFn, callback) {
+          return _this.setState(function (_ref) {
+            var stateValue = _ref.stateValue;
+            return {
+              stateValue: typeof updateFn === 'function' ? updateFn(stateValue) : updateFn
+            };
+          }, callback);
+        };
+
+        return _this;
+      }
+
+      var _proto = WithState.prototype;
+
+      _proto.render = function render() {
+        var _extends2;
+
+        return factory((0, _extends3["default"])({}, this.props, (_extends2 = {}, _extends2[stateName] = this.state.stateValue, _extends2[stateUpdaterName] = this.updateStateValue, _extends2)));
+      };
+
+      return WithState;
+    }(_react.Component);
+
+    if (true) {
+      return (0, _setDisplayName["default"])((0, _wrapDisplayName["default"])(BaseComponent, 'withState'))(WithState);
+    }
+
+    return WithState;
+  };
+};
+
+var _default = withState;
+exports["default"] = _default;
+
+/***/ }),
+
 /***/ "./node_modules/recompose/wrapDisplayName.js":
 /*!***************************************************!*\
   !*** ./node_modules/recompose/wrapDisplayName.js ***!
@@ -56449,6 +59170,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _nivo_line__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @nivo/line */ "./node_modules/@nivo/line/dist/nivo-line.es.js");
 /* harmony import */ var _nivo_scatterplot__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @nivo/scatterplot */ "./node_modules/@nivo/scatterplot/dist/nivo-scatterplot.es.js");
 /* harmony import */ var _nivo_chord__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @nivo/chord */ "./node_modules/@nivo/chord/dist/nivo-chord.es.js");
+/* harmony import */ var _nivo_waffle__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @nivo/waffle */ "./node_modules/@nivo/waffle/dist/nivo-waffle.es.js");
+
 
 
 
@@ -56470,6 +59193,9 @@ Object(reactR__WEBPACK_IMPORTED_MODULE_0__["reactWidget"])(
     ResponsiveScatterPlotCanvas: _nivo_scatterplot__WEBPACK_IMPORTED_MODULE_4__["ResponsiveScatterPlotCanvas"],
     ResponsiveChord: _nivo_chord__WEBPACK_IMPORTED_MODULE_5__["ResponsiveChord"],
     ResponsiveChordCanvas: _nivo_chord__WEBPACK_IMPORTED_MODULE_5__["ResponsiveChordCanvas"],
+    ResponsiveWaffle: _nivo_waffle__WEBPACK_IMPORTED_MODULE_6__["ResponsiveWaffle"], 
+    ResponsiveWaffleHtml: _nivo_waffle__WEBPACK_IMPORTED_MODULE_6__["ResponsiveWaffleHtml"],
+    ResponsiveWaffleCanvas: _nivo_waffle__WEBPACK_IMPORTED_MODULE_6__["ResponsiveWaffleCanvas"],
   },
   {},
 );
