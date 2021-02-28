@@ -59171,6 +59171,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _nivo_scatterplot__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @nivo/scatterplot */ "./node_modules/@nivo/scatterplot/dist/nivo-scatterplot.es.js");
 /* harmony import */ var _nivo_chord__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @nivo/chord */ "./node_modules/@nivo/chord/dist/nivo-chord.es.js");
 /* harmony import */ var _nivo_waffle__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @nivo/waffle */ "./node_modules/@nivo/waffle/dist/nivo-waffle.es.js");
+/* harmony import */ var _nivo_voronoi__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @nivo/voronoi */ "./node_modules/@nivo/voronoi/dist/nivo-voronoi.es.js");
+
 
 
 
@@ -59196,6 +59198,7 @@ Object(reactR__WEBPACK_IMPORTED_MODULE_0__["reactWidget"])(
     ResponsiveWaffle: _nivo_waffle__WEBPACK_IMPORTED_MODULE_6__["ResponsiveWaffle"], 
     ResponsiveWaffleHtml: _nivo_waffle__WEBPACK_IMPORTED_MODULE_6__["ResponsiveWaffleHtml"],
     ResponsiveWaffleCanvas: _nivo_waffle__WEBPACK_IMPORTED_MODULE_6__["ResponsiveWaffleCanvas"],
+    ResponsiveVoronoi: _nivo_voronoi__WEBPACK_IMPORTED_MODULE_7__["ResponsiveVoronoi"],
   },
   {},
 );

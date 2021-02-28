@@ -200,10 +200,35 @@
 <span class="fu"><a href="reference/n_calendar.html">n_calendar</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></code></pre></div>
 <p><img src="reference/figures/Calendar.png" alt="Calendar"></p>
 </div>
+<div id="voronoi" class="section level3">
+<h3 class="hasAnchor">
+<a href="#voronoi" class="anchor"></a>Voronoi</h3>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>
+  id <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">50</span>,
+  x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Exponential.html">rexp</a></span><span class="op">(</span><span class="fl">50</span><span class="op">)</span> <span class="op">*</span> <span class="fl">20</span>, <span class="fl">0</span><span class="op">)</span>,
+  y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Exponential.html">rexp</a></span><span class="op">(</span><span class="fl">50</span><span class="op">)</span> <span class="op">*</span> <span class="fl">20</span>, <span class="fl">0</span><span class="op">)</span>
+<span class="op">)</span>
+
+<span class="fu"><a href="reference/n_voronoi.html">n_voronoi</a></span><span class="op">(</span>
+  data <span class="op">=</span> <span class="va">data</span>,
+  id <span class="op">=</span> <span class="st">"id"</span>,
+  x <span class="op">=</span> <span class="st">"x"</span>,
+  y <span class="op">=</span> <span class="st">"y"</span>,
+  xDomain <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">100</span><span class="op">)</span>,
+  yDomain <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">100</span><span class="op">)</span>,
+  enableLinks <span class="op">=</span> <span class="cn">TRUE</span>,
+  linkLineColor <span class="op">=</span> <span class="st">"#cccccc"</span>,
+  cellLineColor <span class="op">=</span> <span class="st">"#c6432d"</span>,
+  pointSize <span class="op">=</span> <span class="fl">6</span>,
+  pointColor <span class="op">=</span> <span class="st">"#c6432d"</span>
+<span class="op">)</span></code></pre></div>
+<p><img src="reference/figures/Voronoi.png" alt="Voronoi"></p>
+</div>
 <div id="waffle" class="section level3">
 <h3 class="hasAnchor">
 <a href="#waffle" class="anchor"></a>Waffle</h3>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>
   id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"men"</span>, <span class="st">"women"</span>, <span class="st">"children"</span><span class="op">)</span>,
   label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Men"</span>, <span class="st">"Women"</span>, <span class="st">"Children"</span><span class="op">)</span>,
