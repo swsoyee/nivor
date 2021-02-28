@@ -1044,7 +1044,7 @@
   dependencies:
     react-spring "9.0.0-rc.3"
 
-"@nivo/voronoi@0.67.0":
+"@nivo/voronoi@0.67.0", "@nivo/voronoi@^0.67.0":
   version "0.67.0"
   resolved "https://registry.yarnpkg.com/@nivo/voronoi/-/voronoi-0.67.0.tgz#07ec873846ec12aa62d1c1884e274ea114b4341b"
   integrity sha512-Z+e+fa92xWIhbpSRdQGJtei3bBHTbLnsmXtfje+Xz8LYpkyxp8R/iTs9cqzQ4KILp1Tv6EnQYWrFWNizN3fNGA==

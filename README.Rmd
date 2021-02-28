@@ -142,6 +142,32 @@ n_calendar(df)
 
 ![Calendar](man/figures/Calendar.png)
 
+### Voronoi
+
+```{r voronoi, eval=FALSE}
+data <- data.frame(
+  id = 1:50,
+  x = round(rexp(50) * 20, 0),
+  y = round(rexp(50) * 20, 0)
+)
+
+n_voronoi(
+  data = data,
+  id = "id",
+  x = "x",
+  y = "y",
+  xDomain = c(0, 100),
+  yDomain = c(0, 100),
+  enableLinks = TRUE,
+  linkLineColor = "#cccccc",
+  cellLineColor = "#c6432d",
+  pointSize = 6,
+  pointColor = "#c6432d"
+)
+```
+
+![Voronoi](man/figures/Voronoi.png)
+
 ### Waffle
 
 ```{r waffle, eval=FALSE}
