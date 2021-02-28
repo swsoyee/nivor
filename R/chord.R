@@ -31,13 +31,13 @@
 #'   keys = c("A", "B", "C", "D", "E")
 #' )
 n_chord <- function(
-  matrix,
-  keys,
-  render = c("svg", "canvas"),
-  ...,
-  width = NULL,
-  height = NULL,
-  element_id = NULL) {
+                    matrix,
+                    keys,
+                    render = c("svg", "canvas"),
+                    ...,
+                    width = NULL,
+                    height = NULL,
+                    element_id = NULL) {
   render <- match.arg(render, c("svg", "canvas"))
 
   if (missing(matrix)) {
