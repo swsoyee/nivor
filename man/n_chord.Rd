@@ -30,8 +30,6 @@ isomorphic rendering ability.}
 string and have \code{'px'} appended.}
 
 \item{element_id}{element id of widgets.}
-
-\item{data}{data set in data.frame.}
 }
 \value{
 a nivo Chord component

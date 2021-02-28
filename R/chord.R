@@ -2,7 +2,6 @@
 #'
 #' Chord diagram.
 #'
-#' @param data data set in data.frame.
 #' @param matrix a matrix used to compute the chord diagram.
 #' @param keys keys used to identify each cell in the matrix.
 #' @param render "svg" (responsive) or "canvas". "canvas" is well suited for
