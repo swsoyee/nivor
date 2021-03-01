@@ -1,0 +1,10 @@
+url: https://swsoyee.github.io/nivor/
+
+authors:
+  Wei Su:
+    href: https://swsoyee.vercel.app/
+
+template:
+  params:
+    bootswatch: flatly
+    ganalytics: UA-131217026-3
