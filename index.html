@@ -104,7 +104,7 @@
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p><del>You can install the released version of nivor from <a href="https://CRAN.R-project.org">CRAN</a></del> with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Give me a more time to make the first release!</span>
+<code class="sourceCode R"><span class="co"># Give me more time to make the first release!</span>
 <span class="co"># install.packages("nivor")</span></code></pre></div>
 <p>And the development version from <a href="https://github.com/swsoyee/nivor">GitHub</a> with:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
@@ -117,141 +117,43 @@
 <p>This is a basic example which shows you how to solve a common problem:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/swsoyee/nivor">nivor</a></span><span class="op">)</span></code></pre></div>
-<div id="areabump" class="section level3">
+<div id="gallery" class="section level3">
 <h3 class="hasAnchor">
-<a href="#areabump" class="anchor"></a>AreaBump</h3>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>
-  group <span class="op">=</span> <span class="fl">2000</span><span class="op">:</span><span class="fl">2005</span>,
-  <span class="st">"Serie 1"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">6</span>, <span class="fl">2</span>, <span class="fl">4</span>, <span class="fl">1</span>, <span class="fl">5</span><span class="op">)</span>,
-  <span class="st">"Serie 2"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">4</span>, <span class="fl">5</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">6</span><span class="op">)</span>,
-  <span class="st">"Serie 3"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">1</span>, <span class="fl">5</span>, <span class="fl">6</span>, <span class="fl">4</span><span class="op">)</span>,
-  <span class="st">"Serie 4"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">1</span>, <span class="fl">3</span>, <span class="fl">6</span>, <span class="fl">5</span>, <span class="fl">2</span><span class="op">)</span>,
-  <span class="st">"Serie 5"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">6</span>, <span class="fl">5</span>, <span class="fl">4</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span>,
-  <span class="st">"Serie 6"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">2</span>, <span class="fl">6</span>, <span class="fl">3</span>, <span class="fl">4</span>, <span class="fl">1</span><span class="op">)</span>
-<span class="op">)</span>
-
-<span class="fu"><a href="reference/n_area_bump.html">n_area_bump</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></code></pre></div>
-<p><img src="reference/figures/AreaBump.png" alt="AreaBump"></p>
-</div>
-<div id="bump" class="section level3">
-<h3 class="hasAnchor">
-<a href="#bump" class="anchor"></a>Bump</h3>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>
-  group <span class="op">=</span> <span class="fl">2000</span><span class="op">:</span><span class="fl">2005</span>,
-  <span class="st">"Serie 1"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">6</span>, <span class="fl">2</span>, <span class="fl">4</span>, <span class="fl">1</span>, <span class="fl">5</span><span class="op">)</span>,
-  <span class="st">"Serie 2"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">4</span>, <span class="fl">5</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">6</span><span class="op">)</span>,
-  <span class="st">"Serie 3"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">1</span>, <span class="fl">5</span>, <span class="fl">6</span>, <span class="fl">4</span><span class="op">)</span>,
-  <span class="st">"Serie 4"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">1</span>, <span class="fl">3</span>, <span class="fl">6</span>, <span class="fl">5</span>, <span class="fl">2</span><span class="op">)</span>,
-  <span class="st">"Serie 5"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">6</span>, <span class="fl">5</span>, <span class="fl">4</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span>,
-  <span class="st">"Serie 6"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">2</span>, <span class="fl">6</span>, <span class="fl">3</span>, <span class="fl">4</span>, <span class="fl">1</span><span class="op">)</span>
-<span class="op">)</span>
-
-<span class="fu"><a href="reference/n_bump.html">n_bump</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></code></pre></div>
-<p><img src="reference/figures/Bump.png" alt="Calendar"></p>
-</div>
-<div id="chord" class="section level3">
-<h3 class="hasAnchor">
-<a href="#chord" class="anchor"></a>Chord</h3>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>
-<span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Exponential.html">rexp</a></span><span class="op">(</span><span class="fl">25</span><span class="op">)</span> <span class="op">*</span> <span class="fl">100</span>, <span class="fl">0</span><span class="op">)</span>, <span class="fl">5</span>, <span class="fl">5</span><span class="op">)</span>
-
-<span class="co"># the simplest use</span>
-<span class="fu"><a href="reference/n_chord.html">n_chord</a></span><span class="op">(</span>
-  matrix <span class="op">=</span> <span class="va">data</span>,
-  keys <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>, <span class="st">"D"</span>, <span class="st">"E"</span><span class="op">)</span>
-<span class="op">)</span></code></pre></div>
-<p><img src="reference/figures/Chord.png" alt="Chord"></p>
-</div>
-<div id="scatter" class="section level3">
-<h3 class="hasAnchor">
-<a href="#scatter" class="anchor"></a>Scatter</h3>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="reference/n_scatter.html">n_scatter</a></span><span class="op">(</span>
-  data <span class="op">=</span> <span class="va">iris</span>,
-  x <span class="op">=</span> <span class="st">"Sepal.Width"</span>,
-  y <span class="op">=</span> <span class="st">"Sepal.Length"</span>,
-  group <span class="op">=</span> <span class="st">"Species"</span>
-<span class="op">)</span></code></pre></div>
-<p><img src="reference/figures/ScatterPlot.png" alt="ScatterPlot"></p>
-</div>
-<div id="line" class="section level3">
-<h3 class="hasAnchor">
-<a href="#line" class="anchor"></a>Line</h3>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>
-  year <span class="op">=</span> <span class="fl">2000</span><span class="op">:</span><span class="fl">2005</span>,
-  JavaScript <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fl">6</span>, min <span class="op">=</span> <span class="fl">0</span>, max <span class="op">=</span> <span class="fl">50</span><span class="op">)</span>,
-  ReasonML <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fl">6</span>, min <span class="op">=</span> <span class="fl">0</span>, max <span class="op">=</span> <span class="fl">50</span><span class="op">)</span>,
-  TypeScript <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fl">6</span>, min <span class="op">=</span> <span class="fl">0</span>, max <span class="op">=</span> <span class="fl">50</span><span class="op">)</span>,
-  Elm <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fl">6</span>, min <span class="op">=</span> <span class="fl">0</span>, max <span class="op">=</span> <span class="fl">50</span><span class="op">)</span>,
-  CoffeeScript <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fl">6</span>, min <span class="op">=</span> <span class="fl">0</span>, max <span class="op">=</span> <span class="fl">50</span><span class="op">)</span>
-<span class="op">)</span>
-
-<span class="fu"><a href="reference/n_line.html">n_line</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></code></pre></div>
-<p><img src="reference/figures/Line.png" alt="Line"></p>
-</div>
-<div id="calendar" class="section level3">
-<h3 class="hasAnchor">
-<a href="#calendar" class="anchor"></a>Calendar</h3>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>
-  day <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.Date.html">seq.Date</a></span><span class="op">(</span>
-    from <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="st">"2020-04-01"</span><span class="op">)</span>,
-    length.out <span class="op">=</span> <span class="fl">600</span>,
-    by <span class="op">=</span> <span class="st">"days"</span>
-  <span class="op">)</span>,
-  value <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fl">600</span><span class="op">)</span> <span class="op">*</span> <span class="fl">1000</span>, <span class="fl">0</span><span class="op">)</span>
-<span class="op">)</span>
-
-<span class="fu"><a href="reference/n_calendar.html">n_calendar</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></code></pre></div>
-<p><img src="reference/figures/Calendar.png" alt="Calendar"></p>
-</div>
-<div id="voronoi" class="section level3">
-<h3 class="hasAnchor">
-<a href="#voronoi" class="anchor"></a>Voronoi</h3>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>
-  id <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">50</span>,
-  x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Exponential.html">rexp</a></span><span class="op">(</span><span class="fl">50</span><span class="op">)</span> <span class="op">*</span> <span class="fl">20</span>, <span class="fl">0</span><span class="op">)</span>,
-  y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Exponential.html">rexp</a></span><span class="op">(</span><span class="fl">50</span><span class="op">)</span> <span class="op">*</span> <span class="fl">20</span>, <span class="fl">0</span><span class="op">)</span>
-<span class="op">)</span>
-
-<span class="fu"><a href="reference/n_voronoi.html">n_voronoi</a></span><span class="op">(</span>
-  data <span class="op">=</span> <span class="va">data</span>,
-  id <span class="op">=</span> <span class="st">"id"</span>,
-  x <span class="op">=</span> <span class="st">"x"</span>,
-  y <span class="op">=</span> <span class="st">"y"</span>,
-  xDomain <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">100</span><span class="op">)</span>,
-  yDomain <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">100</span><span class="op">)</span>,
-  enableLinks <span class="op">=</span> <span class="cn">TRUE</span>,
-  linkLineColor <span class="op">=</span> <span class="st">"#cccccc"</span>,
-  cellLineColor <span class="op">=</span> <span class="st">"#c6432d"</span>,
-  pointSize <span class="op">=</span> <span class="fl">6</span>,
-  pointColor <span class="op">=</span> <span class="st">"#c6432d"</span>
-<span class="op">)</span></code></pre></div>
-<p><img src="reference/figures/Voronoi.png" alt="Voronoi"></p>
-</div>
-<div id="waffle" class="section level3">
-<h3 class="hasAnchor">
-<a href="#waffle" class="anchor"></a>Waffle</h3>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>
-  id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"men"</span>, <span class="st">"women"</span>, <span class="st">"children"</span><span class="op">)</span>,
-  label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Men"</span>, <span class="st">"Women"</span>, <span class="st">"Children"</span><span class="op">)</span>,
-  value <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">12</span>, <span class="fl">15</span>, <span class="fl">30</span><span class="op">)</span>,
-  color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"#468df3"</span>, <span class="st">"#ba72ff"</span>, <span class="st">"#a1cfff"</span><span class="op">)</span>
-<span class="op">)</span>
-
-<span class="fu"><a href="reference/n_waffle.html">n_waffle</a></span><span class="op">(</span>
-  data <span class="op">=</span> <span class="va">data</span>,
-  total <span class="op">=</span> <span class="fl">100</span>,
-  rows <span class="op">=</span> <span class="fl">18</span>,
-  columns <span class="op">=</span> <span class="fl">14</span>
-<span class="op">)</span></code></pre></div>
-<p><img src="reference/figures/Waffle.png" alt="Waffle"></p>
+<a href="#gallery" class="anchor"></a>Gallery</h3>
+<table class="table">
+<thead><tr class="header">
+<th>AreaBump</th>
+<th>Bump</th>
+<th>Calendar</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td><img src="reference/figures/AreaBump.png" alt="AreaBump"></td>
+<td><img src="reference/figures/Bump.png" alt="Bump"></td>
+<td><img src="reference/figures/Calendar_Multiple.png" alt="Calendar"></td>
+</tr>
+<tr class="even">
+<td><strong>Chord</strong></td>
+<td><strong>Line</strong></td>
+<td><strong>Pie</strong></td>
+</tr>
+<tr class="odd">
+<td><img src="reference/figures/Chord.png" alt="Chord"></td>
+<td><img src="reference/figures/Line.png" alt="Line"></td>
+<td><img src="reference/figures/Pie.png" alt="Pie"></td>
+</tr>
+<tr class="even">
+<td><strong>ScatterPlot</strong></td>
+<td><strong>Voronoi</strong></td>
+<td><strong>Pie</strong></td>
+</tr>
+<tr class="odd">
+<td><img src="reference/figures/Scatter.png" alt="ScatterPlot"></td>
+<td><img src="reference/figures/Voronoi.png" alt="Voronoi"></td>
+<td><img src="reference/figures/Waffle.png" alt="Waffle"></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <div id="code-of-conduct" class="section level2">
