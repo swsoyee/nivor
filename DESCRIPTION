@@ -5,7 +5,8 @@ Authors@R:
     person(given = "Wei",
            family = "Su",
            role = c("aut", "cre"),
-           email = "swsoyee@gmail.com")
+           email = "swsoyee@gmail.com",
+           comment = c(ORCID = "0000-0002-9302-5332"))
 Description: NIVO visualization in R.
 License: MIT + file LICENSE
 Encoding: UTF-8
