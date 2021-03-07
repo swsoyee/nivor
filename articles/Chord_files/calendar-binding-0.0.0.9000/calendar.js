@@ -12413,6 +12413,528 @@ var ResponsiveLineCanvas$1 = /*#__PURE__*/Object(react__WEBPACK_IMPORTED_MODULE_
 
 /***/ }),
 
+/***/ "./node_modules/@nivo/parallel-coordinates/dist/nivo-parallel-coordinates.es.js":
+/*!**************************************************************************************!*\
+  !*** ./node_modules/@nivo/parallel-coordinates/dist/nivo-parallel-coordinates.es.js ***!
+  \**************************************************************************************/
+/*! exports provided: ParallelCoordinates, ParallelCoordinatesCanvas, ResponsiveParallelCoordinates, ResponsiveParallelCoordinatesCanvas, commonDefaultProps, commonPropTypes, svgDefaultProps, svgPropTypes */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* WEBPACK VAR INJECTION */(function(global) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ParallelCoordinates", function() { return WrappedParallelCoordinates; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ParallelCoordinatesCanvas", function() { return WrappedParallelCoordinatesCanvas; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ResponsiveParallelCoordinates", function() { return ResponsiveParallelCoordinates; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ResponsiveParallelCoordinatesCanvas", function() { return ResponsiveParallelCoordinatesCanvas; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "commonDefaultProps", function() { return commonDefaultProps; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "commonPropTypes", function() { return commonPropTypes; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "svgDefaultProps", function() { return svgDefaultProps; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "svgPropTypes", function() { return svgPropTypes; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _nivo_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @nivo/core */ "./node_modules/@nivo/core/dist/nivo-core.es.js");
+/* harmony import */ var _nivo_axes__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @nivo/axes */ "./node_modules/@nivo/axes/dist/nivo-axes.es.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _nivo_colors__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @nivo/colors */ "./node_modules/@nivo/colors/dist/nivo-colors.es.js");
+/* harmony import */ var d3_shape__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! d3-shape */ "./node_modules/d3-shape/src/index.js");
+/* harmony import */ var d3_scale__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! d3-scale */ "./node_modules/d3-scale/src/index.js");
+/* harmony import */ var react_spring__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-spring */ "./node_modules/react-spring/web.js");
+/* harmony import */ var _nivo_tooltip__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @nivo/tooltip */ "./node_modules/@nivo/tooltip/dist/nivo-tooltip.es.js");
+
+
+
+
+
+
+
+
+
+
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+function ownKeys(object, enumerableOnly) {
+  var keys = Object.keys(object);
+
+  if (Object.getOwnPropertySymbols) {
+    var symbols = Object.getOwnPropertySymbols(object);
+    if (enumerableOnly) symbols = symbols.filter(function (sym) {
+      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+    });
+    keys.push.apply(keys, symbols);
+  }
+
+  return keys;
+}
+
+function _objectSpread2(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i] != null ? arguments[i] : {};
+
+    if (i % 2) {
+      ownKeys(Object(source), true).forEach(function (key) {
+        _defineProperty(target, key, source[key]);
+      });
+    } else if (Object.getOwnPropertyDescriptors) {
+      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+    } else {
+      ownKeys(Object(source)).forEach(function (key) {
+        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+      });
+    }
+  }
+
+  return target;
+}
+
+var commonVariablePropTypes = {
+  key: prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.string.isRequired,
+  ticksPosition: prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.oneOf(['before', 'after']),
+  tickSize: prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.number,
+  tickPadding: prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.number,
+  tickRotation: prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.number,
+  format: prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.func, prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.string]),
+  legend: prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.node,
+  legendPosition: prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.oneOf(['start', 'middle', 'end']),
+  legendOffset: prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.number
+};
+var commonPropTypes = {
+  data: prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.arrayOf(prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.object).isRequired,
+  variables: prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.arrayOf(prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.shape(_objectSpread2(_objectSpread2({}, commonVariablePropTypes), {}, {
+    key: prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.string.isRequired,
+    type: prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.oneOf(['point']).isRequired,
+    padding: prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.number,
+    values: prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.arrayOf(prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.string, prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.number])),
+    tickValues: prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.arrayOf(prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.string, prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.number]))
+  })), prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.shape(_objectSpread2(_objectSpread2({}, commonVariablePropTypes), {}, {
+    type: prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.oneOf(['linear']).isRequired,
+    min: prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.number, prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.oneOf(['auto'])]),
+    max: prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.number, prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.oneOf(['auto'])]),
+    tickValues: prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.number, prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.arrayOf(prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.number)])
+  }))])).isRequired,
+  layout: prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.oneOf(['horizontal', 'vertical']).isRequired,
+  curve: _nivo_core__WEBPACK_IMPORTED_MODULE_1__["lineCurvePropType"].isRequired,
+  strokeWidth: prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.number.isRequired,
+  lineOpacity: prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.number.isRequired,
+  axesPlan: prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.oneOf(['foreground', 'background']).isRequired,
+  axesTicksPosition: prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.oneOf(['before', 'after']).isRequired,
+  colors: _nivo_colors__WEBPACK_IMPORTED_MODULE_4__["ordinalColorsPropType"].isRequired
+};
+
+var svgPropTypes = _objectSpread2(_objectSpread2({}, commonPropTypes), {}, {
+  role: prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.string.isRequired
+});
+
+var commonDefaultProps = {
+  layout: 'horizontal',
+  curve: 'linear',
+  colors: {
+    scheme: 'yellow_orange_red'
+  },
+  strokeWidth: 2,
+  lineOpacity: 0.35,
+  axesPlan: 'foreground',
+  axesTicksPosition: 'after',
+  animate: true,
+  motionConfig: 'gentle'
+};
+
+var svgDefaultProps = _objectSpread2(_objectSpread2({}, commonDefaultProps), {}, {
+  role: 'img'
+});
+
+function _arrayLikeToArray(arr, len) {
+  if (len == null || len > arr.length) len = arr.length;
+
+  for (var i = 0, arr2 = new Array(len); i < len; i++) {
+    arr2[i] = arr[i];
+  }
+
+  return arr2;
+}
+
+function _arrayWithoutHoles(arr) {
+  if (Array.isArray(arr)) return _arrayLikeToArray(arr);
+}
+
+function _iterableToArray(iter) {
+  if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter);
+}
+
+function _unsupportedIterableToArray(o, minLen) {
+  if (!o) return;
+  if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+  var n = Object.prototype.toString.call(o).slice(8, -1);
+  if (n === "Object" && o.constructor) n = o.constructor.name;
+  if (n === "Map" || n === "Set") return Array.from(n);
+  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+}
+
+function _nonIterableSpread() {
+  throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+
+function _toConsumableArray(arr) {
+  return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
+}
+
+var computeParallelCoordinatesLayout = function computeParallelCoordinatesLayout(_ref) {
+  var width = _ref.width,
+      height = _ref.height,
+      data = _ref.data,
+      variables = _ref.variables,
+      layout = _ref.layout;
+  var variablesScale = Object(d3_scale__WEBPACK_IMPORTED_MODULE_6__["scalePoint"])().range(layout === 'horizontal' ? [0, width] : [height, 0]).domain(variables.map(function (_ref2) {
+    var key = _ref2.key;
+    return key;
+  }));
+  var range = layout === 'horizontal' ? [height, 0] : [0, width];
+  var variablesWithScale = variables.map(function (variable) {
+    var allValues = new Set();
+    data.forEach(function (d) {
+      return allValues.add(d[variable.key]);
+    });
+    var scale;
+
+    if (variable.type === 'linear') {
+      var min = variable.min !== undefined && variable.min !== 'auto' ? variable.min : Math.min.apply(Math, _toConsumableArray(Array.from(allValues)));
+      var max = variable.max !== undefined && variable.max !== 'auto' ? variable.max : Math.max.apply(Math, _toConsumableArray(Array.from(allValues)));
+      scale = Object(d3_scale__WEBPACK_IMPORTED_MODULE_6__["scaleLinear"])().rangeRound(range).domain([min, max]);
+    }
+
+    if (variable.type === 'point') {
+      scale = Object(d3_scale__WEBPACK_IMPORTED_MODULE_6__["scalePoint"])().range(range).domain(variable.values || allValues);
+
+      if (variable.padding !== undefined) {
+        scale.padding(variable.padding);
+      }
+    }
+
+    return _objectSpread2(_objectSpread2({}, variable), {}, {
+      scale: scale,
+      values: Array.from(allValues)
+    });
+  });
+  var dataWithPoints = data.map(function (datum, index) {
+    var points = variablesWithScale.map(function (variable) {
+      return {
+        x: layout === 'horizontal' ? variablesScale(variable.key) : variable.scale(datum[variable.key]),
+        y: layout === 'horizontal' ? variable.scale(datum[variable.key]) : variablesScale(variable.key)
+      };
+    });
+    return _objectSpread2(_objectSpread2({
+      index: index
+    }, datum), {}, {
+      points: points
+    });
+  });
+  return {
+    variablesScale: variablesScale,
+    variablesWithScale: variablesWithScale,
+    dataWithPoints: dataWithPoints
+  };
+};
+
+var useParallelCoordinates = function useParallelCoordinates(_ref3) {
+  var width = _ref3.width,
+      height = _ref3.height,
+      data = _ref3.data,
+      variables = _ref3.variables,
+      layout = _ref3.layout,
+      colors = _ref3.colors,
+      curve = _ref3.curve;
+  var getLineColor = Object(_nivo_colors__WEBPACK_IMPORTED_MODULE_4__["useOrdinalColorScale"])(colors, 'index');
+  var lineGenerator = Object(react__WEBPACK_IMPORTED_MODULE_0__["useMemo"])(function () {
+    return Object(d3_shape__WEBPACK_IMPORTED_MODULE_5__["line"])().x(function (d) {
+      return d.x;
+    }).y(function (d) {
+      return d.y;
+    }).curve(Object(_nivo_core__WEBPACK_IMPORTED_MODULE_1__["curveFromProp"])(curve));
+  }, [curve]);
+
+  var _useMemo = Object(react__WEBPACK_IMPORTED_MODULE_0__["useMemo"])(function () {
+    return computeParallelCoordinatesLayout({
+      width: width,
+      height: height,
+      data: data,
+      variables: variables,
+      layout: layout
+    });
+  }, [width, height, data, variables, layout]),
+      variablesScale = _useMemo.variablesScale,
+      variablesWithScale = _useMemo.variablesWithScale,
+      dataWithPoints = _useMemo.dataWithPoints;
+
+  return {
+    variablesScale: variablesScale,
+    variablesWithScale: variablesWithScale,
+    dataWithPoints: dataWithPoints,
+    getLineColor: getLineColor,
+    lineGenerator: lineGenerator
+  };
+};
+
+var ParallelCoordinatesLineTooltip = function ParallelCoordinatesLineTooltip(_ref) {
+  var data = _ref.data,
+      variables = _ref.variables;
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_nivo_tooltip__WEBPACK_IMPORTED_MODULE_8__["TableTooltip"], {
+    rows: variables.map(function (variable) {
+      return [variable.key, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", null, data[variable.key])];
+    })
+  });
+};
+
+var ParallelCoordinatesLineTooltip$1 = /*#__PURE__*/Object(react__WEBPACK_IMPORTED_MODULE_0__["memo"])(ParallelCoordinatesLineTooltip);
+
+var ParallelCoordinatesLine = function ParallelCoordinatesLine(_ref) {
+  var data = _ref.data,
+      variables = _ref.variables,
+      lineGenerator = _ref.lineGenerator,
+      points = _ref.points,
+      strokeWidth = _ref.strokeWidth,
+      color = _ref.color,
+      opacity = _ref.opacity;
+
+  var _useTooltip = Object(_nivo_tooltip__WEBPACK_IMPORTED_MODULE_8__["useTooltip"])(),
+      showTooltipFromEvent = _useTooltip.showTooltipFromEvent,
+      hideTooltip = _useTooltip.hideTooltip;
+
+  var handleMouseHover = Object(react__WEBPACK_IMPORTED_MODULE_0__["useCallback"])(function (event) {
+    showTooltipFromEvent( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(ParallelCoordinatesLineTooltip$1, {
+      data: data,
+      variables: variables
+    }), event);
+  }, [data, variables]);
+
+  var _useMotionConfig = Object(_nivo_core__WEBPACK_IMPORTED_MODULE_1__["useMotionConfig"])(),
+      animate = _useMotionConfig.animate,
+      springConfig = _useMotionConfig.config;
+
+  var animatedPath = Object(_nivo_core__WEBPACK_IMPORTED_MODULE_1__["useAnimatedPath"])(lineGenerator(points));
+  var animatedProps = Object(react_spring__WEBPACK_IMPORTED_MODULE_7__["useSpring"])({
+    color: color,
+    opacity: opacity,
+    config: springConfig,
+    immediate: !animate
+  });
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_spring__WEBPACK_IMPORTED_MODULE_7__["animated"].path, {
+    d: animatedPath,
+    stroke: animatedProps.color,
+    strokeWidth: strokeWidth,
+    strokeLinecap: "round",
+    opacity: animatedProps.opacity,
+    fill: "none",
+    onMouseEnter: handleMouseHover,
+    onMouseMove: handleMouseHover,
+    onMouseLeave: hideTooltip
+  });
+};
+
+var ParallelCoordinatesLine$1 = /*#__PURE__*/Object(react__WEBPACK_IMPORTED_MODULE_0__["memo"])(ParallelCoordinatesLine);
+
+var ParallelCoordinates = function ParallelCoordinates(_ref) {
+  var data = _ref.data,
+      variables = _ref.variables,
+      layout = _ref.layout,
+      width = _ref.width,
+      height = _ref.height,
+      partialMargin = _ref.margin,
+      axesPlan = _ref.axesPlan,
+      axesTicksPosition = _ref.axesTicksPosition,
+      strokeWidth = _ref.strokeWidth,
+      lineOpacity = _ref.lineOpacity,
+      curve = _ref.curve,
+      colors = _ref.colors,
+      role = _ref.role;
+
+  var _useDimensions = Object(_nivo_core__WEBPACK_IMPORTED_MODULE_1__["useDimensions"])(width, height, partialMargin),
+      margin = _useDimensions.margin,
+      innerWidth = _useDimensions.innerWidth,
+      innerHeight = _useDimensions.innerHeight,
+      outerWidth = _useDimensions.outerWidth,
+      outerHeight = _useDimensions.outerHeight;
+
+  var _useParallelCoordinat = useParallelCoordinates({
+    width: innerWidth,
+    height: innerHeight,
+    data: data,
+    variables: variables,
+    layout: layout,
+    colors: colors,
+    curve: curve
+  }),
+      variablesScale = _useParallelCoordinat.variablesScale,
+      variablesWithScale = _useParallelCoordinat.variablesWithScale,
+      dataWithPoints = _useParallelCoordinat.dataWithPoints,
+      lineGenerator = _useParallelCoordinat.lineGenerator,
+      getLineColor = _useParallelCoordinat.getLineColor;
+
+  var axes = variablesWithScale.map(function (variable) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_nivo_axes__WEBPACK_IMPORTED_MODULE_2__["Axis"], {
+      key: variable.key,
+      axis: layout === 'horizontal' ? 'y' : 'x',
+      length: layout === 'horizontal' ? innerHeight : innerWidth,
+      x: layout === 'horizontal' ? variablesScale(variable.key) : 0,
+      y: layout === 'horizontal' ? 0 : variablesScale(variable.key),
+      scale: variable.scale,
+      ticksPosition: variable.ticksPosition || axesTicksPosition,
+      tickValues: variable.tickValues,
+      tickSize: variable.tickSize,
+      tickPadding: variable.tickPadding,
+      tickRotation: variable.tickRotation,
+      format: variable.tickFormat,
+      legend: variable.legend,
+      legendPosition: variable.legendPosition,
+      legendOffset: variable.legendOffset
+    });
+  });
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_nivo_core__WEBPACK_IMPORTED_MODULE_1__["SvgWrapper"], {
+    width: outerWidth,
+    height: outerHeight,
+    margin: margin,
+    role: role
+  }, axesPlan === 'background' && axes, dataWithPoints.map(function (datum) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(ParallelCoordinatesLine$1, {
+      key: datum.index,
+      data: datum,
+      variables: variables,
+      lineGenerator: lineGenerator,
+      points: datum.points,
+      strokeWidth: strokeWidth,
+      opacity: lineOpacity,
+      color: getLineColor(datum)
+    });
+  }), axesPlan === 'foreground' && axes);
+};
+
+var WrappedParallelCoordinates = Object(_nivo_core__WEBPACK_IMPORTED_MODULE_1__["withContainer"])(ParallelCoordinates);
+WrappedParallelCoordinates.defaultProps = svgDefaultProps;
+
+var ResponsiveParallelCoordinates = function ResponsiveParallelCoordinates(props) {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_nivo_core__WEBPACK_IMPORTED_MODULE_1__["ResponsiveWrapper"], null, function (_ref) {
+    var width = _ref.width,
+        height = _ref.height;
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(WrappedParallelCoordinates, Object.assign({
+      width: width,
+      height: height
+    }, props));
+  });
+};
+
+var ParallelCoordinatesCanvas = function ParallelCoordinatesCanvas(_ref) {
+  var data = _ref.data,
+      layout = _ref.layout,
+      variables = _ref.variables,
+      width = _ref.width,
+      height = _ref.height,
+      partialMargin = _ref.margin,
+      curve = _ref.curve,
+      colors = _ref.colors,
+      lineOpacity = _ref.lineOpacity,
+      strokeWidth = _ref.strokeWidth,
+      axesTicksPosition = _ref.axesTicksPosition,
+      pixelRatio = _ref.pixelRatio;
+  var canvasEl = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(null);
+
+  var _useDimensions = Object(_nivo_core__WEBPACK_IMPORTED_MODULE_1__["useDimensions"])(width, height, partialMargin),
+      margin = _useDimensions.margin,
+      innerWidth = _useDimensions.innerWidth,
+      innerHeight = _useDimensions.innerHeight,
+      outerWidth = _useDimensions.outerWidth,
+      outerHeight = _useDimensions.outerHeight;
+
+  var _useParallelCoordinat = useParallelCoordinates({
+    width: innerWidth,
+    height: innerHeight,
+    data: data,
+    variables: variables,
+    layout: layout,
+    colors: colors,
+    curve: curve
+  }),
+      variablesScale = _useParallelCoordinat.variablesScale,
+      variablesWithScale = _useParallelCoordinat.variablesWithScale,
+      dataWithPoints = _useParallelCoordinat.dataWithPoints,
+      lineGenerator = _useParallelCoordinat.lineGenerator,
+      getLineColor = _useParallelCoordinat.getLineColor;
+
+  var theme = Object(_nivo_core__WEBPACK_IMPORTED_MODULE_1__["useTheme"])();
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
+    canvasEl.current.width = outerWidth * pixelRatio;
+    canvasEl.current.height = outerHeight * pixelRatio;
+    var ctx = canvasEl.current.getContext('2d');
+    ctx.scale(pixelRatio, pixelRatio);
+    ctx.fillStyle = theme.background;
+    ctx.fillRect(0, 0, outerWidth, outerHeight);
+    ctx.translate(margin.left, margin.top);
+    lineGenerator.context(ctx);
+    dataWithPoints.forEach(function (datum) {
+      ctx.save();
+      ctx.globalAlpha = lineOpacity;
+      ctx.beginPath();
+      lineGenerator(datum.points);
+      ctx.strokeStyle = getLineColor(datum);
+      ctx.lineWidth = strokeWidth;
+      ctx.stroke();
+      ctx.restore();
+    });
+    variablesWithScale.map(function (variable) {
+      Object(_nivo_axes__WEBPACK_IMPORTED_MODULE_2__["renderAxisToCanvas"])(ctx, {
+        axis: layout === 'horizontal' ? 'y' : 'x',
+        scale: variable.scale,
+        x: layout === 'horizontal' ? variablesScale(variable.key) : 0,
+        y: layout === 'horizontal' ? 0 : variablesScale(variable.key),
+        length: layout === 'horizontal' ? innerHeight : innerWidth,
+        ticksPosition: axesTicksPosition,
+        theme: theme
+      });
+    });
+  }, [canvasEl, outerWidth, outerHeight, innerWidth, innerHeight, margin, lineGenerator, getLineColor, lineOpacity, strokeWidth, dataWithPoints, variablesWithScale, layout, axesTicksPosition, theme, pixelRatio]);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("canvas", {
+    ref: canvasEl,
+    width: outerWidth * pixelRatio,
+    height: outerHeight * pixelRatio,
+    style: {
+      width: outerWidth,
+      height: outerHeight
+    }
+  });
+};
+
+var WrappedParallelCoordinatesCanvas = Object(_nivo_core__WEBPACK_IMPORTED_MODULE_1__["withContainer"])(ParallelCoordinatesCanvas);
+WrappedParallelCoordinatesCanvas.defaultProps = _objectSpread2(_objectSpread2({}, commonDefaultProps), {}, {
+  pixelRatio: global.window && global.window.devicePixelRatio ? global.window.devicePixelRatio : 1
+});
+
+var ResponsiveParallelCoordinatesCanvas = function ResponsiveParallelCoordinatesCanvas(props) {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_nivo_core__WEBPACK_IMPORTED_MODULE_1__["ResponsiveWrapper"], null, function (_ref) {
+    var width = _ref.width,
+        height = _ref.height;
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(WrappedParallelCoordinatesCanvas, Object.assign({
+      width: width,
+      height: height
+    }, props));
+  });
+};
+
+
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js")))
+
+/***/ }),
+
 /***/ "./node_modules/@nivo/pie/dist/nivo-pie.es.js":
 /*!****************************************************!*\
   !*** ./node_modules/@nivo/pie/dist/nivo-pie.es.js ***!
@@ -60415,6 +60937,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _nivo_waffle__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @nivo/waffle */ "./node_modules/@nivo/waffle/dist/nivo-waffle.es.js");
 /* harmony import */ var _nivo_voronoi__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @nivo/voronoi */ "./node_modules/@nivo/voronoi/dist/nivo-voronoi.es.js");
 /* harmony import */ var _nivo_pie__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @nivo/pie */ "./node_modules/@nivo/pie/dist/nivo-pie.es.js");
+/* harmony import */ var _nivo_parallel_coordinates__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @nivo/parallel-coordinates */ "./node_modules/@nivo/parallel-coordinates/dist/nivo-parallel-coordinates.es.js");
+
 
 
 
@@ -60445,6 +60969,8 @@ Object(reactR__WEBPACK_IMPORTED_MODULE_0__["reactWidget"])(
     ResponsiveVoronoi: _nivo_voronoi__WEBPACK_IMPORTED_MODULE_7__["ResponsiveVoronoi"],
     ResponsivePie: _nivo_pie__WEBPACK_IMPORTED_MODULE_8__["ResponsivePie"], 
     ResponsivePieCanvas: _nivo_pie__WEBPACK_IMPORTED_MODULE_8__["ResponsivePieCanvas"],
+    ResponsiveParallelCoordinates: _nivo_parallel_coordinates__WEBPACK_IMPORTED_MODULE_9__["ResponsiveParallelCoordinates"],
+    ResponsiveParallelCoordinatesCanvas: _nivo_parallel_coordinates__WEBPACK_IMPORTED_MODULE_9__["ResponsiveParallelCoordinatesCanvas"],
   },
   {},
 );
