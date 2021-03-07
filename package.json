@@ -11,6 +11,7 @@
     "@nivo/waffle": "^0.67.0",
     "@nivo/voronoi": "^0.67.0",
     "@nivo/pie": "^0.67.0",
+    "@nivo/parallel-coordinates": "^0.67.0",
     "prop-types": "^15.7.2"
   },
   "devDependencies": {

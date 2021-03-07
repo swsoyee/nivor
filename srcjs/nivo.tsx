@@ -6,7 +6,8 @@ import { ResponsiveScatterPlot, ResponsiveScatterPlotCanvas } from "@nivo/scatte
 import { ResponsiveChord, ResponsiveChordCanvas } from "@nivo/chord";
 import { ResponsiveWaffle, ResponsiveWaffleHtml, ResponsiveWaffleCanvas } from "@nivo/waffle";
 import { ResponsiveVoronoi } from "@nivo/voronoi";
-import { ResponsivePie, ResponsivePieCanvas } from "@nivo/pie"
+import { ResponsivePie, ResponsivePieCanvas } from "@nivo/pie";
+import { ResponsiveParallelCoordinates, ResponsiveParallelCoordinatesCanvas } from "@nivo/parallel-coordinates";
 
 reactWidget(
   'calendar',
@@ -28,6 +29,8 @@ reactWidget(
     ResponsiveVoronoi,
     ResponsivePie, 
     ResponsivePieCanvas,
+    ResponsiveParallelCoordinates,
+    ResponsiveParallelCoordinatesCanvas,
   },
   {},
 );

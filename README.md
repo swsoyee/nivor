@@ -44,13 +44,15 @@ library(nivor)
 
 ### Gallery
 
-| AreaBump                                | Bump                                | Calendar                                       |
-| --------------------------------------- | ----------------------------------- | ---------------------------------------------- |
-| ![AreaBump](man/figures/AreaBump.png)   | ![Bump](man/figures/Bump.png)       | ![Calendar](man/figures/Calendar_Multiple.png) |
-| **Chord**                               | **Line**                            | **Pie**                                        |
-| ![Chord](man/figures/Chord.png)         | ![Line](man/figures/Line.png)       | ![Pie](man/figures/Pie.png)                    |
-| **ScatterPlot**                         | **Voronoi**                         | **Pie**                                        |
-| ![ScatterPlot](man/figures/Scatter.png) | ![Voronoi](man/figures/Voronoi.png) | ![Waffle](man/figures/Waffle.png)              |
+| AreaBump                                                     | Bump                                | Calendar                                       |
+| ------------------------------------------------------------ | ----------------------------------- | ---------------------------------------------- |
+| ![AreaBump](man/figures/AreaBump.png)                        | ![Bump](man/figures/Bump.png)       | ![Calendar](man/figures/Calendar_Multiple.png) |
+| **Chord**                                                    | **Line**                            | **Pie**                                        |
+| ![Chord](man/figures/Chord.png)                              | ![Line](man/figures/Line.png)       | ![Pie](man/figures/Pie.png)                    |
+| **Parallel Coordinates**                                     | **(WIP)**                           | **(WIP)**                                      |
+| ![Parallel Coordinates](man/figures/ParallelCoordinates.png) |                                     |                                                |
+| **ScatterPlot**                                              | **Voronoi**                         | **Waffle**                                     |
+| ![ScatterPlot](man/figures/Scatter.png)                      | ![Voronoi](man/figures/Voronoi.png) | ![Waffle](man/figures/Waffle.png)              |
 
 ## Code of Conduct
 
