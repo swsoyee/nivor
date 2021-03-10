@@ -40,7 +40,6 @@
 #'   pointSize = 6,
 #'   pointColor = "#c6432d"
 #' )
-#'
 n_voronoi <- function(
                       data,
                       id,

@@ -119,15 +119,15 @@
 #'   )
 #' )
 n_pie <- function(
-  data,
-  id = NULL,
-  value = NULL,
-  label = NULL,
-  render = c("svg", "canvas"),
-  ...,
-  width = NULL,
-  height = NULL,
-  elementId = NULL) {
+                  data,
+                  id = NULL,
+                  value = NULL,
+                  label = NULL,
+                  render = c("svg", "canvas"),
+                  ...,
+                  width = NULL,
+                  height = NULL,
+                  elementId = NULL) {
   render <- match.arg(render, c("svg", "canvas"))
 
   if (missing(data)) {
