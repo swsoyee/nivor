@@ -15890,6 +15890,751 @@ var ResponsiveScatterPlotCanvas = function ResponsiveScatterPlotCanvas(props) {
 
 /***/ }),
 
+/***/ "./node_modules/@nivo/stream/dist/nivo-stream.es.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/@nivo/stream/dist/nivo-stream.es.js ***!
+  \**********************************************************/
+/*! exports provided: ResponsiveStream, Stream, StreamDefaultProps, StreamPropTypes */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ResponsiveStream", function() { return ResponsiveStream; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Stream", function() { return WrappedStream; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "StreamDefaultProps", function() { return StreamDefaultProps; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "StreamPropTypes", function() { return StreamPropTypes; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _nivo_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @nivo/core */ "./node_modules/@nivo/core/dist/nivo-core.es.js");
+/* harmony import */ var _nivo_axes__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @nivo/axes */ "./node_modules/@nivo/axes/dist/nivo-axes.es.js");
+/* harmony import */ var _nivo_legends__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @nivo/legends */ "./node_modules/@nivo/legends/dist/nivo-legends.es.js");
+/* harmony import */ var react_spring__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-spring */ "./node_modules/react-spring/web.js");
+/* harmony import */ var _nivo_tooltip__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @nivo/tooltip */ "./node_modules/@nivo/tooltip/dist/nivo-tooltip.es.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _nivo_colors__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @nivo/colors */ "./node_modules/@nivo/colors/dist/nivo-colors.es.js");
+/* harmony import */ var d3_shape__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! d3-shape */ "./node_modules/d3-shape/src/index.js");
+/* harmony import */ var d3_scale__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! d3-scale */ "./node_modules/d3-scale/src/index.js");
+
+
+
+
+
+
+
+
+
+
+
+var StreamLayer = function StreamLayer(_ref) {
+  var layer = _ref.layer,
+      fillOpacity = _ref.fillOpacity,
+      borderWidth = _ref.borderWidth,
+      getBorderColor = _ref.getBorderColor,
+      getTooltipLabel = _ref.getTooltipLabel,
+      isInteractive = _ref.isInteractive;
+
+  var _useTooltip = Object(_nivo_tooltip__WEBPACK_IMPORTED_MODULE_5__["useTooltip"])(),
+      showTooltipFromEvent = _useTooltip.showTooltipFromEvent,
+      hideTooltip = _useTooltip.hideTooltip;
+
+  var handleMouseHover = Object(react__WEBPACK_IMPORTED_MODULE_0__["useCallback"])(function (event) {
+    showTooltipFromEvent( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_nivo_tooltip__WEBPACK_IMPORTED_MODULE_5__["BasicTooltip"], {
+      id: getTooltipLabel(layer),
+      enableChip: true,
+      color: layer.color
+    }), event, 'left');
+  }, [showTooltipFromEvent, getTooltipLabel, layer]);
+
+  var _useMotionConfig = Object(_nivo_core__WEBPACK_IMPORTED_MODULE_1__["useMotionConfig"])(),
+      animate = _useMotionConfig.animate,
+      springConfig = _useMotionConfig.config;
+
+  var animatedPath = Object(_nivo_core__WEBPACK_IMPORTED_MODULE_1__["useAnimatedPath"])(layer.path);
+  var animatedProps = Object(react_spring__WEBPACK_IMPORTED_MODULE_4__["useSpring"])({
+    color: layer.color,
+    config: springConfig,
+    immediate: !animate
+  });
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_spring__WEBPACK_IMPORTED_MODULE_4__["animated"].path, {
+    d: animatedPath,
+    fill: layer.fill ? layer.fill : animatedProps.color,
+    fillOpacity: fillOpacity,
+    stroke: getBorderColor(layer),
+    strokeWidth: borderWidth,
+    onMouseMove: isInteractive ? handleMouseHover : undefined,
+    onMouseEnter: isInteractive ? handleMouseHover : undefined,
+    onMouseLeave: isInteractive ? hideTooltip : undefined
+  });
+};
+
+var StreamLayer$1 = /*#__PURE__*/Object(react__WEBPACK_IMPORTED_MODULE_0__["memo"])(StreamLayer);
+
+var StreamLayers = function StreamLayers(_ref) {
+  var layers = _ref.layers,
+      fillOpacity = _ref.fillOpacity,
+      borderWidth = _ref.borderWidth,
+      getBorderColor = _ref.getBorderColor,
+      getTooltipLabel = _ref.getTooltipLabel,
+      isInteractive = _ref.isInteractive;
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("g", null, layers.map(function (layer, i) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StreamLayer$1, {
+      key: i,
+      layer: layer,
+      getBorderColor: getBorderColor,
+      borderWidth: borderWidth,
+      fillOpacity: fillOpacity,
+      getTooltipLabel: getTooltipLabel,
+      isInteractive: isInteractive
+    });
+  }));
+};
+
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+function ownKeys(object, enumerableOnly) {
+  var keys = Object.keys(object);
+
+  if (Object.getOwnPropertySymbols) {
+    var symbols = Object.getOwnPropertySymbols(object);
+    if (enumerableOnly) symbols = symbols.filter(function (sym) {
+      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+    });
+    keys.push.apply(keys, symbols);
+  }
+
+  return keys;
+}
+
+function _objectSpread2(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i] != null ? arguments[i] : {};
+
+    if (i % 2) {
+      ownKeys(Object(source), true).forEach(function (key) {
+        _defineProperty(target, key, source[key]);
+      });
+    } else if (Object.getOwnPropertyDescriptors) {
+      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+    } else {
+      ownKeys(Object(source)).forEach(function (key) {
+        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+      });
+    }
+  }
+
+  return target;
+}
+
+var getDotY = function getDotY(datum, position) {
+  var y = datum.y2;
+
+  if (position === 'center') {
+    y = datum.y1 + (datum.y2 - datum.y1) / 2;
+  } else if (position === 'start') {
+    y = datum.y1;
+  }
+
+  return y;
+};
+
+var StreamDots = function StreamDots(_ref) {
+  var id = _ref.id,
+      color = _ref.color,
+      data = _ref.data,
+      dotComponent = _ref.dotComponent,
+      position = _ref.position,
+      getSize = _ref.getSize,
+      getColor = _ref.getColor,
+      getBorderWidth = _ref.getBorderWidth,
+      getBorderColor = _ref.getBorderColor;
+  return data.map(function (d, i) {
+    var datum = _objectSpread2(_objectSpread2({}, d), {}, {
+      key: id,
+      color: color
+    });
+
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(dotComponent, {
+      key: i,
+      datum: datum,
+      x: datum.x,
+      y: getDotY(datum, position),
+      size: getSize(datum),
+      color: getColor(datum),
+      borderWidth: getBorderWidth(datum),
+      borderColor: getBorderColor(datum)
+    });
+  });
+};
+
+var StreamDots$1 = /*#__PURE__*/Object(react__WEBPACK_IMPORTED_MODULE_0__["memo"])(StreamDots);
+
+function _arrayWithHoles(arr) {
+  if (Array.isArray(arr)) return arr;
+}
+
+function _iterableToArrayLimit(arr, i) {
+  if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return;
+  var _arr = [];
+  var _n = true;
+  var _d = false;
+  var _e = undefined;
+
+  try {
+    for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
+      _arr.push(_s.value);
+
+      if (i && _arr.length === i) break;
+    }
+  } catch (err) {
+    _d = true;
+    _e = err;
+  } finally {
+    try {
+      if (!_n && _i["return"] != null) _i["return"]();
+    } finally {
+      if (_d) throw _e;
+    }
+  }
+
+  return _arr;
+}
+
+function _arrayLikeToArray(arr, len) {
+  if (len == null || len > arr.length) len = arr.length;
+
+  for (var i = 0, arr2 = new Array(len); i < len; i++) {
+    arr2[i] = arr[i];
+  }
+
+  return arr2;
+}
+
+function _unsupportedIterableToArray(o, minLen) {
+  if (!o) return;
+  if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+  var n = Object.prototype.toString.call(o).slice(8, -1);
+  if (n === "Object" && o.constructor) n = o.constructor.name;
+  if (n === "Map" || n === "Set") return Array.from(n);
+  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+}
+
+function _nonIterableRest() {
+  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+
+function _slicedToArray(arr, i) {
+  return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
+}
+
+var StreamSlicesItem = function StreamSlicesItem(_ref) {
+  var slice = _ref.slice,
+      height = _ref.height,
+      getTooltipLabel = _ref.getTooltipLabel,
+      getTooltipValue = _ref.getTooltipValue;
+
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false),
+      _useState2 = _slicedToArray(_useState, 2),
+      isHover = _useState2[0],
+      setIsHover = _useState2[1];
+
+  var _useTooltip = Object(_nivo_tooltip__WEBPACK_IMPORTED_MODULE_5__["useTooltip"])(),
+      showTooltipFromEvent = _useTooltip.showTooltipFromEvent,
+      hideTooltip = _useTooltip.hideTooltip;
+
+  var rows = Object(react__WEBPACK_IMPORTED_MODULE_0__["useMemo"])(function () {
+    return slice.stack.map(function (p) {
+      return [/*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_nivo_tooltip__WEBPACK_IMPORTED_MODULE_5__["Chip"], {
+        key: p.id,
+        color: p.color
+      }), getTooltipLabel(p), getTooltipValue(p.value)];
+    });
+  }, [slice, getTooltipLabel, getTooltipValue]);
+  var handleMouseHover = Object(react__WEBPACK_IMPORTED_MODULE_0__["useCallback"])(function (event) {
+    setIsHover(true);
+    showTooltipFromEvent( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_nivo_tooltip__WEBPACK_IMPORTED_MODULE_5__["TableTooltip"], {
+      rows: rows
+    }), event, 'left');
+  }, [setIsHover, showTooltipFromEvent, rows]);
+  var handleMouseLeave = Object(react__WEBPACK_IMPORTED_MODULE_0__["useCallback"])(function () {
+    setIsHover(false);
+    hideTooltip();
+  }, [setIsHover, hideTooltip]);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("g", {
+    transform: "translate(".concat(slice.x, ", 0)")
+  }, isHover && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("line", {
+    x1: 0,
+    x2: 0,
+    y1: 0,
+    y2: height,
+    stroke: "#000",
+    strokeOpacity: 0.35,
+    strokeWidth: 1
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("rect", {
+    x: -20,
+    width: 40,
+    height: height,
+    fill: "#000",
+    fillOpacity: 0,
+    onMouseEnter: handleMouseHover,
+    onMouseMove: handleMouseHover,
+    onMouseLeave: handleMouseLeave
+  }));
+};
+
+var StreamSlicesItem$1 = /*#__PURE__*/Object(react__WEBPACK_IMPORTED_MODULE_0__["memo"])(StreamSlicesItem);
+
+var StreamSlices = function StreamSlices(_ref) {
+  var slices = _ref.slices,
+      height = _ref.height,
+      getTooltipLabel = _ref.getTooltipLabel,
+      getTooltipValue = _ref.getTooltipValue;
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("g", null, slices.map(function (slice) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StreamSlicesItem$1, {
+      key: slice.index,
+      slice: slice,
+      height: height,
+      getTooltipLabel: getTooltipLabel,
+      getTooltipValue: getTooltipValue
+    });
+  }));
+};
+
+var StreamSlices$1 = /*#__PURE__*/Object(react__WEBPACK_IMPORTED_MODULE_0__["memo"])(StreamSlices);
+
+var StreamDotsItem = function StreamDotsItem(_ref) {
+  var x = _ref.x,
+      y = _ref.y,
+      size = _ref.size,
+      color = _ref.color,
+      borderWidth = _ref.borderWidth,
+      borderColor = _ref.borderColor;
+
+  var _useMotionConfig = Object(_nivo_core__WEBPACK_IMPORTED_MODULE_1__["useMotionConfig"])(),
+      animate = _useMotionConfig.animate,
+      springConfig = _useMotionConfig.config;
+
+  var animatedProps = Object(react_spring__WEBPACK_IMPORTED_MODULE_4__["useSpring"])({
+    x: x,
+    y: y,
+    radius: size * 0.5,
+    color: color,
+    config: springConfig,
+    immediate: !animate
+  });
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_spring__WEBPACK_IMPORTED_MODULE_4__["animated"].circle, {
+    cx: animatedProps.x,
+    cy: animatedProps.y,
+    r: animatedProps.radius,
+    fill: animatedProps.color,
+    strokeWidth: borderWidth,
+    stroke: borderColor
+  });
+};
+
+var StreamDotsItem$1 = /*#__PURE__*/Object(react__WEBPACK_IMPORTED_MODULE_0__["memo"])(StreamDotsItem);
+var StreamPropTypes = {
+  data: prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.arrayOf(prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.object).isRequired,
+  keys: prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.array.isRequired,
+  order: _nivo_core__WEBPACK_IMPORTED_MODULE_1__["stackOrderPropType"].isRequired,
+  offsetType: _nivo_core__WEBPACK_IMPORTED_MODULE_1__["stackOffsetPropType"].isRequired,
+  curve: _nivo_core__WEBPACK_IMPORTED_MODULE_1__["areaCurvePropType"].isRequired,
+  axisTop: prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.object,
+  axisRight: prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.object,
+  axisBottom: prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.object,
+  axisLeft: prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.object,
+  enableGridX: prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.bool.isRequired,
+  enableGridY: prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.bool.isRequired,
+  colors: _nivo_colors__WEBPACK_IMPORTED_MODULE_7__["ordinalColorsPropType"].isRequired,
+  fillOpacity: prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.number.isRequired,
+  defs: prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.arrayOf(prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.shape({
+    id: prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.string.isRequired
+  })).isRequired,
+  fill: prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.arrayOf(prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.shape({
+    id: prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.string,
+    match: prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.oneOf(['*']), prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.object, prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.func]).isRequired
+  })).isRequired,
+  borderWidth: prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.number.isRequired,
+  borderColor: _nivo_colors__WEBPACK_IMPORTED_MODULE_7__["inheritedColorPropType"].isRequired,
+  enableDots: prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.bool.isRequired,
+  dotComponent: prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.func, prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.object]).isRequired,
+  dotPosition: prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.oneOf(['start', 'center', 'end']).isRequired,
+  dotSize: prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.number, prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.func]).isRequired,
+  dotColor: _nivo_colors__WEBPACK_IMPORTED_MODULE_7__["inheritedColorPropType"].isRequired,
+  dotBorderWidth: prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.number, prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.func]).isRequired,
+  dotBorderColor: _nivo_colors__WEBPACK_IMPORTED_MODULE_7__["inheritedColorPropType"].isRequired,
+  isInteractive: prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.bool,
+  tooltipLabel: prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.func,
+  tooltipFormat: prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.func, prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.string]),
+  enableStackTooltip: prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.bool.isRequired,
+  legends: prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.arrayOf(prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.shape(_nivo_legends__WEBPACK_IMPORTED_MODULE_3__["LegendPropShape"])).isRequired,
+  role: prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.string.isRequired
+};
+var StreamDefaultProps = {
+  order: 'none',
+  offsetType: 'wiggle',
+  curve: 'catmullRom',
+  axisBottom: {},
+  enableGridX: true,
+  enableGridY: false,
+  borderWidth: 0,
+  borderColor: {
+    from: 'color',
+    modifiers: [['darker', 1]]
+  },
+  colors: {
+    scheme: 'nivo'
+  },
+  fillOpacity: 1,
+  defs: [],
+  fill: [],
+  enableDots: false,
+  dotPosition: 'center',
+  dotComponent: StreamDotsItem$1,
+  dotSize: 6,
+  dotColor: {
+    from: 'color'
+  },
+  dotBorderWidth: 0,
+  dotBorderColor: {
+    from: 'color'
+  },
+  isInteractive: true,
+  enableStackTooltip: true,
+  legends: [],
+  role: 'img',
+  animate: true,
+  motionConfig: 'gentle'
+};
+
+function _arrayWithoutHoles(arr) {
+  if (Array.isArray(arr)) return _arrayLikeToArray(arr);
+}
+
+function _iterableToArray(iter) {
+  if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter);
+}
+
+function _nonIterableSpread() {
+  throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+
+function _toConsumableArray(arr) {
+  return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
+}
+
+var stackMin = function stackMin(layers) {
+  return Math.min.apply(Math, _toConsumableArray(layers.reduce(function (acc, layer) {
+    return [].concat(_toConsumableArray(acc), _toConsumableArray(layer.map(function (d) {
+      return d[0];
+    })));
+  }, [])));
+};
+
+var stackMax = function stackMax(layers) {
+  return Math.max.apply(Math, _toConsumableArray(layers.reduce(function (acc, layer) {
+    return [].concat(_toConsumableArray(acc), _toConsumableArray(layer.map(function (d) {
+      return d[1];
+    })));
+  }, [])));
+};
+
+var useStream = function useStream(_ref) {
+  var width = _ref.width,
+      height = _ref.height,
+      data = _ref.data,
+      keys = _ref.keys,
+      offsetType = _ref.offsetType,
+      order = _ref.order,
+      curve = _ref.curve,
+      colors = _ref.colors,
+      borderColor = _ref.borderColor,
+      dotSize = _ref.dotSize,
+      dotColor = _ref.dotColor,
+      dotBorderWidth = _ref.dotBorderWidth,
+      dotBorderColor = _ref.dotBorderColor,
+      tooltipLabel = _ref.tooltipLabel,
+      tooltipFormat = _ref.tooltipFormat;
+  var areaGenerator = Object(react__WEBPACK_IMPORTED_MODULE_0__["useMemo"])(function () {
+    return Object(d3_shape__WEBPACK_IMPORTED_MODULE_8__["area"])().x(function (_ref2) {
+      var x = _ref2.x;
+      return x;
+    }).y0(function (_ref3) {
+      var y1 = _ref3.y1;
+      return y1;
+    }).y1(function (_ref4) {
+      var y2 = _ref4.y2;
+      return y2;
+    }).curve(Object(_nivo_core__WEBPACK_IMPORTED_MODULE_1__["curveFromProp"])(curve));
+  }, [curve]);
+  var stack$1 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useMemo"])(function () {
+    return Object(d3_shape__WEBPACK_IMPORTED_MODULE_8__["stack"])().keys(keys).offset(Object(_nivo_core__WEBPACK_IMPORTED_MODULE_1__["stackOffsetFromProp"])(offsetType)).order(Object(_nivo_core__WEBPACK_IMPORTED_MODULE_1__["stackOrderFromProp"])(order));
+  }, [keys, offsetType, order]);
+
+  var _useMemo = Object(react__WEBPACK_IMPORTED_MODULE_0__["useMemo"])(function () {
+    var layers = stack$1(data);
+    layers.forEach(function (layer) {
+      layer.forEach(function (point) {
+        point.value = point.data[layer.key];
+      });
+    });
+    var minValue = stackMin(layers);
+    var maxValue = stackMax(layers);
+    return [layers, Object(d3_scale__WEBPACK_IMPORTED_MODULE_9__["scalePoint"])().domain(Array.from({
+      length: data.length
+    }, function (_, i) {
+      return i;
+    })).range([0, width]), Object(d3_scale__WEBPACK_IMPORTED_MODULE_9__["scaleLinear"])().domain([minValue, maxValue]).range([height, 0])];
+  }, [stack$1, data, width, height]),
+      _useMemo2 = _slicedToArray(_useMemo, 3),
+      layers = _useMemo2[0],
+      xScale = _useMemo2[1],
+      yScale = _useMemo2[2];
+
+  var theme = Object(_nivo_core__WEBPACK_IMPORTED_MODULE_1__["useTheme"])();
+  var getColor = Object(_nivo_colors__WEBPACK_IMPORTED_MODULE_7__["useOrdinalColorScale"])(colors, 'index');
+  var getBorderColor = Object(_nivo_colors__WEBPACK_IMPORTED_MODULE_7__["useInheritedColor"])(borderColor, theme);
+  var getDotSize = Object(react__WEBPACK_IMPORTED_MODULE_0__["useMemo"])(function () {
+    return typeof dotSize === 'function' ? dotSize : function () {
+      return dotSize;
+    };
+  }, [dotSize]);
+  var getDotColor = Object(_nivo_colors__WEBPACK_IMPORTED_MODULE_7__["useInheritedColor"])(dotColor, theme);
+  var getDotBorderWidth = Object(react__WEBPACK_IMPORTED_MODULE_0__["useMemo"])(function () {
+    return typeof dotBorderWidth === 'function' ? dotBorderWidth : function () {
+      return dotBorderWidth;
+    };
+  }, [dotBorderWidth]);
+  var getDotBorderColor = Object(_nivo_colors__WEBPACK_IMPORTED_MODULE_7__["useInheritedColor"])(dotBorderColor, theme);
+  var enhancedLayers = Object(react__WEBPACK_IMPORTED_MODULE_0__["useMemo"])(function () {
+    return layers.map(function (points, layerIndex) {
+      var layer = points.map(function (point, i) {
+        return {
+          index: i,
+          x: xScale(i),
+          value: point.value,
+          y1: yScale(point[0]),
+          y2: yScale(point[1])
+        };
+      });
+      return {
+        id: keys[layerIndex],
+        layer: layer,
+        path: areaGenerator(layer),
+        color: getColor({
+          index: layerIndex
+        })
+      };
+    });
+  }, [layers, keys, areaGenerator, getColor]);
+  var slices = Object(react__WEBPACK_IMPORTED_MODULE_0__["useMemo"])(function () {
+    return Array.from({
+      length: data.length
+    }, function (_, i) {
+      var sliceStack = enhancedLayers.map(function (layer) {
+        return _objectSpread2({
+          id: layer.id,
+          color: layer.color
+        }, layer.layer[i]);
+      }).sort(function (a, b) {
+        return a.y2 - b.y2;
+      });
+      return {
+        index: i,
+        x: enhancedLayers[0].layer[i].x,
+        stack: sliceStack
+      };
+    });
+  }, [data.length, enhancedLayers]);
+  var getTooltipLabel = Object(react__WEBPACK_IMPORTED_MODULE_0__["useMemo"])(function () {
+    if (typeof tooltipLabel === 'function') return tooltipLabel;
+    return function (d) {
+      return d.id;
+    };
+  }, [tooltipLabel]);
+  var getTooltipValue = Object(_nivo_core__WEBPACK_IMPORTED_MODULE_1__["useValueFormatter"])(tooltipFormat);
+  return {
+    xScale: xScale,
+    yScale: yScale,
+    layers: enhancedLayers,
+    slices: slices,
+    getBorderColor: getBorderColor,
+    getDotSize: getDotSize,
+    getDotColor: getDotColor,
+    getDotBorderWidth: getDotBorderWidth,
+    getDotBorderColor: getDotBorderColor,
+    getTooltipLabel: getTooltipLabel,
+    getTooltipValue: getTooltipValue
+  };
+};
+
+var Stream = function Stream(_ref) {
+  var data = _ref.data,
+      keys = _ref.keys,
+      offsetType = _ref.offsetType,
+      order = _ref.order,
+      curve = _ref.curve,
+      width = _ref.width,
+      height = _ref.height,
+      partialMargin = _ref.margin,
+      axisTop = _ref.axisTop,
+      axisRight = _ref.axisRight,
+      axisBottom = _ref.axisBottom,
+      axisLeft = _ref.axisLeft,
+      enableGridX = _ref.enableGridX,
+      enableGridY = _ref.enableGridY,
+      colors = _ref.colors,
+      fillOpacity = _ref.fillOpacity,
+      borderWidth = _ref.borderWidth,
+      borderColor = _ref.borderColor,
+      defs = _ref.defs,
+      fill = _ref.fill,
+      enableDots = _ref.enableDots,
+      dotPosition = _ref.dotPosition,
+      dotComponent = _ref.dotComponent,
+      dotSize = _ref.dotSize,
+      dotColor = _ref.dotColor,
+      dotBorderWidth = _ref.dotBorderWidth,
+      dotBorderColor = _ref.dotBorderColor,
+      isInteractive = _ref.isInteractive,
+      tooltipLabel = _ref.tooltipLabel,
+      tooltipFormat = _ref.tooltipFormat,
+      enableStackTooltip = _ref.enableStackTooltip,
+      legends = _ref.legends,
+      role = _ref.role;
+
+  var _useDimensions = Object(_nivo_core__WEBPACK_IMPORTED_MODULE_1__["useDimensions"])(width, height, partialMargin),
+      margin = _useDimensions.margin,
+      innerWidth = _useDimensions.innerWidth,
+      innerHeight = _useDimensions.innerHeight,
+      outerWidth = _useDimensions.outerWidth,
+      outerHeight = _useDimensions.outerHeight;
+
+  var _useStream = useStream({
+    width: innerWidth,
+    height: innerHeight,
+    data: data,
+    keys: keys,
+    offsetType: offsetType,
+    order: order,
+    curve: curve,
+    colors: colors,
+    borderColor: borderColor,
+    dotSize: dotSize,
+    dotColor: dotColor,
+    dotBorderWidth: dotBorderWidth,
+    dotBorderColor: dotBorderColor,
+    tooltipLabel: tooltipLabel,
+    tooltipFormat: tooltipFormat
+  }),
+      xScale = _useStream.xScale,
+      yScale = _useStream.yScale,
+      layers = _useStream.layers,
+      slices = _useStream.slices,
+      getBorderColor = _useStream.getBorderColor,
+      getDotSize = _useStream.getDotSize,
+      getDotColor = _useStream.getDotColor,
+      getDotBorderWidth = _useStream.getDotBorderWidth,
+      getDotBorderColor = _useStream.getDotBorderColor,
+      getTooltipLabel = _useStream.getTooltipLabel,
+      getTooltipValue = _useStream.getTooltipValue;
+
+  var boundDefs = Object(_nivo_core__WEBPACK_IMPORTED_MODULE_1__["bindDefs"])(defs, layers, fill);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_nivo_core__WEBPACK_IMPORTED_MODULE_1__["SvgWrapper"], {
+    width: outerWidth,
+    height: outerHeight,
+    margin: margin,
+    defs: boundDefs,
+    role: role
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_nivo_axes__WEBPACK_IMPORTED_MODULE_2__["Grid"], {
+    width: innerWidth,
+    height: innerHeight,
+    xScale: enableGridX ? xScale : null,
+    yScale: enableGridY ? yScale : null
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StreamLayers, {
+    layers: layers,
+    fillOpacity: fillOpacity,
+    borderWidth: borderWidth,
+    getBorderColor: getBorderColor,
+    getTooltipLabel: getTooltipLabel,
+    isInteractive: isInteractive
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_nivo_axes__WEBPACK_IMPORTED_MODULE_2__["Axes"], {
+    xScale: xScale,
+    yScale: yScale,
+    width: innerWidth,
+    height: innerHeight,
+    top: axisTop,
+    right: axisRight,
+    bottom: axisBottom,
+    left: axisLeft
+  }), enableDots && layers.map(function (layer) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StreamDots$1, {
+      key: layer.id,
+      id: layer.id,
+      color: layer.color,
+      data: layer.layer,
+      dotComponent: dotComponent,
+      position: dotPosition,
+      getSize: getDotSize,
+      getColor: getDotColor,
+      getBorderWidth: getDotBorderWidth,
+      getBorderColor: getDotBorderColor
+    });
+  }), isInteractive && enableStackTooltip && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StreamSlices$1, {
+    slices: slices,
+    height: innerHeight,
+    getTooltipValue: getTooltipValue,
+    getTooltipLabel: getTooltipLabel
+  }), legends.map(function (legend, i) {
+    var legendData = layers.map(function (l) {
+      return {
+        id: l.id,
+        label: l.id,
+        color: l.color,
+        fill: l.fill
+      };
+    }).reverse();
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_nivo_legends__WEBPACK_IMPORTED_MODULE_3__["BoxLegendSvg"], Object.assign({
+      key: i
+    }, legend, {
+      containerWidth: innerWidth,
+      containerHeight: innerHeight,
+      data: legendData
+    }));
+  }));
+};
+
+var WrappedStream = Object(_nivo_core__WEBPACK_IMPORTED_MODULE_1__["withContainer"])(Stream);
+WrappedStream.defaultProps = StreamDefaultProps;
+
+var ResponsiveStream = function ResponsiveStream(props) {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_nivo_core__WEBPACK_IMPORTED_MODULE_1__["ResponsiveWrapper"], null, function (_ref) {
+    var width = _ref.width,
+        height = _ref.height;
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(WrappedStream, Object.assign({
+      width: width,
+      height: height
+    }, props));
+  });
+};
+
+
+
+/***/ }),
+
 /***/ "./node_modules/@nivo/tooltip/dist/nivo-tooltip.es.js":
 /*!************************************************************!*\
   !*** ./node_modules/@nivo/tooltip/dist/nivo-tooltip.es.js ***!
@@ -60938,6 +61683,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _nivo_voronoi__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @nivo/voronoi */ "./node_modules/@nivo/voronoi/dist/nivo-voronoi.es.js");
 /* harmony import */ var _nivo_pie__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @nivo/pie */ "./node_modules/@nivo/pie/dist/nivo-pie.es.js");
 /* harmony import */ var _nivo_parallel_coordinates__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @nivo/parallel-coordinates */ "./node_modules/@nivo/parallel-coordinates/dist/nivo-parallel-coordinates.es.js");
+/* harmony import */ var _nivo_stream__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @nivo/stream */ "./node_modules/@nivo/stream/dist/nivo-stream.es.js");
+
 
 
 
@@ -60971,6 +61718,7 @@ Object(reactR__WEBPACK_IMPORTED_MODULE_0__["reactWidget"])(
     ResponsivePieCanvas: _nivo_pie__WEBPACK_IMPORTED_MODULE_8__["ResponsivePieCanvas"],
     ResponsiveParallelCoordinates: _nivo_parallel_coordinates__WEBPACK_IMPORTED_MODULE_9__["ResponsiveParallelCoordinates"],
     ResponsiveParallelCoordinatesCanvas: _nivo_parallel_coordinates__WEBPACK_IMPORTED_MODULE_9__["ResponsiveParallelCoordinatesCanvas"],
+    ResponsiveStream: _nivo_stream__WEBPACK_IMPORTED_MODULE_10__["ResponsiveStream"],
   },
   {},
 );

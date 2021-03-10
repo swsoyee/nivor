@@ -8,6 +8,7 @@ import { ResponsiveWaffle, ResponsiveWaffleHtml, ResponsiveWaffleCanvas } from "
 import { ResponsiveVoronoi } from "@nivo/voronoi";
 import { ResponsivePie, ResponsivePieCanvas } from "@nivo/pie";
 import { ResponsiveParallelCoordinates, ResponsiveParallelCoordinatesCanvas } from "@nivo/parallel-coordinates";
+import { ResponsiveStream } from "@nivo/stream";
 
 reactWidget(
   'calendar',
@@ -31,6 +32,7 @@ reactWidget(
     ResponsivePieCanvas,
     ResponsiveParallelCoordinates,
     ResponsiveParallelCoordinatesCanvas,
+    ResponsiveStream,
   },
   {},
 );
